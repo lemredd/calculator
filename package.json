@@ -6,7 +6,13 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc && vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+
+		"changelog:add-and-commit": "git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md'",
+		"push:origin-and-tags": "git push origin && git push origin --tags",
+		"release:major": "changelog -M && pnpm changelog:add-and-commit && pnpm version major && pnpm push:origin-and-tags",
+		"release:minor": "changelog -m && pnpm changelog:add-and-commit && pnpm version minor && pnpm push:origin-and-tags",
+		"release:patch": "changelog -p && pnpm changelog:add-and-commit && pnpm version patch && pnpm push:origin-and-tags"
 	},
 	"dependencies": {
 		"vue": "^3.2.45"
@@ -18,6 +24,7 @@
 		"autoprefixer": "^10.4.13",
 		"eslint": "^8.29.0",
 		"eslint-plugin-vue": "^9.8.0",
+		"generate-changelog": "^1.8.0",
 		"postcss": "^8.4.20",
 		"sass": "^1.56.2",
 		"tailwindcss": "^3.2.4",
