@@ -12,7 +12,7 @@ This is to avoid complicating conflicts.
 - none / lemredd/calculator#
 
 ## Breaking Changes
-- none lemredd/calculator#
+- none
 
 ## Pull Request Quality
 - Will have additional commits?
