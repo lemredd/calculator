@@ -36,6 +36,11 @@
 		"semi": [
 			"error",
 			"never"
+		],
+		"no-unused-vars": "off",
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{ "argsIgnorePattern": "^unused", "varsIgnorePattern": "^unused" }
 		]
 	}
 }
