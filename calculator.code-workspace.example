@@ -1,0 +1,31 @@
+{
+	"extensions": {
+		"recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
+	},
+	"folders": [
+		// { "name": "root",					"path": "." },
+		// { "name": "components",				"path": "./src/components" },
+		// { "name": "General Test Directory",	"path": "./tests" },
+	],
+	"settings": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": false,
+		"editor.renderWhitespace": "all",
+		"editor.minimap.enabled": false,
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
+		"files.trimTrailingWhitespace": true,
+		"files.exclude": {
+			"**/.DS_Store": true,
+			"**/.git": true,
+			"**/.hg": true,
+			"**/.svn": true,
+			"**/CVS": true,
+			"**/Thumbs.db": true,
+			"**/dist": true,
+			"**/node_modules": true
+		},
+		"scss.lint.unknownAtRules": "ignore"
+	}
+}
