@@ -27,3 +27,4 @@ Scope		| Description
 *lint:*		| refers to changes in ESLint configuration
 *ux:*		| refers to changes that would affect user experience
 *dx:*		| refers to changes that would affect developer experience
+*ui:*		| refers to changes in the interface (HTML or CSS)
