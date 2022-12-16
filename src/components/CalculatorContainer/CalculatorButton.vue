@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import Calculator from "@/CalculatorContainer.vue"
 </script>
 
 <template>
-	<Calculator/>
+	button
 </template>
 
 <style scoped lang="scss">

@@ -26,5 +26,6 @@ This is to avoid complicating conflicts.
 
 ## Proof of Passing
 <!--
-To be setup once tests are configured.
+Other workflows will be added
 -->
+[![Calculator: Components](https://github.com/lemredd/calculator/actions/workflows/unit.components.yml/badge.svg?branch=<branch_name>)](https://github.com/lemredd/calculator/actions/workflows/unit.components.yml)

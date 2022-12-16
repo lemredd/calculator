@@ -9,16 +9,22 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"esModuleInterop": true,
-		"lib": ["ESNext", "DOM"],
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
 		"noEmit": true,
-		"types": ["mocha", "chai", "sinon"]
+		"types": ["vitest/globals"],
+		"paths": {
+			"@/*": ["./src/components/*"],
+			"^t/*": ["./test/*"]
+		}
 	},
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.d.ts",
 		"src/**/*.tsx",
-		"src/**/*.vue"
+		"src/**/*.vue",
+		"test/**/*.ts",
+		"test/**/*.test.ts"
 	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
