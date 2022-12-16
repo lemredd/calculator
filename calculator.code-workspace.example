@@ -3,9 +3,18 @@
 		"recommendations": ["Vue.volar", "Vue.vscode-typescript-vue-plugin"]
 	},
 	"folders": [
+		// General locations
 		// { "name": "root",					"path": "." },
+		// { "name": "Github Files",			"path": "./.github" },
+
+		// Component locations
 		// { "name": "components",				"path": "./src/components" },
+
+		// Test locations
 		// { "name": "General Test Directory",	"path": "./tests" },
+
+		// User defined locations
+
 	],
 	"settings": {
 		"editor.tabSize": 4,
