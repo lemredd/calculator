@@ -6,6 +6,6 @@ describe("Component: CalculatorContainer/Button", () => {
 	it("can emit custom value", () => {
 		const wrapper = shallowMount(Component)
 
-		console.log(wrapper.html(), "\n\n\n")
+		expect(wrapper.exists()).toBeTruthy()
 	})
 })
