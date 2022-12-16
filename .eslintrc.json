@@ -43,6 +43,16 @@
 			"error",
 			{ "argsIgnorePattern": "^unused", "varsIgnorePattern": "^unused" }
 		],
-		"space-before-function-paren": ["error", "never"]
+		"space-before-function-paren": ["error", "never"],
+		"vue/sort-keys": [
+			"warn",
+			"asc",
+			{
+				"caseSensitive": true,
+				"ignoreChildrenOf": ["methods"],
+				"ignoreGrandchildrenOf": ["directives", "inject", "watch"],
+				"minKeys": 2
+			}
+		]
 	}
 }
