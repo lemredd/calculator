@@ -7,6 +7,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.46.1
   '@typescript-eslint/parser': ^5.46.1
   '@vitejs/plugin-vue': ^4.0.0
+  '@vue/test-utils': ^2.2.6
   autoprefixer: ^10.4.13
   chai: ^4.3.7
   eslint: ^8.29.0
@@ -33,6 +34,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.46.1_imrg37k3svwu377c6q7gkarwmi
   '@typescript-eslint/parser': 5.46.1_ha6vam6werchizxrnqvarmz2zu
   '@vitejs/plugin-vue': 4.0.0_vite@4.0.1+vue@3.2.45
+  '@vue/test-utils': 2.2.6_vue@3.2.45
   autoprefixer: 10.4.13_postcss@8.4.20
   chai: 4.3.7
   eslint: 8.29.0
@@ -640,6 +642,14 @@ packages:
 
   /@vue/shared/3.2.45:
     resolution: {integrity: sha512-Ewzq5Yhimg7pSztDV+RH1UDKBzmtqieXQlpTVm2AwraoRL/Rks96mvd8Vgi7Lj+h+TH8dv7mXD3FRZR3TUvbSg==}
+
+  /@vue/test-utils/2.2.6_vue@3.2.45:
+    resolution: {integrity: sha512-64zHtJZdG7V/U2L0j/z3Pt5bSygccI3xs+Kl7LB73AZK4MQ8WONJhqDQPK8leUFFA9CmmoJygeky7zcl2hX10A==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      vue: 3.2.45
+    dev: true
 
   /acorn-jsx/5.3.2_acorn@8.8.1:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
