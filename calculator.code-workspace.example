@@ -11,7 +11,7 @@
 		// { "name": "components",				"path": "./src/components" },
 
 		// Test locations
-		// { "name": "General Test Directory",	"path": "./tests" },
+		// { "name": "General Test Directory",	"path": "./test" },
 
 		// User defined locations
 
