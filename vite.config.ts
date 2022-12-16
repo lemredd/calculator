@@ -19,6 +19,7 @@ export default defineConfig({
 		"open": true
 	},
 	"test": {
+		"environment": "jsdom",
 		"globals": true,
 		"include": [
 			"**/*.{test,spec}.{ts,js}"
