@@ -20,9 +20,6 @@ export default defineConfig({
 	},
 	"test": {
 		"environment": "jsdom",
-		"globals": true,
-		"include": [
-			"**/*.{test,spec}.{ts,js}"
-		]
+		"globals": true
 	}
 })
