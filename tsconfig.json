@@ -12,7 +12,10 @@
 		"lib": ["ESNext", "DOM"],
 		"skipLibCheck": true,
 		"noEmit": true,
-		"types": ["mocha", "chai", "sinon"]
+		"types": ["mocha", "chai"],
+		"paths": {
+			"@/*": ["./src/components/*"]
+		}
 	},
 	"include": [
 		"src/**/*.ts",
