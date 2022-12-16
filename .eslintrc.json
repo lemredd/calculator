@@ -44,6 +44,31 @@
 			{ "argsIgnorePattern": "^unused", "varsIgnorePattern": "^unused" }
 		],
 		"space-before-function-paren": ["error", "never"],
+		"vue/html-indent": [
+			"error",
+			"tab",
+			{
+				"attribute": 1,
+				"baseIndent": 1,
+				"closeBracket": 0,
+				"alignAttributesVertically": true,
+				"ignores": []
+			}
+		],
+		"vue/max-attributes-per-line": [
+			"error",
+			{
+				"singleline": { "max": 2 },
+				"multiline": { "max": 1 }
+			}
+		],
+		"vue/html-closing-bracket-newline": [
+			"error",
+			{
+			"singleline": "never",
+			"multiline": "always"
+			}
+		],
 		"vue/sort-keys": [
 			"warn",
 			"asc",
