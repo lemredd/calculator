@@ -20,11 +20,14 @@ Type		| Description
 
 this will refer only to the developer's most used scoped types. May add more if necessary.
 
-
 Scope		| Description
 --- | ---
-*git:*		| refers to changes in any git configuration
-*lint:*		| refers to changes in ESLint configuration
-*ux:*		| refers to changes that would affect user experience
-*dx:*		| refers to changes that would affect developer experience
-*ui:*		| refers to changes in the interface (HTML or CSS)
+*git*		| refers to changes in any git configuration
+*lint*		| refers to changes in code adhering to set ESLint rules
+*ux*		| refers to changes that would affect user experience
+*dx*		| refers to changes that would affect developer experience
+*ui*		| refers to changes in the interface (HTML or CSS)
+*helper*	| refers to changes in helper methods or its tests
+*cmpnt*		| refers to changes in components or its tests
+*intg*		| refers to changes in integration or its tests
+*E2E*		| refers to changes end-to-end tests
