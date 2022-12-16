@@ -1,7 +1,7 @@
-import { assert } from "chai"
+import { describe, expect, it } from "vitest"
 
 describe("Sample test", () => {
 	it("should test successfully", () => {
-		assert.equal(1, 1)
+		expect(1).toEqual(1)
 	})
 })
