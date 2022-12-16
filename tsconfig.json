@@ -14,7 +14,8 @@
 		"noEmit": true,
 		"types": ["vitest/globals"],
 		"paths": {
-			"@/*": ["./src/components/*"]
+			"@/*": ["./src/components/*"],
+			"^t/*": ["./test/*"]
 		}
 	},
 	"include": [

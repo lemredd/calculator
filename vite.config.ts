@@ -11,7 +11,8 @@ export default defineConfig({
 	"plugins": [vue()],
 	"resolve": {
 		"alias": {
-			"@": path.resolve(ROOT_DIR, "./src/components")
+			"@": path.resolve(ROOT_DIR, "./src/components"),
+			"^t": path.resolve(ROOT_DIR, "./test")
 		}
 	},
 	"server": {
