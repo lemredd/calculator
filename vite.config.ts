@@ -20,6 +20,7 @@ export default defineConfig({
 		"open": true
 	},
 	"test": {
+		"globals": true,
 		"include": [
 			"**/*.{test,spec}.{ts,js}"
 		]
