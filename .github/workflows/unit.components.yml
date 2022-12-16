@@ -1,4 +1,4 @@
-name: Calculator-components
+name: calculator_components
 run-name: Component Unit Tests
 on: [push]
 jobs:
