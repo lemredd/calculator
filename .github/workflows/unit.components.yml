@@ -1,4 +1,4 @@
-name: Calculator CI
+name: Calculator - components
 run-name: Component Unit Tests
 on: [push]
 jobs:
