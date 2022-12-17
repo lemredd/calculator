@@ -1,5 +1,5 @@
-name: Calculator CI
-run-name: General Tests
+name: Component Integration Tests
+run-name: Component Integration Tests
 on: [push]
 jobs:
   sample_unit_test:
@@ -19,4 +19,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}_${{ hashFiles('package.json') }}
       - run: npm install
-      - run: npm run test:general
+      - run: npm run test:intg
