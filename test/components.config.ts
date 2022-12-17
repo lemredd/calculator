@@ -9,7 +9,7 @@ export default defineConfig({
 		"globals": true,
 
 		"include": [
-			"./src/components/**/*.test.ts"
+			"./src/components/*/**/*.test.ts"
 		]
 	}
 })
