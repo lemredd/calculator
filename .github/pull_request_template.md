@@ -28,4 +28,5 @@ This is to avoid complicating conflicts.
 <!--
 Other workflows will be added
 -->
-[![Calculator: Components](https://github.com/lemredd/calculator/actions/workflows/unit.components.yml/badge.svg?branch=<branch_name>)](https://github.com/lemredd/calculator/actions/workflows/unit.components.yml)
+[![Component Unit Tests](https://github.com/lemredd/calculator/actions/workflows/unit.components.yml/badge.svg?branch=<branch_name>)](https://github.com/lemredd/calculator/actions/workflows/unit.components.yml)
+[![Component Integration Tests](https://github.com/lemredd/calculator/actions/workflows/intg.components.yml/badge.svg?branch=<branch_name>)](https://github.com/lemredd/calculator/actions/workflows/intg.components.yml)
