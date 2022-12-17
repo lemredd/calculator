@@ -1,5 +1,5 @@
-name: Components Unit Tests
-run-name: Component Unit Tests
+name: Component Integration Tests
+run-name: Component Integration Tests
 on: [push]
 jobs:
   sample_unit_test:
@@ -19,4 +19,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}_${{ hashFiles('package.json') }}
       - run: npm install
-      - run: npm run test:components
+      - run: npm run test:intg
