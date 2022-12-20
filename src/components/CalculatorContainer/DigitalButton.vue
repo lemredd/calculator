@@ -15,7 +15,7 @@ function appendToScreen() {
 </script>
 
 <template>
-	<button class="calculator-button" @click="appendToScreen">
+	<button class="digital-button" @click="appendToScreen">
 		{{ props.value }}
 	</button>
 </template>

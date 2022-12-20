@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import Button from "@/CalculatorContainer/CalculatorButton.vue"
+import Button from "@/CalculatorContainer/DigitalButton.vue"
 import Screen from "@/CalculatorContainer/CalculatorScreen.vue"
 
 const valueToDisplay = ref("0")
