@@ -5,15 +5,6 @@ import Component from "./CalculatorContainer.vue"
 describe("Component: CalculatorContainer", () => {
 	it("can change screen value once a button is pressed", async() => {
 		const wrapper = mount(Component)
-		const digitalBtn = wrapper.find(".digital-button")
-		const calculatorScreen = wrapper.find(".calculator-screen").element as HTMLInputElement
-
-		await digitalBtn.trigger("click")
-		expect(calculatorScreen.value).not.toEqual("0")
-	})
-
-	it("can evaluate simple expression", async() => {
-		const wrapper = mount(Component)
 		const calculatorScreen = wrapper.find(".calculator-screen").element as HTMLInputElement
 
 		// Find the digit "1" button and click it
@@ -38,4 +29,6 @@ describe("Component: CalculatorContainer", () => {
 		await equalBtn.trigger("click")
 		expect(calculatorScreen.value).toEqual("1 + 1 =")
 	})
+
+	it.todo("can evaluate a formed expression")
 })
