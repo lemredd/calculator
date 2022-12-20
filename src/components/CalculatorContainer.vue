@@ -10,7 +10,7 @@ const valueToDisplay = ref("0")
 const isDisplayEmpty = computed(() => valueToDisplay.value === "0")
 function appendToScreen(valueToAppend: number | string) {
 	if (isDisplayEmpty.value) valueToDisplay.value = String(valueToAppend)
-	else valueToDisplay.value += String(valueToAppend)
+	else valueToDisplay.value += ` ${valueToAppend}`
 }
 </script>
 
