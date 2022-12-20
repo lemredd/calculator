@@ -7,7 +7,7 @@ interface Props {
 const props = defineProps<Props>()
 
 interface CustomEvents {
-	(event: "appendToScreen", valueToAppend: string): void
+	(event: "appendToScreen", valueToAppend: Corrections): void
 }
 const emit = defineEmits<CustomEvents>()
 
