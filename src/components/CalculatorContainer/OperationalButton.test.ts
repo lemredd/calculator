@@ -6,7 +6,7 @@ describe("Component: CalculatorContainer/OperationalButton", () => {
 	it("can emit custom value", async() => {
 		const wrapper = shallowMount(Component, {
 			"props": {
-				"value": 1
+				"value": "+"
 			}
 		})
 		const operationalBtn = wrapper.find("button.operational-button")
