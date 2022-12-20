@@ -19,8 +19,10 @@ function appendToScreen(valueToAppend: PossibleButtonValues) {
 }
 
 function evaluateExpression(valueToAppend: PossibleButtonValues) {
+	const evaluatedValue = evaluate(valueToDisplay.value)
+
 	appendToScreen(valueToAppend)
-	return
+	return evaluatedValue
 }
 </script>
 
