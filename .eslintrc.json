@@ -43,6 +43,7 @@
 			"error",
 			{ "argsIgnorePattern": "^unused", "varsIgnorePattern": "^unused" }
 		],
+		"@typescript-eslint/no-explicit-any": "off",
 		"space-before-function-paren": ["error", "never"],
 		"object-curly-spacing": ["error", "always"],
 		"vue/html-indent": [

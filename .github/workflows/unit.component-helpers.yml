@@ -1,0 +1,22 @@
+name: Component Helpers Unit Tests
+run-name: Component Helpers Unit Tests
+on: [push]
+jobs:
+  sample_unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Testing on Node.js 14.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}_${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}_${{ hashFiles('package.json') }}
+      - run: npm install
+      - run: npm run test:helpers

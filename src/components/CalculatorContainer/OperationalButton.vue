@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { Operations } from "@/types/buttons"
+
 interface Props {
-	value: number
+	value: Operations
 }
 const props = defineProps<Props>()
 
 interface CustomEvents {
-	(event: "appendToScreen", valueToAppend: number): void
+	(event: "appendToScreen", valueToAppend: Operations): void
 }
 const emit = defineEmits<CustomEvents>()
 
@@ -15,7 +17,7 @@ function appendToScreen() {
 </script>
 
 <template>
-	<button class="calculator-button" @click="appendToScreen">
+	<button class="operational-button" @click="appendToScreen">
 		{{ props.value }}
 	</button>
 </template>
