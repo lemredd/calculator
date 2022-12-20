@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface Props {
-	valueToDisplay: number
+	valueToDisplay: string
 }
 defineProps<Props>()
 </script>
 
 <template>
 	<input
-		type="number"
+		type="text"
 		class="entry-screen"
 		disabled
 		:value="valueToDisplay"
