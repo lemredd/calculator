@@ -5,7 +5,7 @@ import Component from "./CalculatorContainer.vue"
 describe("Component: CalculatorContainer", () => {
 	it("can evaluate a proper expression", async() => {
 		const wrapper = mount(Component)
-		const calculatorScreen = wrapper.find(".calculator-screen").element as HTMLInputElement
+		const calculatorScreen = wrapper.find(".evaluation-screen").element as HTMLInputElement
 
 		const wrapperInternals = wrapper.vm as any
 		const evaluateExpressionSpy = vitest.spyOn(wrapperInternals, "evaluateExpression")

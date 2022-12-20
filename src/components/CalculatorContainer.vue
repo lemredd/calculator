@@ -5,7 +5,7 @@ import type { PossibleButtonValues } from "@/types/buttons"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
 
-import Screen from "@/CalculatorContainer/CalculatorScreen.vue"
+import Screen from "@/CalculatorContainer/EvaluationScreen.vue"
 import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"

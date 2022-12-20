@@ -1,15 +1,15 @@
 import { shallowMount } from "@vue/test-utils"
 
-import Component from "./CalculatorScreen.vue"
+import Component from "./EvaluationScreen.vue"
 
-describe("Component: CalculatorContainer/CalculatorScreen", () => {
+describe("Component: CalculatorContainer/EvaluationScreen", () => {
 	it("can change displayed value", async() => {
 		const wrapper = shallowMount(Component, {
 			"props": {
 				"valueToDisplay": "0"
 			}
 		})
-		const calculatorScreen = wrapper.find("input.calculator-screen").element as HTMLInputElement
+		const calculatorScreen = wrapper.find("input.evaluation-screen").element as HTMLInputElement
 		const calculatorScreenInitialValue = wrapper.props("valueToDisplay")
 		expect(calculatorScreen.value).toEqual(calculatorScreenInitialValue)
 
