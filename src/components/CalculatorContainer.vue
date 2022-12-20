@@ -1,18 +1,24 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
-import Button from "@/CalculatorContainer/DigitalButton.vue"
 import Screen from "@/CalculatorContainer/CalculatorScreen.vue"
+import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
+import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
+import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const valueToDisplay = ref("0")
+const isDisplayEmpty = computed(() => valueToDisplay.value === "0")
 function appendToScreen(valueToAppend: number | string) {
-	valueToDisplay.value += valueToAppend
+	if (isDisplayEmpty.value) valueToDisplay.value = String(valueToAppend)
+	else valueToDisplay.value += String(valueToAppend)
 }
 </script>
 
 <template>
 	<Screen :value-to-display="valueToDisplay" />
-	<Button :value="1" @append-to-screen="appendToScreen" />
+	<DigitalButton :value="1" @append-to-screen="appendToScreen" />
+	<OperationalButton value="+" @append-to-screen="appendToScreen" />
+	<EvaluationButton value="=" @append-to-screen="appendToScreen" />
 </template>
 
 <style scoped lang="scss">

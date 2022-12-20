@@ -22,12 +22,11 @@ describe("Component: CalculatorContainer", () => {
 		await digital1Btn.trigger("click")
 		expect(calculatorScreen.value).toEqual("1")
 
-
 		// Find the Addition button and click it
 		const operationalBtns = wrapper.findAll(".operational-button")
 		const [additionBtn] =  operationalBtns.filter(btn => btn.text() === "+")
 		await additionBtn.trigger("click")
-		expect(calculatorScreen.value).not.toEqual("1+")
+		expect(calculatorScreen.value).toEqual("1+")
 
 		// click digit "1" button again
 		await digital1Btn.trigger("click")
