@@ -1,5 +1,6 @@
 <script setup lang="ts">
-type Corrections = "CE"|"C"|""
+import type { Corrections } from "@/types/buttons"
+
 interface Props {
 	value: Corrections
 }

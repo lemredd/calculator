@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Evaluations = "="|"√"|"x²"|"1/x"|"%"
+import type { Evaluations } from "@/types/buttons"
 interface Props {
 	value: Evaluations
 }

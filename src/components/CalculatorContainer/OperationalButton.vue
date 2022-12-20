@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Operations = "+"|"-"|"×"|"÷"
+import type { Operations } from "@/types/buttons"
 interface Props {
 	value: Operations
 }

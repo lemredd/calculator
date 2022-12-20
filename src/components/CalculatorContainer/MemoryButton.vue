@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type MemoryOperations = "MC"|"MR"|"M+"|"M-"|"MS"|"M"
+import type { MemoryOperations } from "@/types/buttons"
 interface Props {
 	value: MemoryOperations
 }
