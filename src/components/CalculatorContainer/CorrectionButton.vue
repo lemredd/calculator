@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue"
 import type { Corrections } from "@/types/buttons"
 
 interface Props {
@@ -7,17 +8,23 @@ interface Props {
 const props = defineProps<Props>()
 
 interface CustomEvents {
-	(event: "appendToScreen", valueToAppend: Corrections): void
+	(event: "clearOneDigit"): void
+	(event: "clearAllScreens"): void
+	(event: "clearEntryScreen"): void
 }
 const emit = defineEmits<CustomEvents>()
+const mayOneDigitOnly = computed(() => props.value === "")
+const mayClearEntryScreenOnly = computed(() => props.value === "CE")
 
-function appendToScreen() {
-	emit("appendToScreen", props.value)
+function clearScreens() {
+	if (mayClearEntryScreenOnly.value) emit("clearEntryScreen")
+	if (mayOneDigitOnly.value) emit("clearOneDigit")
+	else emit("clearAllScreens")
 }
 </script>
 
 <template>
-	<button class="correction-button" @click="appendToScreen">
+	<button class="correction-button" @click="clearScreens">
 		{{ props.value }}
 	</button>
 </template>
