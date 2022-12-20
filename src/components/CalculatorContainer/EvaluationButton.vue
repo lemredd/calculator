@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Evaluations } from "@/types/buttons"
+
 interface Props {
 	value: Evaluations
 }

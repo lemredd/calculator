@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { MemoryOperations } from "@/types/buttons"
+
 interface Props {
 	value: MemoryOperations
 }

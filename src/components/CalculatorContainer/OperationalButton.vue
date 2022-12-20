@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Operations } from "@/types/buttons"
+
 interface Props {
 	value: Operations
 }
