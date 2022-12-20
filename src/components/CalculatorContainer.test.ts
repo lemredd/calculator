@@ -3,9 +3,12 @@ import { mount } from "@vue/test-utils"
 import Component from "./CalculatorContainer.vue"
 
 describe("Component: CalculatorContainer", () => {
-	it("can change screen value once a button is pressed", async() => {
+	it("can evaluate a proper expression", async() => {
 		const wrapper = mount(Component)
 		const calculatorScreen = wrapper.find(".calculator-screen").element as HTMLInputElement
+
+		const wrapperInternals = wrapper.vm as any
+		const evaluateExpressionSpy = vitest.spyOn(wrapperInternals, "evaluateExpression")
 
 		// Find the digit "1" button and click it
 		const digitalBtns = wrapper.findAll(".digital-button")
@@ -28,7 +31,7 @@ describe("Component: CalculatorContainer", () => {
 		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
 		await equalBtn.trigger("click")
 		expect(calculatorScreen.value).toEqual("1 + 1 =")
-	})
 
-	it.todo("can evaluate a formed expression")
+		expect(evaluateExpressionSpy).toHaveReturnedWith(2)
+	})
 })
