@@ -5,31 +5,48 @@ import type { PossibleButtonValues } from "@/types/buttons"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
 
-import Screen from "@/CalculatorContainer/EvaluationScreen.vue"
+import EntryScreen from "@/CalculatorContainer/EntryScreen.vue"
 import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
+import EvaluationScreen from "@/CalculatorContainer/EvaluationScreen.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
-const valueToDisplay = ref("0")
-const isDisplayEmpty = computed(() => valueToDisplay.value === "0")
+const entryValue = ref("0")
+const mustResetOnNextEntry = ref(false)
+const isEntryValueEmpty = computed(() => entryValue.value === "0")
 
-function appendToScreen(valueToAppend: PossibleButtonValues) {
-	if (isDisplayEmpty.value) valueToDisplay.value = String(valueToAppend)
-	else valueToDisplay.value += ` ${valueToAppend}`
+function appendToEntryScreen(valueToAppend: string|number) {
+	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entryValue.value = String(valueToAppend)
+	else entryValue.value += String(valueToAppend)
+
+	mustResetOnNextEntry.value = false
+}
+
+const evaluationValue = ref("")
+const isEvaluationValueEmpty = computed(() => evaluationValue.value === "")
+
+function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
+	mustResetOnNextEntry.value = true
+
+	if (!isEvaluationValueEmpty.value) evaluationValue.value += ` ${entryValue.value} ${valueToAppend}`
+	else evaluationValue.value = `${entryValue.value} ${valueToAppend}`
 }
 
 function evaluateExpression(valueToAppend: PossibleButtonValues) {
-	const evaluatedValue = evaluate(valueToDisplay.value)
+	const evaluatedValue = evaluate(`${evaluationValue.value} ${entryValue.value}`)
 
-	appendToScreen(valueToAppend)
+	appendToEvaluationScreen(valueToAppend)
 	return evaluatedValue
 }
 </script>
 
 <template>
-	<Screen :value-to-display="valueToDisplay" />
-	<DigitalButton :value="1" @append-to-screen="appendToScreen" />
-	<OperationalButton value="+" @append-to-screen="appendToScreen" />
+	<div class="screens">
+		<EvaluationScreen :value-to-display="evaluationValue" />
+		<EntryScreen :value-to-display="entryValue" />
+	</div>
+	<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
+	<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
 	<EvaluationButton value="=" @append-to-screen="evaluateExpression" />
 </template>
 
