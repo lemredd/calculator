@@ -37,10 +37,10 @@ function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
 // Evaluated data and mutators
 const evaluatedValue = ref("0")
 function evaluateExpression(valueToAppend: PossibleButtonValues) {
-	evaluatedValue.value = evaluate(`${evaluationValue.value} ${entryValue.value}`)
+	evaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
 
 	appendToEvaluationScreen(valueToAppend)
-	entryValue.value = String(evaluatedValue.value)
+	entryValue.value = evaluatedValue.value
 }
 </script>
 
