@@ -8,9 +8,6 @@ describe("Component: CalculatorContainer", () => {
 		const evaluationScrn = wrapper.find(".evaluation-screen").element as HTMLInputElement
 		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
 
-		const wrapperInternals = wrapper.vm as any
-		const evaluateExpressionSpy = vitest.spyOn(wrapperInternals, "evaluateExpression")
-
 		// Find the digit "1" button and click it
 		const digitalBtns = wrapper.findAll(".digital-button")
 		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
@@ -33,7 +30,6 @@ describe("Component: CalculatorContainer", () => {
 		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
 		await equalBtn.trigger("click")
 		expect(evaluationScrn.value).toEqual("1 + 1 =")
-
-		expect(evaluateExpressionSpy).toHaveReturnedWith(2)
+		expect(entryScrn.value).toEqual("2")
 	})
 })
