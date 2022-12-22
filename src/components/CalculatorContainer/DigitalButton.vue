@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { Entries } from "@/types/buttons"
+
 interface Props {
-	value: number
+	value: Entries
 }
 const props = defineProps<Props>()
 
 interface CustomEvents {
-	(event: "appendToScreen", valueToAppend: number): void
+	(event: "appendToScreen", valueToAppend: Entries): void
 }
 const emit = defineEmits<CustomEvents>()
 
