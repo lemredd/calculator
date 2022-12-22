@@ -46,27 +46,43 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 
 <template>
 	<div class="screens">
-		<EvaluationScreen
-			class="screen"
-			:value-to-display="evaluationValue"
-		/>
+		<div class="evaluation-screen-container">
+			<EvaluationScreen
+				class="screen"
+				:value-to-display="evaluationValue"
+			/>
+		</div>
 		<EntryScreen
 			class="screen"
 			:value-to-display="entryValue"
 		/>
 	</div>
-	<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
-	<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
-	<EvaluationButton value="=" @append-to-screen="evaluateExpression" />
+	<div class="row">
+		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
+	</div>
+	<div class="row">
+		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
+	</div>
+	<div class="row">
+		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
+	</div>
+	<div class="row">
+		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
+		<DigitalButton :value="2" @append-to-screen="appendToEntryScreen" />
+		<DigitalButton :value="3" @append-to-screen="appendToEntryScreen" />
+		<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
+	</div>
+	<div class="row">
+		<EvaluationButton value="=" @append-to-screen="evaluateExpression" />
+	</div>
 </template>
 
 <style lang="scss">
-	.screen {
-		direction: rtl;
+	.entry-screen {
+		@apply text-2xl;
 
-		&.entry-screen {
-			@apply text-2xl;
-		}
+		direction: rtl;
+		width: 100%;
 	}
 
 	button {
@@ -77,8 +93,7 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 </style>
 
 <style scoped lang="scss">
-	.screen {
-		width: 100%;
-
+	.evaluation-screen-container {
+		@apply flex justify-end;
 	}
 </style>
