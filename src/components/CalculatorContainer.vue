@@ -36,7 +36,7 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 	const evaluatedValue = evaluate(`${evaluationValue.value} ${entryValue.value}`)
 
 	appendToEvaluationScreen(valueToAppend)
-	entryValue.value = evaluatedValue
+	entryValue.value = String(evaluatedValue)
 }
 </script>
 
