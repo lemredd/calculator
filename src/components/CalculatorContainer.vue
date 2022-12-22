@@ -11,6 +11,7 @@ import EvaluationScreen from "@/CalculatorContainer/EvaluationScreen.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
+// EntryScreen data and mutators
 const entryValue = ref("0")
 const mustResetOnNextEntry = ref(false)
 const isEntryValueEmpty = computed(() => entryValue.value === "0")
@@ -22,6 +23,7 @@ function appendToEntryScreen(valueToAppend: string|number) {
 	mustResetOnNextEntry.value = false
 }
 
+// EvaluationScreen data and mutators
 const evaluationValue = ref("")
 const isEvaluationValueEmpty = computed(() => evaluationValue.value === "")
 
@@ -32,11 +34,13 @@ function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
 	else evaluationValue.value = `${entryValue.value} ${valueToAppend}`
 }
 
+// Evaluated data and mutators
+const evaluatedValue = ref("0")
 function evaluateExpression(valueToAppend: PossibleButtonValues) {
-	const evaluatedValue = evaluate(`${evaluationValue.value} ${entryValue.value}`)
+	evaluatedValue.value = evaluate(`${evaluationValue.value} ${entryValue.value}`)
 
 	appendToEvaluationScreen(valueToAppend)
-	entryValue.value = String(evaluatedValue)
+	entryValue.value = String(evaluatedValue.value)
 }
 </script>
 
