@@ -32,4 +32,6 @@ describe("Component: CalculatorContainer", () => {
 		expect(evaluationScrn.value).toEqual("1 + 1 =")
 		expect(entryScrn.value).toEqual("2")
 	})
+
+	it.todo("can continuously evaluate")
 })
