@@ -9,6 +9,7 @@ import EntryScreen from "@/CalculatorContainer/EntryScreen.vue"
 import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
 import EvaluationScreen from "@/CalculatorContainer/EvaluationScreen.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
+import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 // EntryScreen data and mutators
@@ -45,35 +46,55 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 </script>
 
 <template>
-	<div class="screens">
-		<div class="evaluation-screen-container">
-			<EvaluationScreen
+	<div class="calculator-container">
+		<div class="screens">
+			<div class="evaluation-screen-container">
+				<EvaluationScreen
+					class="screen"
+					:value-to-display="evaluationValue"
+				/>
+			</div>
+			<EntryScreen
 				class="screen"
-				:value-to-display="evaluationValue"
+				:value-to-display="entryValue"
 			/>
 		</div>
-		<EntryScreen
-			class="screen"
-			:value-to-display="entryValue"
-		/>
-	</div>
-	<div class="row">
-		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
-	</div>
-	<div class="row">
-		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
-	</div>
-	<div class="row">
-		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
-	</div>
-	<div class="row">
-		<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
-		<DigitalButton :value="2" @append-to-screen="appendToEntryScreen" />
-		<DigitalButton :value="3" @append-to-screen="appendToEntryScreen" />
-		<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
-	</div>
-	<div class="row">
-		<EvaluationButton value="=" @append-to-screen="evaluateExpression" />
+		<div class="row">
+			<EvaluationButton value="%" @append-to-screen="evaluateExpression" />
+			<CorrectionButton value="CE" @append-to-screen="evaluateExpression" />
+			<CorrectionButton value="C" @append-to-screen="evaluateExpression" />
+			<CorrectionButton value="" @append-to-screen="evaluateExpression" />
+		</div>
+		<div class="row">
+			<EvaluationButton value="1/x" @append-to-screen="evaluateExpression" />
+			<EvaluationButton value="x²" @append-to-screen="evaluateExpression" />
+			<EvaluationButton value="√" @append-to-screen="evaluateExpression" />
+			<OperationalButton value="÷" @append-to-screen="appendToEvaluationScreen" />
+		</div>
+		<div class="row">
+			<DigitalButton :value="7" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="8" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="9" @append-to-screen="appendToEntryScreen" />
+			<OperationalButton value="×" @append-to-screen="appendToEvaluationScreen" />
+		</div>
+		<div class="row">
+			<DigitalButton :value="4" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="5" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="6" @append-to-screen="appendToEntryScreen" />
+			<OperationalButton value="-" @append-to-screen="appendToEvaluationScreen" />
+		</div>
+		<div class="row">
+			<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="2" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="3" @append-to-screen="appendToEntryScreen" />
+			<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
+		</div>
+		<div class="row">
+			<DigitalButton value="+/-" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton :value="0" @append-to-screen="appendToEntryScreen" />
+			<DigitalButton value="." @append-to-screen="appendToEntryScreen" />
+			<EvaluationButton value="=" @append-to-screen="evaluateExpression" />
+		</div>
 	</div>
 </template>
 
@@ -93,6 +114,9 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 </style>
 
 <style scoped lang="scss">
+	.calculator-container {
+		@apply p-1;
+	}
 	.evaluation-screen-container {
 		@apply flex justify-end;
 	}
