@@ -8,7 +8,7 @@ defineProps<Props>()
 <template>
 	<input
 		type="text"
-		class="calculator-screen"
+		class="entry-screen"
 		disabled
 		:value="valueToDisplay"
 	>
