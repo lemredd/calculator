@@ -54,5 +54,13 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 	<EvaluationButton value="=" @append-to-screen="evaluateExpression" />
 </template>
 
+<style lang="scss">
+	button {
+		@apply m-[1px] px-2 py-1;
+		@apply bg-slate-200 rounded-sm;
+		@apply text-xl;
+	}
+</style>
+
 <style scoped lang="scss">
 </style>
