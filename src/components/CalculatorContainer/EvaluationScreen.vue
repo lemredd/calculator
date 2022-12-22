@@ -6,12 +6,9 @@ defineProps<Props>()
 </script>
 
 <template>
-	<input
-		type="text"
-		class="evaluation-screen"
-		disabled
-		:value="valueToDisplay"
-	>
+	<span>
+		{{ valueToDisplay }}
+	</span>
 </template>
 
 <style scoped lang="scss"></style>
