@@ -6,7 +6,7 @@ defineProps<Props>()
 </script>
 
 <template>
-	<span>
+	<span class="evaluation-screen">
 		{{ valueToDisplay }}
 	</span>
 </template>
