@@ -102,7 +102,7 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 
 <style lang="scss">
 	.entry-screen {
-		@apply text-2xl;
+		@apply text-4xl;
 
 		direction: rtl;
 		width: 100%;
@@ -127,9 +127,17 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 	}
 
 	.screens {
+		position: relative;
 
 		.evaluation-screen-container {
 			@apply flex justify-end;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+
+		.screen:nth-child(2) {
+			@apply mt-8 mb-2;
 		}
 	}
 
