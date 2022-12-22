@@ -46,8 +46,14 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 
 <template>
 	<div class="screens">
-		<EvaluationScreen :value-to-display="evaluationValue" />
-		<EntryScreen :value-to-display="entryValue" />
+		<EvaluationScreen
+			class="screen"
+			:value-to-display="evaluationValue"
+		/>
+		<EntryScreen
+			class="screen"
+			:value-to-display="entryValue"
+		/>
 	</div>
 	<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
 	<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
@@ -55,6 +61,14 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 </template>
 
 <style lang="scss">
+	.screen {
+		direction: rtl;
+
+		&.entry-screen {
+			@apply text-2xl;
+		}
+	}
+
 	button {
 		@apply m-[1px] px-2 py-1;
 		@apply bg-slate-200 rounded-sm;
@@ -63,4 +77,8 @@ function evaluateExpression(valueToAppend: PossibleButtonValues) {
 </style>
 
 <style scoped lang="scss">
+	.screen {
+		width: 100%;
+
+	}
 </style>
