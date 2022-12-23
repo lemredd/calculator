@@ -53,7 +53,14 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 			evaluationValue.value = percentageResult
 			break
 		}
+		case "1/x": {
+			const quotient = 1 / Number(entryValue.value)
+			evaluationValue.value = `1/(${entryValue.value})`
+			entryValue.value = String(quotient)
+		}
 	}
+
+	mustResetOnNextEntry.value = true
 }
 </script>
 
