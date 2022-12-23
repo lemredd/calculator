@@ -97,5 +97,26 @@ describe("Component: CalculatorContainer", () => {
 		expect(entryScrn.value).toEqual("0.5")
 	})
 
+	it("can square given entry", async() => {
+		const wrapper = mount(Component)
+		const evaluationScrn = wrapper.find(".evaluation-screen")
+		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
+
+		// Find the digits "1" and "2" buttons and click digit "1" button
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital8Btn] = digitalBtns.filter(btn => btn.text() === "8")
+		await digital8Btn.trigger("click")
+		expect(entryScrn.value).toEqual("8")
+		expect(evaluationScrn.text()).toEqual("")
+
+		// Find the Fraction button and click it
+		const evaluationBtns = wrapper.findAll(".evaluation-button")
+		const [sqrBtn] =  evaluationBtns.filter(btn => btn.text() === "x²")
+		await sqrBtn.trigger("click")
+		expect(evaluationScrn.text()).toEqual("sqr(8)")
+		expect(entryScrn.value).toEqual("64")
+
+	})
+
 	it.todo("can continuously evaluate")
 })
