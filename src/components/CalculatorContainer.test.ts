@@ -25,7 +25,7 @@ describe("Component: CalculatorContainer", () => {
 		await digital1Btn.trigger("click")
 		expect(entryScrn.value).toEqual("1")
 
-		// // Find the Equal button and click it
+		// Find the Equal button and click it
 		const evaluationBtns = wrapper.findAll(".evaluation-button")
 		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
 		await equalBtn.trigger("click")
@@ -66,6 +66,35 @@ describe("Component: CalculatorContainer", () => {
 		await percentageBtn.trigger("click")
 		expect(entryScrn.value).toEqual("45")
 		expect(evaluationScrn.text()).toEqual("45")
+	})
+
+	it("can divide 1 by given entry", async() => {
+		const wrapper = mount(Component)
+		const evaluationScrn = wrapper.find(".evaluation-screen")
+		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
+
+		// Find the digits "1" and "2" buttons and click digit "1" button
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital1Btn, digital2Btn] = digitalBtns.filter(
+			btn => btn.text() === "1" || btn.text() === "2"
+		)
+		await digital1Btn.trigger("click")
+		expect(entryScrn.value).toEqual("1")
+		expect(evaluationScrn.text()).toEqual("")
+
+		// Find the Fraction button and click it
+		const evaluationBtns = wrapper.findAll(".evaluation-button")
+		const [fractionBtn] =  evaluationBtns.filter(btn => btn.text() === "1/x")
+		await fractionBtn.trigger("click")
+		expect(evaluationScrn.text()).toEqual("1/(1)")
+		expect(entryScrn.value).toEqual("1")
+
+		// Click digit "2" button and Fraction button
+		await digital2Btn.trigger("click")
+		expect(entryScrn.value).toEqual("2")
+		await fractionBtn.trigger("click")
+		expect(evaluationScrn.text()).toEqual("1/(2)")
+		expect(entryScrn.value).toEqual("0.5")
 	})
 
 	it.todo("can continuously evaluate")
