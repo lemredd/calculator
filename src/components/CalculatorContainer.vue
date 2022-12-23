@@ -36,12 +36,24 @@ function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
 }
 
 // Evaluated data and mutators
-const evaluatedValue = ref("0")
-function evaluateExpression(valueToAppend: PossibleButtonValues) {
-	evaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
-
-	appendToEvaluationScreen(valueToAppend)
-	entryValue.value = evaluatedValue.value
+const previousEvaluatedValue = ref("0")
+function evaluateExpression(evaluationMethod: PossibleButtonValues) {
+	switch (evaluationMethod) {
+		case "=": {
+			previousEvaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
+			appendToEvaluationScreen(evaluationMethod)
+			entryValue.value = previousEvaluatedValue.value
+			break
+		}
+		case "%": {
+			const base = entryValue.value
+			const percent = Number(previousEvaluatedValue.value) / 100
+			const percentageResult = String(evaluate(`${base} * ${percent}`))
+			entryValue.value = percentageResult
+			evaluationValue.value = percentageResult
+			break
+		}
+	}
 }
 </script>
 
