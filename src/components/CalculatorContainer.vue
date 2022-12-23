@@ -14,6 +14,8 @@ import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 // EntryScreen data and mutators
 const entryValue = ref("0")
+const leftEntry = ref("")
+const rightEntry = ref("")
 const mustResetOnNextEntry = ref(false)
 const isEntryValueEmpty = computed(() => entryValue.value === "0")
 
@@ -25,12 +27,16 @@ function appendToEntryScreen(valueToAppend: string|number) {
 }
 
 // EvaluationScreen data and mutators
+const operation = ref("")
 const evaluationValue = ref("")
 const isEvaluationValueEmpty = computed(() => evaluationValue.value === "")
 
 function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
+	const isEvaluating = valueToAppend === "="
 	mustResetOnNextEntry.value = true
 
+	if (!isEvaluating && !leftEntry.value) leftEntry.value = entryValue.value
+	if (isEvaluating && !rightEntry.value) rightEntry.value = entryValue.value
 	if (!isEvaluationValueEmpty.value) evaluationValue.value += ` ${entryValue.value} ${valueToAppend}`
 	else evaluationValue.value = `${entryValue.value} ${valueToAppend}`
 }
