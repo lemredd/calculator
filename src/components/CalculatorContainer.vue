@@ -57,6 +57,13 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 			const quotient = 1 / Number(entryValue.value)
 			evaluationValue.value = `1/(${entryValue.value})`
 			entryValue.value = String(quotient)
+			break
+		}
+		case "x²": {
+			const sqr = Number(entryValue.value) * Number(entryValue.value)
+			evaluationValue.value = `sqr(${entryValue.value})`
+			entryValue.value = String(sqr)
+			break
 		}
 	}
 
