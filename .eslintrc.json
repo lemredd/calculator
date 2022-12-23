@@ -1,6 +1,7 @@
 {
 	"env": {
 		"browser": true,
+		"ecmaVersion": 2017,
 		"es2021": true,
 		"node": true
 	},
@@ -24,7 +25,10 @@
 	"rules": {
 		"indent": [
 			"error",
-			"tab"
+			"tab",
+			{
+				"SwitchCase": 1
+			}
 		],
 		"linebreak-style": [
 			"error",
@@ -34,6 +38,7 @@
 			"error",
 			"double"
 		],
+		"require-await": "error",
 		"semi": [
 			"error",
 			"never"

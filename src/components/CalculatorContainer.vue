@@ -14,6 +14,8 @@ import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 // EntryScreen data and mutators
 const entryValue = ref("0")
+const leftEntry = ref("")
+const rightEntry = ref("")
 const mustResetOnNextEntry = ref(false)
 const isEntryValueEmpty = computed(() => entryValue.value === "0")
 
@@ -25,23 +27,59 @@ function appendToEntryScreen(valueToAppend: string|number) {
 }
 
 // EvaluationScreen data and mutators
+const operation = ref("")
 const evaluationValue = ref("")
 const isEvaluationValueEmpty = computed(() => evaluationValue.value === "")
 
 function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
+	const isEvaluating = valueToAppend === "="
 	mustResetOnNextEntry.value = true
 
+	if (!isEvaluating && !leftEntry.value) leftEntry.value = entryValue.value
+	if (isEvaluating && !rightEntry.value) rightEntry.value = entryValue.value
 	if (!isEvaluationValueEmpty.value) evaluationValue.value += ` ${entryValue.value} ${valueToAppend}`
 	else evaluationValue.value = `${entryValue.value} ${valueToAppend}`
 }
 
 // Evaluated data and mutators
-const evaluatedValue = ref("0")
-function evaluateExpression(valueToAppend: PossibleButtonValues) {
-	evaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
+const previousEvaluatedValue = ref("0")
+function evaluateExpression(evaluationMethod: PossibleButtonValues) {
+	switch (evaluationMethod) {
+		case "=": {
+			previousEvaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
+			appendToEvaluationScreen(evaluationMethod)
+			entryValue.value = previousEvaluatedValue.value
+			break
+		}
+		case "%": {
+			const base = entryValue.value
+			const percent = Number(previousEvaluatedValue.value) / 100
+			const percentageResult = String(evaluate(`${base} * ${percent}`))
+			entryValue.value = percentageResult
+			evaluationValue.value = percentageResult
+			break
+		}
+		case "1/x": {
+			const quotient = 1 / Number(entryValue.value)
+			evaluationValue.value = `1/(${entryValue.value})`
+			entryValue.value = String(quotient)
+			break
+		}
+		case "x²": {
+			const sqr = Number(entryValue.value) * Number(entryValue.value)
+			evaluationValue.value = `sqr(${entryValue.value})`
+			entryValue.value = String(sqr)
+			break
+		}
+		case "√": {
+			const sqrt = Math.sqrt(Number(entryValue.value))
+			evaluationValue.value = `√(${entryValue.value})`
+			entryValue.value = String(sqrt)
+			break
+		}
+	}
 
-	appendToEvaluationScreen(valueToAppend)
-	entryValue.value = evaluatedValue.value
+	mustResetOnNextEntry.value = true
 }
 </script>
 
