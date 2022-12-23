@@ -65,6 +65,12 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 			entryValue.value = String(sqr)
 			break
 		}
+		case "√": {
+			const sqrt = Math.sqrt(Number(entryValue.value))
+			evaluationValue.value = `√(${entryValue.value})`
+			entryValue.value = String(sqrt)
+			break
+		}
 	}
 
 	mustResetOnNextEntry.value = true
