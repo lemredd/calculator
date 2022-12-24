@@ -31,6 +31,14 @@ describe("Component: CalculatorContainer", () => {
 		await equalBtn.trigger("click")
 		expect(evaluationScrn.text()).toEqual("1 + 1 =")
 		expect(entryScrn.value).toEqual("2")
+
+		// Evaluate continuously
+		await equalBtn.trigger("click")
+		expect(evaluationScrn.text()).toEqual("2 + 1 =")
+		expect(entryScrn.value).toEqual("3")
+		await equalBtn.trigger("click")
+		expect(evaluationScrn.text()).toEqual("3 + 1 =")
+		expect(entryScrn.value).toEqual("4")
 	})
 
 	it("can derive percentage as such: `entryValue * (previousEvaluatedValue / 100)`", async() => {
@@ -132,6 +140,4 @@ describe("Component: CalculatorContainer", () => {
 		expect(evaluationScrn.text()).toEqual("√(9)")
 		expect(entryScrn.value).toEqual("3")
 	})
-
-	it.todo("can continuously evaluate")
 })
