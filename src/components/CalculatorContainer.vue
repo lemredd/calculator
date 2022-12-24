@@ -97,6 +97,24 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 
 	mustResetOnNextEntry.value = true
 }
+
+function popOneDigit() {
+	const entryValueArray = Array.from(entryValue.value)
+	entryValueArray.pop()
+	entryValue.value = entryValueArray.join("")
+}
+function clearEntryScreen() {
+	entryValue.value = "0"
+	evaluationValue.value = ""
+}
+function clearAll() {
+	entryValue.value = "0"
+	leftEntry.value = ""
+	rightEntry.value = ""
+	operation.value = ""
+	evaluationValue.value = ""
+	previousEvaluatedValue.value = "0"
+}
 </script>
 
 <template>
@@ -116,9 +134,9 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 		<div class="common-buttons">
 			<div class="row">
 				<EvaluationButton value="%" @append-to-screen="evaluateExpression" />
-				<CorrectionButton value="CE" @append-to-screen="evaluateExpression" />
-				<CorrectionButton value="C" @append-to-screen="evaluateExpression" />
-				<CorrectionButton value="" @append-to-screen="evaluateExpression" />
+				<CorrectionButton value="CE" @clear-entry-screen="clearEntryScreen" />
+				<CorrectionButton value="C" @clear-all-screens="clearAll" />
+				<CorrectionButton value="" @clear-one-digit="popOneDigit" />
 			</div>
 			<div class="row">
 				<EvaluationButton value="1/x" @append-to-screen="evaluateExpression" />
