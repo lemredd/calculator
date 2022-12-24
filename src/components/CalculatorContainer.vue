@@ -35,7 +35,10 @@ function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
 	const isEvaluating = valueToAppend === "="
 	mustResetOnNextEntry.value = true
 
-	if (!isEvaluating && !leftEntry.value) leftEntry.value = entryValue.value
+	if (!isEvaluating && !leftEntry.value) {
+		leftEntry.value = entryValue.value
+		operation.value = String(valueToAppend)
+	}
 	if (isEvaluating && !rightEntry.value) rightEntry.value = entryValue.value
 	if (!isEvaluationValueEmpty.value) evaluationValue.value += ` ${entryValue.value} ${valueToAppend}`
 	else evaluationValue.value = `${entryValue.value} ${valueToAppend}`
@@ -43,12 +46,25 @@ function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
 
 // Evaluated data and mutators
 const previousEvaluatedValue = ref("0")
+const isEntryValueEvaluated = computed(() => previousEvaluatedValue.value === entryValue.value)
 function evaluateExpression(evaluationMethod: PossibleButtonValues) {
-	switch (evaluationMethod) {
-		case "=": {
+	function evaluateBasicOperation() {
+		if (!isEntryValueEvaluated.value) {
 			previousEvaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
 			appendToEvaluationScreen(evaluationMethod)
-			entryValue.value = previousEvaluatedValue.value
+		} else {
+			leftEntry.value = previousEvaluatedValue.value
+			evaluationValue.value = `${leftEntry.value} ${operation.value} ${rightEntry.value}`
+			previousEvaluatedValue.value = String(evaluate(evaluationValue.value))
+			evaluationValue.value += " ="
+		}
+
+		entryValue.value = previousEvaluatedValue.value
+	}
+
+	switch (evaluationMethod) {
+		case "=": {
+			evaluateBasicOperation()
 			break
 		}
 		case "%": {
@@ -81,6 +97,24 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 
 	mustResetOnNextEntry.value = true
 }
+
+function popOneDigit() {
+	const entryValueArray = Array.from(entryValue.value)
+	entryValueArray.pop()
+	entryValue.value = entryValueArray.join("")
+}
+function clearEntryScreen() {
+	entryValue.value = "0"
+	evaluationValue.value = ""
+}
+function clearAll() {
+	entryValue.value = "0"
+	leftEntry.value = ""
+	rightEntry.value = ""
+	operation.value = ""
+	evaluationValue.value = ""
+	previousEvaluatedValue.value = "0"
+}
 </script>
 
 <template>
@@ -100,9 +134,9 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 		<div class="common-buttons">
 			<div class="row">
 				<EvaluationButton value="%" @append-to-screen="evaluateExpression" />
-				<CorrectionButton value="CE" @append-to-screen="evaluateExpression" />
-				<CorrectionButton value="C" @append-to-screen="evaluateExpression" />
-				<CorrectionButton value="" @append-to-screen="evaluateExpression" />
+				<CorrectionButton value="CE" @clear-entry-screen="clearEntryScreen" />
+				<CorrectionButton value="C" @clear-all-screens="clearAll" />
+				<CorrectionButton value="" @clear-one-digit="popOneDigit" />
 			</div>
 			<div class="row">
 				<EvaluationButton value="1/x" @append-to-screen="evaluateExpression" />
