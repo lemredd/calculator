@@ -7,7 +7,7 @@ import evaluate from "@/CalculatorContainer/helpers/evaluate"
 
 import EntryScreen from "@/CalculatorContainer/EntryScreen.vue"
 import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
-import EvaluationScreen from "@/CalculatorContainer/EvaluationScreen.vue"
+import ExpressionScreen from "@/CalculatorContainer/ExpressionScreen.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
 import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
@@ -26,12 +26,12 @@ function appendToEntryScreen(valueToAppend: string|number) {
 	mustResetOnNextEntry.value = false
 }
 
-// EvaluationScreen data and mutators
+// ExpressionScreen data and mutators
 const operation = ref("")
-const evaluationValue = ref("")
-const isEvaluationValueEmpty = computed(() => evaluationValue.value === "")
+const expressionValue = ref("")
+const isEvaluationValueEmpty = computed(() => expressionValue.value === "")
 
-function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
+function appendToExpressionScreen(valueToAppend: PossibleButtonValues) {
 	const isEvaluating = valueToAppend === "="
 	mustResetOnNextEntry.value = true
 
@@ -40,8 +40,8 @@ function appendToEvaluationScreen(valueToAppend: PossibleButtonValues) {
 		operation.value = String(valueToAppend)
 	}
 	if (isEvaluating && !rightEntry.value) rightEntry.value = entryValue.value
-	if (!isEvaluationValueEmpty.value) evaluationValue.value += ` ${entryValue.value} ${valueToAppend}`
-	else evaluationValue.value = `${entryValue.value} ${valueToAppend}`
+	if (!isEvaluationValueEmpty.value) expressionValue.value += ` ${entryValue.value} ${valueToAppend}`
+	else expressionValue.value = `${entryValue.value} ${valueToAppend}`
 }
 
 // Evaluated data and mutators
@@ -50,13 +50,13 @@ const isEntryValueEvaluated = computed(() => previousEvaluatedValue.value === en
 function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 	function evaluateBasicOperation() {
 		if (!isEntryValueEvaluated.value) {
-			previousEvaluatedValue.value = String(evaluate(`${evaluationValue.value} ${entryValue.value}`))
-			appendToEvaluationScreen(evaluationMethod)
+			previousEvaluatedValue.value = String(evaluate(`${expressionValue.value} ${entryValue.value}`))
+			appendToExpressionScreen(evaluationMethod)
 		} else {
 			leftEntry.value = previousEvaluatedValue.value
-			evaluationValue.value = `${leftEntry.value} ${operation.value} ${rightEntry.value}`
-			previousEvaluatedValue.value = String(evaluate(evaluationValue.value))
-			evaluationValue.value += " ="
+			expressionValue.value = `${leftEntry.value} ${operation.value} ${rightEntry.value}`
+			previousEvaluatedValue.value = String(evaluate(expressionValue.value))
+			expressionValue.value += " ="
 		}
 
 		entryValue.value = previousEvaluatedValue.value
@@ -72,24 +72,24 @@ function evaluateExpression(evaluationMethod: PossibleButtonValues) {
 			const percent = Number(previousEvaluatedValue.value) / 100
 			const percentageResult = String(evaluate(`${base} * ${percent}`))
 			entryValue.value = percentageResult
-			evaluationValue.value = percentageResult
+			expressionValue.value = percentageResult
 			break
 		}
 		case "1/x": {
 			const quotient = 1 / Number(entryValue.value)
-			evaluationValue.value = `1/(${entryValue.value})`
+			expressionValue.value = `1/(${entryValue.value})`
 			entryValue.value = String(quotient)
 			break
 		}
 		case "x²": {
 			const sqr = Number(entryValue.value) * Number(entryValue.value)
-			evaluationValue.value = `sqr(${entryValue.value})`
+			expressionValue.value = `sqr(${entryValue.value})`
 			entryValue.value = String(sqr)
 			break
 		}
 		case "√": {
 			const sqrt = Math.sqrt(Number(entryValue.value))
-			evaluationValue.value = `√(${entryValue.value})`
+			expressionValue.value = `√(${entryValue.value})`
 			entryValue.value = String(sqrt)
 			break
 		}
@@ -105,14 +105,14 @@ function popOneDigit() {
 }
 function clearEntryScreen() {
 	entryValue.value = "0"
-	evaluationValue.value = ""
+	expressionValue.value = ""
 }
 function clearAll() {
 	entryValue.value = "0"
 	leftEntry.value = ""
 	rightEntry.value = ""
 	operation.value = ""
-	evaluationValue.value = ""
+	expressionValue.value = ""
 	previousEvaluatedValue.value = "0"
 }
 </script>
@@ -121,9 +121,9 @@ function clearAll() {
 	<div class="calculator-container">
 		<div class="screens">
 			<div class="evaluation-screen-container">
-				<EvaluationScreen
+				<ExpressionScreen
 					class="screen"
-					:value-to-display="evaluationValue"
+					:value-to-display="expressionValue"
 				/>
 			</div>
 			<EntryScreen
@@ -142,25 +142,25 @@ function clearAll() {
 				<EvaluationButton value="1/x" @append-to-screen="evaluateExpression" />
 				<EvaluationButton value="x²" @append-to-screen="evaluateExpression" />
 				<EvaluationButton value="√" @append-to-screen="evaluateExpression" />
-				<OperationalButton value="÷" @append-to-screen="appendToEvaluationScreen" />
+				<OperationalButton value="÷" @append-to-screen="appendToExpressionScreen" />
 			</div>
 			<div class="row">
 				<DigitalButton :value="7" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton :value="8" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton :value="9" @append-to-screen="appendToEntryScreen" />
-				<OperationalButton value="×" @append-to-screen="appendToEvaluationScreen" />
+				<OperationalButton value="×" @append-to-screen="appendToExpressionScreen" />
 			</div>
 			<div class="row">
 				<DigitalButton :value="4" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton :value="5" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton :value="6" @append-to-screen="appendToEntryScreen" />
-				<OperationalButton value="-" @append-to-screen="appendToEvaluationScreen" />
+				<OperationalButton value="-" @append-to-screen="appendToExpressionScreen" />
 			</div>
 			<div class="row">
 				<DigitalButton :value="1" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton :value="2" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton :value="3" @append-to-screen="appendToEntryScreen" />
-				<OperationalButton value="+" @append-to-screen="appendToEvaluationScreen" />
+				<OperationalButton value="+" @append-to-screen="appendToExpressionScreen" />
 			</div>
 			<div class="row">
 				<DigitalButton value="+/-" @append-to-screen="appendToEntryScreen" />
