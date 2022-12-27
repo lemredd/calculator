@@ -41,7 +41,7 @@ describe("Component: CalculatorContainer", () => {
 		expect(entryScrn.value).toEqual("4")
 	})
 
-	it("can derive percentage as such: `entryValue * (previousEvaluatedValue / 100)`", async() => {
+	it("can derive percentage as such: `entryValue * (previousResult / 100)`", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
 		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
@@ -74,6 +74,33 @@ describe("Component: CalculatorContainer", () => {
 		await percentageBtn.trigger("click")
 		expect(entryScrn.value).toEqual("45")
 		expect(expressionScrn.text()).toEqual("45")
+	})
+
+	it("can derive percentage as such: `rightEntry * (leftEntry / 100)`", async() => {
+		const wrapper = mount(Component)
+		const expressionScrn = wrapper.find(".expression-screen")
+		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
+
+		// Find the digits "4" and "5" buttons and click "4"
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital4Btn, digital5Btn] = digitalBtns.filter(
+			btn => btn.text() === "4" || btn.text() === "5"
+		)
+		await digital5Btn.trigger("click")
+
+		// Find the Addition button and click it
+		const operationalBtns = wrapper.findAll(".operational-button")
+		const [additionBtn] =  operationalBtns.filter(btn => btn.text() === "+")
+		await additionBtn.trigger("click")
+		await digital4Btn.trigger("click")
+		expect(expressionScrn.text()).toEqual("5 +")
+		expect(entryScrn.value).toEqual("4")
+
+		// Find the Percentage button and click it
+		const evaluationBtns = wrapper.findAll(".evaluation-button")
+		const [percentageBtn] = evaluationBtns.filter(btn => btn.text() === "%")
+		await percentageBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("5 + 0.2")
 	})
 
 	it("can divide 1 by given entry", async() => {
