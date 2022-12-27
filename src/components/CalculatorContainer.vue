@@ -102,6 +102,8 @@ function appendDecimal() {
 	entry.value += "."
 }
 function appendToEntryScreen(valueToAppend: Entries) {
+	if (typeof valueToAppend === "number" && hasEvaluatedResult.value) clearAll()
+
 	if (valueToAppend === ".") appendDecimal()
 	else if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
