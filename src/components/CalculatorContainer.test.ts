@@ -235,4 +235,19 @@ describe("Component: CalculatorContainer", () => {
 		await eraseOneDigitBtn.trigger("click")
 		expect(entryScrn.value).toEqual("0")
 	})
+
+	it("can alter integer sign if `entry !== 0`", async() => {
+		const wrapper = mount(Component)
+		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
+		const wrapperInternals = wrapper.vm as any
+		const [integerSignBtn] = wrapper
+			.findAll(".digital-button")
+			.filter(btn => btn.text() === "+/-")
+
+		wrapperInternals.entry = "2"
+		await integerSignBtn.trigger("click")
+		expect(entryScrn.value).toEqual("-2")
+		await integerSignBtn.trigger("click")
+		expect(entryScrn.value).toEqual("2")
+	})
 })
