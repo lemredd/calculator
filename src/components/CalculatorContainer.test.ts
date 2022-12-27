@@ -96,7 +96,7 @@ describe("Component: CalculatorContainer", () => {
 		expect(expressionScrn.text()).toEqual("2 ÷")
 	})
 
-	it("can derive percentage as such: `entryValue * (previousResult / 100)`", async() => {
+	it("can derive percentage as such: `entry * (previousResult / 100)`", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
 		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
@@ -221,5 +221,18 @@ describe("Component: CalculatorContainer", () => {
 		await sqrtBtn.trigger("click")
 		expect(expressionScrn.text()).toEqual("√(9)")
 		expect(entryScrn.value).toEqual("3")
+	})
+
+	it("can replace entry with 0 if `!entry.length > 1", async() => {
+		const wrapper = mount(Component)
+		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
+		const wrapperInternals = wrapper.vm as any
+		const [eraseOneDigitBtn] = wrapper
+			.findAll(".correction-button")
+			.filter(btn => btn.text() === "backspace")
+
+		wrapperInternals.entry = "2"
+		await eraseOneDigitBtn.trigger("click")
+		expect(entryScrn.value).toEqual("0")
 	})
 })
