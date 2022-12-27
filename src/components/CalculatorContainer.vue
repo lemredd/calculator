@@ -2,6 +2,7 @@
 import { computed, ref } from "vue"
 
 import type {
+	Entries,
 	Operations,
 	Evaluations
 } from "@/types/buttons"
@@ -78,7 +79,9 @@ function alterEntrySign() {
 	}
 }
 
-function appendToEntryScreen(valueToAppend: string|number) {
+function appendToEntryScreen(valueToAppend: Entries) {
+	if (valueToAppend === ".") appendDecimal()
+
 	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
 
