@@ -250,4 +250,27 @@ describe("Component: CalculatorContainer", () => {
 		await integerSignBtn.trigger("click")
 		expect(entryScrn.text()).toEqual("2")
 	})
+
+	it("can append decimal to the rightmost area of entry", async() => {
+		const wrapper = mount(Component)
+		const entryScrn = wrapper.find(".entry-screen")
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [
+			digital5Btn,
+			digital2Btn,
+			decimalBtn
+		] = digitalBtns.filter(
+			btn => btn.text() === "."
+			|| btn.text() === "2"
+			|| btn.text() === "5"
+		)
+
+		await digital2Btn.trigger("click")
+		await decimalBtn.trigger("click")
+		expect(entryScrn.text()).toEqual("2.")
+		await digital5Btn.trigger("click")
+		expect(entryScrn.text()).toEqual("2.5")
+		await decimalBtn.trigger("click")
+		expect(entryScrn.text()).toEqual("25.")
+	})
 })
