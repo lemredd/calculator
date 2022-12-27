@@ -2,6 +2,7 @@
 import { computed, ref } from "vue"
 
 import type {
+	Entries,
 	Operations,
 	Evaluations
 } from "@/types/buttons"
@@ -71,8 +72,40 @@ const expressionToDisplay = computed(() => {
 })
 const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
 
-function appendToEntryScreen(valueToAppend: string|number) {
-	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
+function popOneDigit() {
+	if (entry.value.length > 1) {
+		const entryDigits = Array.from(entry.value)
+		entryDigits.pop()
+		entry.value = entryDigits.join("")
+	} else entry.value = "0"
+}
+function clearEntryScreen() {
+	entry.value = "0"
+}
+function clearAll() {
+	entry.value = "0"
+	leftEntry.value = 0
+	rightEntry.value = 0
+	operation.value = null
+	evaluation.value = null
+	previousResult.value = "0"
+}
+
+function alterEntrySign() {
+	if (Number(entry.value) !== 0) {
+		const negatedEntry = Number(entry.value) * -1
+		entry.value = String(negatedEntry)
+	}
+}
+function appendDecimal() {
+	if (entry.value.includes(".")) entry.value = entry.value.replace(".", "")
+	entry.value += "."
+}
+function appendToEntryScreen(valueToAppend: Entries) {
+	if (typeof valueToAppend === "number" && hasEvaluatedResult.value) clearAll()
+
+	if (valueToAppend === ".") appendDecimal()
+	else if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
 
 	mustResetOnNextEntry.value = false
@@ -147,25 +180,6 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 	evaluateExpression(newEvaluation)
 	evaluation.value = newEvaluation
 }
-
-function popOneDigit() {
-	if (entry.value.length > 1) {
-		const entryDigits = Array.from(entry.value)
-		entryDigits.pop()
-		entry.value = entryDigits.join("")
-	} else entry.value = "0"
-}
-function clearEntryScreen() {
-	entry.value = "0"
-}
-function clearAll() {
-	entry.value = "0"
-	leftEntry.value = 0
-	rightEntry.value = 0
-	operation.value = null
-	evaluation.value = null
-	previousResult.value = "0"
-}
 </script>
 
 <template>
@@ -177,10 +191,12 @@ function clearAll() {
 					:value-to-display="expressionToDisplay"
 				/>
 			</div>
-			<EntryScreen
-				class="screen"
-				:value-to-display="entry"
-			/>
+			<div class="entry-screen-container">
+				<EntryScreen
+					class="screen"
+					:value-to-display="entry"
+				/>
+			</div>
 		</div>
 		<div class="common-buttons">
 			<div class="row">
@@ -214,7 +230,7 @@ function clearAll() {
 				<OperationalButton value="+" @append-to-screen="setOperationValue" />
 			</div>
 			<div class="row">
-				<DigitalButton value="+/-" @append-to-screen="appendToEntryScreen" />
+				<DigitalButton value="+/-" @alter-sign="alterEntrySign" />
 				<DigitalButton :value="0" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton value="." @append-to-screen="appendToEntryScreen" />
 				<EvaluationButton value="=" @append-to-screen="setEvaluationValue" />
@@ -224,13 +240,6 @@ function clearAll() {
 </template>
 
 <style lang="scss">
-	.entry-screen {
-		@apply text-4xl;
-
-		direction: rtl;
-		width: 100%;
-	}
-
 	button {
 		@apply m-[1px] px-2 py-1;
 		@apply border border-neutral-800 rounded-md;
@@ -259,8 +268,14 @@ function clearAll() {
 			right: 0;
 		}
 
-		.screen:nth-child(2) {
+		.entry-screen-container {
+			@apply flex justify-end;
+
 			@apply mt-8 mb-2;
+		}
+
+		.entry-screen-container .screen {
+			@apply text-4xl;
 		}
 	}
 

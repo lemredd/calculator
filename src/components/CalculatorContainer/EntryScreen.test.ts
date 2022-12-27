@@ -9,13 +9,13 @@ describe("Component: CalculatorContainer/EntryScreen", () => {
 				"valueToDisplay": "0"
 			}
 		})
-		const calculatorScreen = wrapper.find("input.entry-screen").element as HTMLInputElement
+		const calculatorScreen = wrapper.find(".entry-screen")
 		const calculatorScreenInitialValue = wrapper.props("valueToDisplay")
-		expect(calculatorScreen.value).toEqual(String(calculatorScreenInitialValue))
+		expect(calculatorScreen.text()).toEqual(String(calculatorScreenInitialValue))
 
 		await wrapper.setProps({
 			"valueToDisplay": "1"
 		})
-		expect(calculatorScreen.value).toEqual("1")
+		expect(calculatorScreen.text()).toEqual("1")
 	})
 })
