@@ -16,12 +16,22 @@ import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const entry = ref("0")
-const leftEntry = ref<number|null>(null)
+const leftEntry = ref(0)
 const operation = ref<Operations|null>(null)
-const rightEntry = ref<number|null>(null)
+const rightEntry = ref(0)
 const mustResetOnNextEntry = ref(false)
 const previousResult = ref("0")
 const evaluation = ref<Evaluations|null>(null)
+
+function solvePercentage(base: number, percent: number) {
+	const percentInDecimal = percent / 100
+	const percentageResult = String(evaluate(`${base} * ${percentInDecimal}`))
+	return percentageResult
+}
+
+function passToRightEntry(newRightEntry: number) {
+	rightEntry.value = newRightEntry
+}
 
 const isEntryValueEmpty = computed(() => entry.value === "0")
 const mayPassToRightEntry = computed(() => Boolean(leftEntry.value) && Boolean(operation.value))
@@ -37,6 +47,18 @@ const expressionToEvaluate = computed(() => {
 const expressionToDisplay = computed(() => {
 	let value = Array.from(expressionToEvaluate.value).join(" ")
 
+	switch(evaluation.value) {
+		case "=": {
+			value += ` ${evaluation.value}`
+			break
+		}
+		case "%": {
+			const mustEvaluateRightEntry = mayPassToRightEntry.value && rightEntry.value
+			const newRightEntry = solvePercentage(rightEntry.value, leftEntry.value)
+			if (mustEvaluateRightEntry) passToRightEntry(Number(newRightEntry))
+			break
+		}
+	}
 
 	return value
 })
@@ -83,10 +105,9 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 			break
 		}
 		case "%": {
-			const base = entry.value
-			const percent = Number(previousResult.value) / 100
-			const percentageResult = String(evaluate(`${base} * ${percent}`))
-			entry.value = percentageResult
+			const base = Number(entry.value)
+			const percent = Number(previousResult.value)
+			entry.value = solvePercentage(base, percent)
 			// expressionValue.value = percentageResult
 			break
 		}
@@ -124,8 +145,8 @@ function clearEntryScreen() {
 }
 function clearAll() {
 	entry.value = "0"
-	leftEntry.value = null
-	rightEntry.value = null
+	leftEntry.value = 0
+	rightEntry.value = 0
 	operation.value = null
 	previousResult.value = "0"
 }
