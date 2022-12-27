@@ -112,7 +112,8 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 			break
 		}
 		case "1/x": {
-			const quotient = 1 / Number(entry.value)
+			leftEntry.value = Number(entry.value)
+			const quotient = 1 / leftEntry.value
 			entry.value = String(quotient)
 			break
 		}
