@@ -29,10 +29,6 @@ function solvePercentage(base: number, percent: number) {
 	return percentageResult
 }
 
-function passToRightEntry(newRightEntry: number) {
-	rightEntry.value = newRightEntry
-}
-
 const isEntryValueEmpty = computed(() => entry.value === "0")
 const mayPassToRightEntry = computed(() => Boolean(leftEntry.value) && Boolean(operation.value))
 const expressionToEvaluate = computed(() => {
@@ -53,15 +49,26 @@ const expressionToDisplay = computed(() => {
 			break
 		}
 		case "%": {
-			const mustEvaluateRightEntry = mayPassToRightEntry.value && rightEntry.value
-			const newRightEntry = solvePercentage(rightEntry.value, leftEntry.value)
-			if (mustEvaluateRightEntry) passToRightEntry(Number(newRightEntry))
+			value = entry.value
+			break
+		}
+		case "1/x": {
+			value = `1/(${leftEntry.value})`
+			break
+		}
+		case "x²": {
+			value = `sqr(${leftEntry.value})`
+			break
+		}
+		case "√": {
+			value = `√(${leftEntry.value})`
 			break
 		}
 	}
 
 	return value
 })
+const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
 
 function appendToEntryScreen(valueToAppend: string|number) {
 	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
@@ -89,8 +96,6 @@ function setOperationValue(newOperation: Operations) {
 	operation.value = newOperation
 }
 
-const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
-const isEvaluatingBasicOperation = computed(() => evaluation.value === "=")
 
 function evaluateExpression(evaluationMethod: Evaluations) {
 	function evaluateBasicOperation() {
@@ -121,11 +126,13 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 			break
 		}
 		case "x²": {
+			leftEntry.value = Number(entry.value)
 			const sqr = Number(entry.value) * Number(entry.value)
 			entry.value = String(sqr)
 			break
 		}
 		case "√": {
+			leftEntry.value = Number(entry.value)
 			const sqrt = Math.sqrt(Number(entry.value))
 			entry.value = String(sqrt)
 			break
