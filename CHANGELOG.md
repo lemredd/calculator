@@ -1,3 +1,34 @@
+#### 0.2.2 (2022-12-27)
+
+##### New Features
+
+* **intg:**
+  *  clear all values after evaluation (bf649f07)
+  *  append  decimal (f4f320ed)
+  *  alter `entry` sign (595f2b18)
+* **ui:**  put `EntryScreen` to the rightmost side (98f8358a)
+* **component:**  emit to alter `entry` sign (8ae66988)
+
+##### Bug Fixes
+
+* **ui:**  use `span` to display value flexibly (2b28459d)
+
+##### Refactors
+
+* **intg:**
+  *  move clearing methods above (445deb03)
+  *  use `Entries` type (5e34ee30)
+
+##### Tests
+
+* **intg:**
+  *  ensure decimal is appended (3b625cab)
+  *  ensure proper element selector (54da57f1)
+  *  ensure altering sign of `entry` (faf14706)
+* **component:**
+  *  ensure proper element selector (f7263ef3)
+  *  ensure sign altering emission (72439b12)
+
 #### 0.2.1 (2022-12-27)
 
 ##### Chores
