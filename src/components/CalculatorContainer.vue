@@ -71,6 +71,13 @@ const expressionToDisplay = computed(() => {
 })
 const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
 
+function alterEntrySign() {
+	if (Number(entry.value) !== 0) {
+		const negatedEntry = Number(entry.value) * -1
+		entry.value = String(negatedEntry)
+	}
+}
+
 function appendToEntryScreen(valueToAppend: string|number) {
 	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
@@ -214,7 +221,7 @@ function clearAll() {
 				<OperationalButton value="+" @append-to-screen="setOperationValue" />
 			</div>
 			<div class="row">
-				<DigitalButton value="+/-" @append-to-screen="appendToEntryScreen" />
+				<DigitalButton value="+/-" @alter-sign="alterEntrySign" />
 				<DigitalButton :value="0" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton value="." @append-to-screen="appendToEntryScreen" />
 				<EvaluationButton value="=" @append-to-screen="setEvaluationValue" />
