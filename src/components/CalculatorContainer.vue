@@ -16,8 +16,31 @@ import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const entry = ref("0")
+const leftEntry = ref<number|null>(null)
+const operation = ref<Operations|null>(null)
+const rightEntry = ref<number|null>(null)
 const mustResetOnNextEntry = ref(false)
+const previousResult = ref("0")
+const evaluation = ref<Evaluations|null>(null)
+
 const isEntryValueEmpty = computed(() => entry.value === "0")
+const mayPassToRightEntry = computed(() => Boolean(leftEntry.value) && Boolean(operation.value))
+const expressionToEvaluate = computed(() => {
+	let value = ""
+
+	if (leftEntry.value) value += leftEntry.value
+	if (operation.value) value += operation.value
+	if (rightEntry.value) value += rightEntry.value
+
+	return value
+})
+const expressionToDisplay = computed(() => {
+	let value = Array.from(expressionToEvaluate.value).join(" ")
+
+
+	return value
+})
+
 function appendToEntryScreen(valueToAppend: string|number) {
 	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
@@ -30,13 +53,10 @@ function popOneDigit() {
 	entry.value = entryDigits.join("")
 }
 
-const leftEntry = ref<number|null>(null)
-const operation = ref<Operations|null>(null)
-const rightEntry = ref<number|null>(null)
-const mayPassToRightEntry = computed(() => Boolean(leftEntry.value) && Boolean(operation.value))
-
 function setOperationValue(newOperation: Operations) {
-	if (!leftEntry.value) leftEntry.value = Number(entry.value)
+	if (!leftEntry.value) {
+		leftEntry.value = Number(entry.value)
+	}
 	if (mayPassToRightEntry.value) rightEntry.value = Number(entry.value)
 	mustResetOnNextEntry.value = true
 
@@ -47,27 +67,7 @@ function setOperationValue(newOperation: Operations) {
 	operation.value = newOperation
 }
 
-const expressionToEvaluate = computed(() => {
-	let value = ""
-
-	if (leftEntry.value) value += leftEntry.value
-	if (operation.value) value += operation.value
-	if (rightEntry.value) value += rightEntry.value
-
-	return value
-})
-const expressionToDisplay = computed(() => {
-	let value = ""
-
-	if (operation.value) value = `${leftEntry.value} ${operation.value}`
-	if (isEvaluatingBasicOperation.value) value += ` ${rightEntry.value} ${evaluation.value}`
-
-	return value
-})
-
-const previousResult = ref("0")
 const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
-const evaluation = ref<Evaluations|null>(null)
 const isEvaluatingBasicOperation = computed(() => evaluation.value === "=")
 
 function evaluateExpression(evaluationMethod: Evaluations) {
@@ -87,7 +87,6 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 			const percent = Number(previousResult.value) / 100
 			const percentageResult = String(evaluate(`${base} * ${percent}`))
 			entry.value = percentageResult
-			// TODO: replace with proper expression
 			// expressionValue.value = percentageResult
 			break
 		}
