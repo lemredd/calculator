@@ -72,18 +72,35 @@ const expressionToDisplay = computed(() => {
 })
 const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
 
+function popOneDigit() {
+	if (entry.value.length > 1) {
+		const entryDigits = Array.from(entry.value)
+		entryDigits.pop()
+		entry.value = entryDigits.join("")
+	} else entry.value = "0"
+}
+function clearEntryScreen() {
+	entry.value = "0"
+}
+function clearAll() {
+	entry.value = "0"
+	leftEntry.value = 0
+	rightEntry.value = 0
+	operation.value = null
+	evaluation.value = null
+	previousResult.value = "0"
+}
+
 function alterEntrySign() {
 	if (Number(entry.value) !== 0) {
 		const negatedEntry = Number(entry.value) * -1
 		entry.value = String(negatedEntry)
 	}
 }
-
 function appendDecimal() {
 	if (entry.value.includes(".")) entry.value = entry.value.replace(".", "")
 	entry.value += "."
 }
-
 function appendToEntryScreen(valueToAppend: Entries) {
 	if (valueToAppend === ".") appendDecimal()
 	else if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
@@ -160,25 +177,6 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 
 	evaluateExpression(newEvaluation)
 	evaluation.value = newEvaluation
-}
-
-function popOneDigit() {
-	if (entry.value.length > 1) {
-		const entryDigits = Array.from(entry.value)
-		entryDigits.pop()
-		entry.value = entryDigits.join("")
-	} else entry.value = "0"
-}
-function clearEntryScreen() {
-	entry.value = "0"
-}
-function clearAll() {
-	entry.value = "0"
-	leftEntry.value = 0
-	rightEntry.value = 0
-	operation.value = null
-	evaluation.value = null
-	previousResult.value = "0"
 }
 </script>
 
