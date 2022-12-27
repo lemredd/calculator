@@ -79,10 +79,14 @@ function alterEntrySign() {
 	}
 }
 
+function appendDecimal() {
+	if (entry.value.includes(".")) entry.value = entry.value.replace(".", "")
+	entry.value += "."
+}
+
 function appendToEntryScreen(valueToAppend: Entries) {
 	if (valueToAppend === ".") appendDecimal()
-
-	if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
+	else if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
 
 	mustResetOnNextEntry.value = false
