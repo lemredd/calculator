@@ -68,7 +68,7 @@ describe("Component: CalculatorContainer", () => {
 
 		// Mock mutation of `previousEvaluatedValue`
 		const wrapperInternals = wrapper.vm as any
-		wrapperInternals.previousEvaluatedValue = "50"
+		wrapperInternals.previousResult = "50"
 		await digital9Btn.trigger("click")
 		await digital0Btn.trigger("click")
 		await percentageBtn.trigger("click")
