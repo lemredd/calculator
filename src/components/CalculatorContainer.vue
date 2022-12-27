@@ -105,10 +105,13 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 			break
 		}
 		case "%": {
+			let percent = 0
 			const base = Number(entry.value)
-			const percent = Number(previousResult.value)
+
+			if (operation.value) percent = leftEntry.value
+			else percent = Number(previousResult.value)
+
 			entry.value = solvePercentage(base, percent)
-			// expressionValue.value = percentageResult
 			break
 		}
 		case "1/x": {
