@@ -6,12 +6,9 @@ defineProps<Props>()
 </script>
 
 <template>
-	<input
-		type="text"
-		class="entry-screen"
-		disabled
-		:value="valueToDisplay"
-	>
+	<span class="entry-screen">
+		{{ valueToDisplay }}
+	</span>
 </template>
 
 <style scoped lang="scss"></style>
