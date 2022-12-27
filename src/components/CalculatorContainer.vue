@@ -77,11 +77,6 @@ function appendToEntryScreen(valueToAppend: string|number) {
 
 	mustResetOnNextEntry.value = false
 }
-function popOneDigit() {
-	const entryDigits = Array.from(entry.value)
-	entryDigits.pop()
-	entry.value = entryDigits.join("")
-}
 
 function setOperationValue(newOperation: Operations) {
 	if (!operation.value) {
@@ -153,6 +148,13 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 	evaluation.value = newEvaluation
 }
 
+function popOneDigit() {
+	if (entry.value.length > 1) {
+		const entryDigits = Array.from(entry.value)
+		entryDigits.pop()
+		entry.value = entryDigits.join("")
+	} else entry.value = "0"
+}
 function clearEntryScreen() {
 	entry.value = "0"
 }
@@ -161,6 +163,7 @@ function clearAll() {
 	leftEntry.value = 0
 	rightEntry.value = 0
 	operation.value = null
+	evaluation.value = null
 	previousResult.value = "0"
 }
 </script>
