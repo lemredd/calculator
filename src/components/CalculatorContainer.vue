@@ -84,16 +84,18 @@ function popOneDigit() {
 }
 
 function setOperationValue(newOperation: Operations) {
-	if (!leftEntry.value) {
-		leftEntry.value = Number(entry.value)
+	if (!operation.value) {
+		if (!leftEntry.value) leftEntry.value = Number(entry.value)
+		if (mayPassToRightEntry.value) rightEntry.value = Number(entry.value)
+		mustResetOnNextEntry.value = true
+	} else if (operation.value && !mustResetOnNextEntry.value) {
+		const expressionToEvaluateEagerly = `${leftEntry.value}${operation.value}${entry.value}`
+		const result = String(evaluate(expressionToEvaluateEagerly))
+		entry.value = result
+		leftEntry.value = Number(result)
+		mustResetOnNextEntry.value = true
 	}
-	if (mayPassToRightEntry.value) rightEntry.value = Number(entry.value)
-	mustResetOnNextEntry.value = true
 
-	const mayEvaluate = leftEntry.value && rightEntry.value
-	const expressionToEvaluate = `${leftEntry.value}${operation.value}${rightEntry.value}`
-
-	if (mayEvaluate) String(evaluate(expressionToEvaluate))
 	operation.value = newOperation
 }
 
