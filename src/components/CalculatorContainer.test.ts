@@ -158,7 +158,7 @@ describe("Component: CalculatorContainer", () => {
 		expect(expressionScrn.text()).toEqual("5 + 0.2")
 	})
 
-	it("can divide 1 by given entry", async() => {
+	it("can evaluate fraction by given entry", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
 		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
