@@ -184,10 +184,12 @@ function clearAll() {
 					:value-to-display="expressionToDisplay"
 				/>
 			</div>
-			<EntryScreen
-				class="screen"
-				:value-to-display="entry"
-			/>
+			<div class="entry-screen-container">
+				<EntryScreen
+					class="screen"
+					:value-to-display="entry"
+				/>
+			</div>
 		</div>
 		<div class="common-buttons">
 			<div class="row">
@@ -231,13 +233,6 @@ function clearAll() {
 </template>
 
 <style lang="scss">
-	.entry-screen {
-		@apply text-4xl;
-
-		direction: rtl;
-		width: 100%;
-	}
-
 	button {
 		@apply m-[1px] px-2 py-1;
 		@apply border border-neutral-800 rounded-md;
@@ -266,8 +261,14 @@ function clearAll() {
 			right: 0;
 		}
 
-		.screen:nth-child(2) {
+		.entry-screen-container {
+			@apply flex justify-end;
+
 			@apply mt-8 mb-2;
+		}
+
+		.entry-screen-container .screen {
+			@apply text-4xl;
 		}
 	}
 
