@@ -8,11 +8,13 @@ const props = defineProps<Props>()
 
 interface CustomEvents {
 	(event: "appendToScreen", valueToAppend: Entries): void
+	(event: "alterSign"): void
 }
 const emit = defineEmits<CustomEvents>()
 
 function appendToScreen() {
-	emit("appendToScreen", props.value)
+	if (props.value === "+/-") emit("alterSign")
+	else emit("appendToScreen", props.value)
 }
 </script>
 
