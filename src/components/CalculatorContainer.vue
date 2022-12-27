@@ -49,7 +49,8 @@ const expressionToDisplay = computed(() => {
 			break
 		}
 		case "%": {
-			value = entry.value
+			if (!mayPassToRightEntry.value) value = entry.value
+			else value = `${leftEntry.value} ${operation.value} ${solvePercentage(rightEntry.value, leftEntry.value)}`
 			break
 		}
 		case "1/x": {
@@ -95,7 +96,6 @@ function setOperationValue(newOperation: Operations) {
 	if (mayEvaluate) String(evaluate(expressionToEvaluate))
 	operation.value = newOperation
 }
-
 
 function evaluateExpression(evaluationMethod: Evaluations) {
 	function evaluateBasicOperation() {
