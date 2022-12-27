@@ -41,6 +41,61 @@ describe("Component: CalculatorContainer", () => {
 		expect(entryScrn.value).toEqual("4")
 	})
 
+	it("can evaluate continuously if operation is already present", async() => {
+		const wrapper = mount(Component)
+		const expressionScrn = wrapper.find(".expression-screen")
+		const entryScrn = wrapper.find(".entry-screen").element as HTMLInputElement
+
+		// Find the digit "1" button and click it
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
+		await digital1Btn.trigger("click")
+		expect(entryScrn.value).toEqual("1")
+		expect(expressionScrn.text()).toEqual("")
+
+		// Find the Addition, Subtraction, and multiplication buttons
+		const operationalBtns = wrapper.findAll(".operational-button")
+		const [divisionBtn, multiplicationBtn, subtractionBtn, additionBtn] =  operationalBtns.filter(
+			btn => btn.text() === "+"
+			|| btn.text() === "-"
+			|| btn.text() === "×"
+			|| btn.text() === "÷"
+		)
+		await additionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("1 +")
+
+		// click digit "1" button again
+		await digital1Btn.trigger("click")
+		expect(entryScrn.value).toEqual("1")
+
+		await additionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 +")
+		expect(entryScrn.value).toEqual("2")
+		await digital1Btn.trigger("click")
+		expect(entryScrn.value).toEqual("1")
+		await additionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("3 +")
+		expect(entryScrn.value).toEqual("3")
+		await subtractionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("3 -")
+		expect(entryScrn.value).toEqual("3")
+		await digital1Btn.trigger("click")
+		await subtractionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 -")
+		await multiplicationBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 ×")
+		await digital1Btn.trigger("click")
+		await multiplicationBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 ×")
+		await divisionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 ÷")
+		await digital1Btn.trigger("click")
+		expect(entryScrn.value).toEqual("1")
+		await divisionBtn.trigger("click")
+		expect(entryScrn.value).toEqual("2")
+		expect(expressionScrn.text()).toEqual("2 ÷")
+	})
+
 	it("can derive percentage as such: `entryValue * (previousResult / 100)`", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
