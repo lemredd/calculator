@@ -31,14 +31,18 @@ function solvePercentage(base: number, percent: number) {
 }
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
-const expressionToEvaluate = computed(() => {
-	let value = ""
+const expressionToEvaluate = computed({
+	get() {
+		let value = ""
 
-	if (previousEntry.value) value += previousEntry.value
-	if (operation.value) value += operation.value
-	if (hasPreviousEntry.value && entry.value) value  += entry.value
+		if (previousEntry.value) value += previousEntry.value
+		if (operation.value) value += operation.value
+		if (hasPreviousEntry.value && entry.value) value  += entry.value
 
-	return value
+		return value
+	}, set(newValue: string) {
+		previousExpressionEvaluated.value = newValue
+	}
 })
 const expressionToDisplay = computed(() => {
 	let value = Array.from(expressionToEvaluate.value).join(" ")
