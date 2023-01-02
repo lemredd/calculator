@@ -44,7 +44,7 @@ const expressionToDisplay = computed(() => {
 
 	switch(evaluation.value) {
 		case "=": {
-			value = `${previousExpressionEvaluated.value} ${evaluation.value}`
+			value = `${Array.from(previousExpressionEvaluated.value).join(" ")} ${evaluation.value}`
 			break
 		}
 		case "%": {
@@ -163,7 +163,7 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 }
 
 function setEvaluationValue(newEvaluation: Evaluations) {
-	previousExpressionEvaluated.value = expressionToDisplay.value
+	previousExpressionEvaluated.value = expressionToEvaluate.value
 	evaluation.value = newEvaluation
 	evaluateExpression(newEvaluation)
 }
