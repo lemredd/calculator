@@ -19,7 +19,6 @@ import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 const entry = ref("")
 const previousEntry = ref(0)
 const operation = ref<Operations|null>(null)
-const mustResetOnNextEntry = ref(false)
 const previousResult = ref("0")
 const evaluation = ref<Evaluations|null>(null)
 
@@ -79,7 +78,7 @@ function popOneDigit() {
 	} else entry.value = "0"
 }
 function clearEntryScreen() {
-	entry.value = "0"
+	entry.value = ""
 }
 function clearAll() {
 	entry.value = "0"
@@ -103,22 +102,21 @@ function appendToEntryScreen(valueToAppend: Entries) {
 	if (typeof valueToAppend === "number" && hasEvaluatedResult.value) clearAll()
 
 	if (valueToAppend === ".") appendDecimal()
-	else if (isEntryValueEmpty.value || mustResetOnNextEntry.value) entry.value = String(valueToAppend)
+	else if (isEntryValueEmpty.value) entry.value = String(valueToAppend)
 	else entry.value += String(valueToAppend)
 
-	mustResetOnNextEntry.value = false
+	clearEntryScreen()
 }
 
 function setOperationValue(newOperation: Operations) {
 	if (!operation.value) {
 		if (!previousEntry.value) previousEntry.value = Number(entry.value)
-		mustResetOnNextEntry.value = true
-	} else if (operation.value && !mustResetOnNextEntry.value) {
+		clearEntryScreen()
+	} else if (operation.value) {
 		const expressionToEvaluateEagerly = `${previousEntry.value}${operation.value}${entry.value}`
 		const result = String(evaluate(expressionToEvaluateEagerly))
 		entry.value = result
 		previousEntry.value = Number(result)
-		mustResetOnNextEntry.value = true
 	}
 
 	operation.value = newOperation
@@ -168,8 +166,6 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 }
 
 function setEvaluationValue(newEvaluation: Evaluations) {
-	mustResetOnNextEntry.value = true
-
 	evaluateExpression(newEvaluation)
 	evaluation.value = newEvaluation
 }
