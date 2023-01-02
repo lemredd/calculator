@@ -28,7 +28,6 @@ function solvePercentage(base: number, percent: number) {
 	return percentageResult
 }
 
-const isEntryValueEmpty = computed(() => entry.value === "0")
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
 const expressionToEvaluate = computed(() => {
 	let value = ""
@@ -102,10 +101,7 @@ function appendToEntryScreen(valueToAppend: Entries) {
 	if (typeof valueToAppend === "number" && hasEvaluatedResult.value) clearAll()
 
 	if (valueToAppend === ".") appendDecimal()
-	else if (isEntryValueEmpty.value) entry.value = String(valueToAppend)
-	else entry.value += String(valueToAppend)
-
-	clearEntryScreen()
+	else entry.value += valueToAppend
 }
 
 function setOperationValue(newOperation: Operations) {
