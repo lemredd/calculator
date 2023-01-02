@@ -20,6 +20,7 @@ const entry = ref("")
 const previousEntry = ref(0)
 const operation = ref<Operations|null>(null)
 const previousResult = ref("0")
+const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
 
 function solvePercentage(base: number, percent: number) {
@@ -43,7 +44,7 @@ const expressionToDisplay = computed(() => {
 
 	switch(evaluation.value) {
 		case "=": {
-			value += ` ${evaluation.value}`
+			value = `${previousExpressionEvaluated.value} ${evaluation.value}`
 			break
 		}
 		case "%": {
@@ -162,8 +163,9 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 }
 
 function setEvaluationValue(newEvaluation: Evaluations) {
-	evaluateExpression(newEvaluation)
+	previousExpressionEvaluated.value = expressionToDisplay.value
 	evaluation.value = newEvaluation
+	evaluateExpression(newEvaluation)
 }
 </script>
 
