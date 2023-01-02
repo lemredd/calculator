@@ -17,8 +17,9 @@ import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const entry = ref("")
-const previousEntry = ref(0)
+const previousEntry = ref<number|null>(null)
 const operation = ref<Operations|null>(null)
+const rightEntry = ref<number|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
