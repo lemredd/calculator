@@ -128,6 +128,7 @@ function setOperationValue(newOperation: Operations) {
 	} else if (hasSavedPreviousResult.value) {
 		previousEntry.value = Number(previousResult.value)
 		evaluation.value = null
+		entry.value = ""
 		expressionToEvaluate.value = ""
 	}
 
