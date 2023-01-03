@@ -178,7 +178,7 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 }
 
 function setEvaluationValue(newEvaluation: Evaluations) {
-	if (!hasSavedPreviousResult.value) previousExpressionEvaluated.value = expressionToEvaluate.value
+	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
 	evaluation.value = newEvaluation
 	evaluateExpression(newEvaluation)
 }
