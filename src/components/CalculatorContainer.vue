@@ -54,7 +54,7 @@ const expressionToDisplay = computed(() => {
 		}
 		case "%": {
 			if (!hasPreviousEntry.value) value = entry.value
-			else value = `${previousEntry.value} ${operation.value} ${solvePercentage(Number(entry.value), previousEntry.value as number)}`
+			else value = `${previousEntry.value} ${operation.value} ${entry.value}`
 			break
 		}
 		case "1/x": {
