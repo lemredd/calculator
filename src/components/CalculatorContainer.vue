@@ -86,14 +86,15 @@ function popOneDigit() {
 	} else entry.value = "0"
 }
 function clearEntryScreen() {
+	if (hasSavedPreviousResult.value) clearAll(false)
 	entry.value = ""
 }
-function clearAll() {
-	entry.value = "0"
+function clearAll(mustClearPreviousResult = true) {
+	entry.value = ""
 	previousEntry.value = 0
 	operation.value = null
 	evaluation.value = null
-	previousResult.value = "0"
+	if (mustClearPreviousResult) previousResult.value = "0"
 }
 
 function alterEntrySign() {
