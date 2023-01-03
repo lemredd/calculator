@@ -32,6 +32,32 @@ describe("Component: CalculatorContainer", () => {
 		expect(entryScrn.text()).toEqual("2")
 	})
 
+	it("can evaluate with incomplete operands", async() => {
+		const wrapper = mount(Component)
+		const expressionScrn = wrapper.find(".expression-screen")
+		const entryScrn = wrapper.find(".entry-screen")
+
+		// Find the digit "1" button and click it
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
+		await digital1Btn.trigger("click")
+		expect(entryScrn.text()).toEqual("1")
+		expect(expressionScrn.text()).toEqual("")
+
+		// Find the Addition button and click it
+		const operationalBtns = wrapper.findAll(".operational-button")
+		const [additionBtn] =  operationalBtns.filter(btn => btn.text() === "+")
+		await additionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("1 +")
+
+		// Find the Equal button and click it
+		const evaluationBtns = wrapper.findAll(".evaluation-button")
+		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
+		await equalBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("1 + 1 =")
+		expect(entryScrn.text()).toEqual("2")
+	})
+
 	it("can evaluate continuously with `=` button", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
