@@ -124,6 +124,10 @@ function setOperationValue(newOperation: Operations) {
 		const result = String(evaluate(expressionToEvaluateEagerly))
 		entry.value = result
 		previousEntry.value = Number(result)
+	} else if (hasSavedPreviousResult.value) {
+		previousEntry.value = Number(previousResult.value)
+		evaluation.value = null
+		expressionToEvaluate.value = ""
 	}
 
 	mustClearEntryOnNextAppend.value = true
