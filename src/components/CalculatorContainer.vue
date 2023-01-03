@@ -45,7 +45,7 @@ const expressionToEvaluate = computed({
 	}
 })
 const expressionToDisplay = computed(() => {
-	let value = Array.from(expressionToEvaluate.value).join(" ")
+	let value = `${previousEntry.value ? previousEntry.value : ""} ${operation.value ? operation.value : ""}`
 
 	switch(evaluation.value) {
 		case "=": {
