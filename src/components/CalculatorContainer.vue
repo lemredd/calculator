@@ -73,7 +73,7 @@ const expressionToDisplay = computed(() => {
 
 	return value
 })
-const hasEvaluatedResult = computed(() => previousResult.value === entry.value)
+const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
 
 function popOneDigit() {
 	if (entry.value.length > 1) {
@@ -104,7 +104,7 @@ function appendDecimal() {
 	entry.value += "."
 }
 function appendToEntryScreen(valueToAppend: Entries) {
-	if (typeof valueToAppend === "number" && hasEvaluatedResult.value) clearAll()
+	if (typeof valueToAppend === "number" && hasSavedPreviousResult.value) clearEntryScreen()
 
 	if (valueToAppend === ".") appendDecimal()
 	else entry.value += valueToAppend
@@ -126,7 +126,7 @@ function setOperationValue(newOperation: Operations) {
 
 function evaluateExpression(evaluationMethod: Evaluations) {
 	function evaluateBasicOperation() {
-		if (hasEvaluatedResult.value) {
+		if (hasSavedPreviousResult.value) {
 			rightEntry.value = Number(previousExpressionEvaluated.value[2])
 			expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
 		}
@@ -171,7 +171,7 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 }
 
 function setEvaluationValue(newEvaluation: Evaluations) {
-	if (!hasEvaluatedResult.value) previousExpressionEvaluated.value = expressionToEvaluate.value
+	if (!hasSavedPreviousResult.value) previousExpressionEvaluated.value = expressionToEvaluate.value
 	evaluation.value = newEvaluation
 	evaluateExpression(newEvaluation)
 }
