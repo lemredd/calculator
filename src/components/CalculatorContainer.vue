@@ -38,7 +38,9 @@ const expressionToEvaluate = computed({
 
 		if (previousEntry.value) value += previousEntry.value
 		if (operation.value) value += operation.value
-		if (hasPreviousEntry.value && entry.value) value  += entry.value
+
+		if (!entry.value) value += previousEntry.value
+		else if (hasPreviousEntry.value && entry.value) value  += entry.value
 
 		return value
 	}, set(newValue: string) {
