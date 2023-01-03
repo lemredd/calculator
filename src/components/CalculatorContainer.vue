@@ -17,6 +17,7 @@ import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const entry = ref("")
+const mustClearEntryOnNextAppend = ref(false)
 const previousEntry = ref<number|null>(null)
 const operation = ref<Operations|null>(null)
 const rightEntry = ref<number|null>(null)
@@ -104,27 +105,31 @@ function appendDecimal() {
 	entry.value += "."
 }
 function appendToEntryScreen(valueToAppend: Entries) {
-	if (typeof valueToAppend === "number" && hasSavedPreviousResult.value) clearEntryScreen()
+	if (typeof valueToAppend === "number" && mustClearEntryOnNextAppend.value) clearEntryScreen()
 
 	if (valueToAppend === ".") appendDecimal()
 	else entry.value += valueToAppend
+
+	mustClearEntryOnNextAppend.value = false
 }
 
 function setOperationValue(newOperation: Operations) {
 	if (!operation.value) {
 		if (!previousEntry.value) previousEntry.value = Number(entry.value)
 		clearEntryScreen()
-	} else if (operation.value) {
+	} else if (!mustClearEntryOnNextAppend.value) {
 		const expressionToEvaluateEagerly = `${previousEntry.value}${operation.value}${entry.value}`
 		const result = String(evaluate(expressionToEvaluateEagerly))
 		entry.value = result
 		previousEntry.value = Number(result)
 	}
 
+	mustClearEntryOnNextAppend.value = true
 	operation.value = newOperation
 }
 
 function evaluateExpression(evaluationMethod: Evaluations) {
+	mustClearEntryOnNextAppend.value = true
 	function evaluateBasicOperation() {
 		if (hasSavedPreviousResult.value) {
 			rightEntry.value = Number(previousExpressionEvaluated.value[2])
