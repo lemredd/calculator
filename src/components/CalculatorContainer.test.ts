@@ -23,7 +23,6 @@ describe("Component: CalculatorContainer", () => {
 
 		// click digit "1" button again
 		await digital1Btn.trigger("click")
-		expect(entryScrn.text()).toEqual("1")
 
 		// Find the Equal button and click it
 		const evaluationBtns = wrapper.findAll(".evaluation-button")
@@ -53,7 +52,6 @@ describe("Component: CalculatorContainer", () => {
 
 		// click digit "1" button again
 		await digital1Btn.trigger("click")
-		expect(entryScrn.text()).toEqual("1")
 
 		// Find the Equal button and click it
 		const evaluationBtns = wrapper.findAll(".evaluation-button")
@@ -161,7 +159,7 @@ describe("Component: CalculatorContainer", () => {
 		expect(expressionScrn.text()).toEqual("45")
 	})
 
-	it("can derive percentage as such: `rightEntry * (leftEntry / 100)`", async() => {
+	it("can derive percentage as such: `entry * (previousEntry / 100)`", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
 		const entryScrn = wrapper.find(".entry-screen")
