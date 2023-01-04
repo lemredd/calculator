@@ -279,7 +279,7 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 		.entry-screen-container {
 			@apply flex justify-end;
 
-			@apply mt-8 mb-2;
+			@apply mb-2;
 		}
 
 		.entry-screen-container .screen {
