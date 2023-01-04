@@ -138,20 +138,20 @@ function setOperationValue(newOperation: Operations) {
 
 function evaluateExpression(evaluationMethod: Evaluations) {
 	mustClearEntryOnNextAppend.value = true
-	function evaluateBasicOperation() {
-		if (hasSavedPreviousResult.value) {
-			rightEntry.value = Number(previousExpressionEvaluated.value[2])
-			expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
-		}
-		previousResult.value = String(evaluate(expressionToEvaluate.value))
-		entry.value = previousResult.value
-	}
+	// function evaluateBasicOperation() {
+	// 	if (hasSavedPreviousResult.value) {
+	// 		rightEntry.value = Number(previousExpressionEvaluated.value[2])
+	// 		expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
+	// 	}
+	// 	previousResult.value = String(evaluate(expressionToEvaluate.value))
+	// 	entry.value = previousResult.value
+	// }
 
 	switch (evaluationMethod) {
-		case "=": {
-			evaluateBasicOperation()
-			break
-		}
+		// case "=": {
+		// 	evaluateBasicOperation()
+		// 	break
+		// }
 		case "%": {
 			let percent = 0
 			const base = Number(entry.value)
@@ -186,7 +186,8 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
 	evaluation.value = newEvaluation
-	evaluateExpression(newEvaluation)
+	previousResult.value = String(result)
+	entry.value = String(result)
 }
 </script>
 
@@ -241,7 +242,11 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 				<DigitalButton value="+/-" @alter-sign="alterEntrySign" />
 				<DigitalButton :value="0" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton value="." @append-to-screen="appendToEntryScreen" />
+				<EvaluationButton
+					value="="
+					:expression-to-evaluate="expressionToEvaluate"
 					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 			</div>
 		</div>
 	</div>
