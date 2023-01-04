@@ -183,7 +183,7 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 	}
 }
 
-function setEvaluationValue(newEvaluation: Evaluations) {
+function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
 	evaluation.value = newEvaluation
 	evaluateExpression(newEvaluation)
@@ -208,15 +208,15 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 		</div>
 		<div class="common-buttons">
 			<div class="row">
-				<EvaluationButton value="%" @append-to-screen="setEvaluationValue" />
+				<EvaluationButton value="%" @append-to-screen="retrieveEvaluationResults" />
 				<CorrectionButton value="CE" @clear-entry-screen="clearEntryScreen" />
 				<CorrectionButton value="C" @clear-all-screens="clearAll" />
 				<CorrectionButton value="" @clear-one-digit="popOneDigit" />
 			</div>
 			<div class="row">
-				<EvaluationButton value="1/x" @append-to-screen="setEvaluationValue" />
-				<EvaluationButton value="x²" @append-to-screen="setEvaluationValue" />
-				<EvaluationButton value="√" @append-to-screen="setEvaluationValue" />
+				<EvaluationButton value="1/x" @append-to-screen="retrieveEvaluationResults" />
+				<EvaluationButton value="x²" @append-to-screen="retrieveEvaluationResults" />
+				<EvaluationButton value="√" @append-to-screen="retrieveEvaluationResults" />
 				<OperationalButton value="÷" @append-to-screen="setOperationValue" />
 			</div>
 			<div class="row">
@@ -241,7 +241,7 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 				<DigitalButton value="+/-" @alter-sign="alterEntrySign" />
 				<DigitalButton :value="0" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton value="." @append-to-screen="appendToEntryScreen" />
-				<EvaluationButton value="=" @append-to-screen="setEvaluationValue" />
+					@emit-evaluation-result="retrieveEvaluationResults"
 			</div>
 		</div>
 	</div>
