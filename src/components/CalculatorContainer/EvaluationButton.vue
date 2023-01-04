@@ -1,23 +1,30 @@
 <script setup lang="ts">
 import type { Evaluations } from "@/types/buttons"
 
+import evaluate from "@/CalculatorContainer/helpers/evaluate"
+
 interface Props {
+	expressionToEvaluate: string
 	value: Evaluations
 }
 const props = defineProps<Props>()
 
 interface CustomEvents {
-	(event: "appendToScreen", valueToAppend: Evaluations): void
+	(event: "emitEvaluationResult", valueToAppend: Evaluations, evaluationResult: number): void
 }
 const emit = defineEmits<CustomEvents>()
 
-function appendToScreen() {
-	emit("appendToScreen", props.value)
+function evaluateExpression() {
+	switch(props.value) {
+		case "=": {
+			emit("emitEvaluationResult", props.value, Number(evaluate(props.expressionToEvaluate)))
+		}
+	}
 }
 </script>
 
 <template>
-	<button class="evaluation-button" @click="appendToScreen">
+	<button class="evaluation-button" @click="evaluateExpression">
 		{{ props.value }}
 	</button>
 </template>
