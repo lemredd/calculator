@@ -22,9 +22,23 @@ interface CustomEvents {
 const emit = defineEmits<CustomEvents>()
 
 function evaluateExpression() {
+	function evaluateWithEquals() {
+		let { expressionToEvaluate } = props
+		const {
+			hasSavedPreviousResult,
+			previousResult,
+			operation,
+			rightEntry
+		} = props.expressionAndPreviousResultInformation
+
+		if (hasSavedPreviousResult) expressionToEvaluate = `${previousResult}${operation}${rightEntry}`
+
+		return Number(evaluate(expressionToEvaluate))
+	}
+
 	switch(props.value) {
 		case "=": {
-			emit("emitEvaluationResult", props.value, Number(evaluate(props.expressionToEvaluate)))
+			emit("emitEvaluationResult", props.value, evaluateWithEquals())
 		}
 	}
 }
