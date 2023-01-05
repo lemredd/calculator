@@ -7,8 +7,15 @@ import Component from "./EvaluationButton.vue"
 describe("Component: CalculatorContainer/EvaluationButton", () => {
 	it("can emit evaluation result based on expression", async() => {
 		const expressionToEvaluate = "1+1"
+		const expressionAndPreviousResultInformation = {
+			"hasSavedPreviousResult": false,
+			"operation": "+",
+			"previousResult": "0",
+			"rightEntry": null
+		}
 		const wrapper = shallowMount(Component, {
 			"props": {
+				expressionAndPreviousResultInformation,
 				expressionToEvaluate,
 				"value": "="
 			}
