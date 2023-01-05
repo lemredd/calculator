@@ -20,7 +20,6 @@ const entry = ref("")
 const mustClearEntryOnNextAppend = ref(false)
 const previousEntry = ref<number|null>(null)
 const operation = ref<Operations|null>(null)
-const rightEntry = ref<number|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
@@ -46,6 +45,14 @@ const expressionToEvaluate = computed({
 	}, set(newValue: string) {
 		previousExpressionEvaluated.value = newValue
 	}
+})
+const rightEntry = computed(() => {
+	let entry: number|null = null
+	const mayIdentifyRightEntry = previousExpressionEvaluated.value && previousExpressionEvaluated.value.length === 3
+
+	if (mayIdentifyRightEntry) entry = Number(previousExpressionEvaluated.value[2])
+
+	return entry
 })
 const expressionToDisplay = computed(() => {
 	let value = `${previousEntry.value ? previousEntry.value : ""} ${operation.value ? operation.value : ""}`
