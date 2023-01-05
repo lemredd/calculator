@@ -3,8 +3,15 @@ import type { Evaluations } from "@/types/buttons"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
 
+type ExpressionAndPreviousResultInformation = {
+	hasSavedPreviousResult: boolean
+	previousResult: string
+	operation: string|null
+	rightEntry: number|null
+}
 interface Props {
-	expressionToEvaluate: string
+	expressionToEvaluate: string,
+	expressionAndPreviousResultInformation: ExpressionAndPreviousResultInformation
 	value: Evaluations
 }
 const props = defineProps<Props>()

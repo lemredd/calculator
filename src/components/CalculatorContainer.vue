@@ -78,6 +78,13 @@ const expressionToDisplay = computed(() => {
 })
 const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
 
+const expressionAndPreviousResultInformation = reactive({
+	hasSavedPreviousResult,
+	operation,
+	previousResult,
+	rightEntry
+})
+
 function popOneDigit() {
 	if (entry.value.length > 1) {
 		const entryDigits = Array.from(entry.value)
