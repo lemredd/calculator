@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, reactive, ref } from "vue"
 
 import type {
 	Entries,
@@ -199,6 +199,8 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
+	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
+
 	evaluation.value = newEvaluation
 	previousResult.value = String(result)
 	entry.value = String(result)
@@ -259,6 +261,7 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 				<EvaluationButton
 					value="="
 					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
 					@emit-evaluation-result="retrieveEvaluationResults"
 				/>
 			</div>
