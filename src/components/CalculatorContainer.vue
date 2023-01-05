@@ -293,9 +293,6 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 
 		.evaluation-screen-container {
 			@apply flex justify-end;
-			position: absolute;
-			top: 0;
-			right: 0;
 		}
 
 		.entry-screen-container {
