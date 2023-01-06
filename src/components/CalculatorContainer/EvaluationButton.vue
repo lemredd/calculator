@@ -4,7 +4,7 @@ import type { Evaluations, Operations } from "@/types/buttons"
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
 import solvePercentage from "@/CalculatorContainer/helpers/solvePercentage"
 
-type ExpressionAndPreviousResultInformation = {
+interface ExpressionAndPreviousResultInformation {
 	hasSavedPreviousResult: boolean
 	previousEntry: number|null
 	previousResult: string
