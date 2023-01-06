@@ -64,6 +64,15 @@ function evaluateExpression() {
 			emit("emitEvaluationResult", props.value, evaluateWithPercent())
 			break
 		}
+		case "1/x": {
+			break
+		}
+		case "x²": {
+			break
+		}
+		case "√": {
+			break
+		}
 	}
 }
 </script>
