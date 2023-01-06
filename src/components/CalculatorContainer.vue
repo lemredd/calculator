@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, reactive, ref } from "vue"
 
 import type {
 	Entries,
@@ -20,18 +20,19 @@ const entry = ref("")
 const mustClearEntryOnNextAppend = ref(false)
 const previousEntry = ref<number|null>(null)
 const operation = ref<Operations|null>(null)
-const rightEntry = ref<number|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
 
-function solvePercentage(base: number, percent: number) {
-	const percentInDecimal = percent / 100
-	const percentageResult = String(evaluate(`${base} * ${percentInDecimal}`))
-	return percentageResult
-}
-
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
+const rightEntry = computed(() => {
+	let entry: number|null = null
+	const mayIdentifyRightEntry = previousExpressionEvaluated.value && previousExpressionEvaluated.value.length === 3
+
+	if (mayIdentifyRightEntry) entry = Number(previousExpressionEvaluated.value[2])
+
+	return entry
+})
 const expressionToEvaluate = computed({
 	get() {
 		let value = ""
@@ -78,6 +79,14 @@ const expressionToDisplay = computed(() => {
 })
 const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
 
+const expressionAndPreviousResultInformation = reactive({
+	hasSavedPreviousResult,
+	operation,
+	previousEntry,
+	previousResult,
+	rightEntry
+})
+
 function popOneDigit() {
 	if (entry.value.length > 1) {
 		const entryDigits = Array.from(entry.value)
@@ -94,7 +103,10 @@ function clearAll(mustClearPreviousResult = true) {
 	previousEntry.value = 0
 	operation.value = null
 	evaluation.value = null
-	if (mustClearPreviousResult) previousResult.value = "0"
+	if (mustClearPreviousResult) {
+		previousResult.value = "0"
+		previousExpressionEvaluated.value = ""
+	}
 }
 
 function alterEntrySign() {
@@ -136,57 +148,20 @@ function setOperationValue(newOperation: Operations) {
 	operation.value = newOperation
 }
 
-function evaluateExpression(evaluationMethod: Evaluations) {
+function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	mustClearEntryOnNextAppend.value = true
-	function evaluateBasicOperation() {
-		if (hasSavedPreviousResult.value) {
-			rightEntry.value = Number(previousExpressionEvaluated.value[2])
-			expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
-		}
-		previousResult.value = String(evaluate(expressionToEvaluate.value))
-		entry.value = previousResult.value
-	}
+	const mustSaveCurrentEntry = newEvaluation === "1/x"
+	|| newEvaluation === "x²"
+	|| newEvaluation === "√"
 
-	switch (evaluationMethod) {
-		case "=": {
-			evaluateBasicOperation()
-			break
-		}
-		case "%": {
-			let percent = 0
-			const base = Number(entry.value)
-
-			if (operation.value) percent = previousEntry.value as number
-			else percent = Number(previousResult.value)
-
-			entry.value = solvePercentage(base, percent)
-			break
-		}
-		case "1/x": {
-			previousEntry.value = Number(entry.value)
-			const quotient = 1 / previousEntry.value
-			entry.value = String(quotient)
-			break
-		}
-		case "x²": {
-			previousEntry.value = Number(entry.value)
-			const sqr = Number(entry.value) * Number(entry.value)
-			entry.value = String(sqr)
-			break
-		}
-		case "√": {
-			previousEntry.value = Number(entry.value)
-			const sqrt = Math.sqrt(Number(entry.value))
-			entry.value = String(sqrt)
-			break
-		}
-	}
-}
-
-function setEvaluationValue(newEvaluation: Evaluations) {
 	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
+	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
+	if (mustSaveCurrentEntry) previousEntry.value = Number(entry.value)
+
 	evaluation.value = newEvaluation
-	evaluateExpression(newEvaluation)
+	previousResult.value = String(result)
+
+	entry.value = String(result)
 }
 </script>
 
@@ -208,15 +183,39 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 		</div>
 		<div class="common-buttons">
 			<div class="row">
-				<EvaluationButton value="%" @append-to-screen="setEvaluationValue" />
+				<EvaluationButton
+					value="%"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 				<CorrectionButton value="CE" @clear-entry-screen="clearEntryScreen" />
 				<CorrectionButton value="C" @clear-all-screens="clearAll" />
 				<CorrectionButton value="" @clear-one-digit="popOneDigit" />
 			</div>
 			<div class="row">
-				<EvaluationButton value="1/x" @append-to-screen="setEvaluationValue" />
-				<EvaluationButton value="x²" @append-to-screen="setEvaluationValue" />
-				<EvaluationButton value="√" @append-to-screen="setEvaluationValue" />
+				<EvaluationButton
+					value="1/x"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
+				<EvaluationButton
+					value="x²"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
+				<EvaluationButton
+					value="√"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 				<OperationalButton value="÷" @append-to-screen="setOperationValue" />
 			</div>
 			<div class="row">
@@ -241,7 +240,12 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 				<DigitalButton value="+/-" @alter-sign="alterEntrySign" />
 				<DigitalButton :value="0" @append-to-screen="appendToEntryScreen" />
 				<DigitalButton value="." @append-to-screen="appendToEntryScreen" />
-				<EvaluationButton value="=" @append-to-screen="setEvaluationValue" />
+				<EvaluationButton
+					value="="
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 			</div>
 		</div>
 	</div>
@@ -271,15 +275,12 @@ function setEvaluationValue(newEvaluation: Evaluations) {
 
 		.evaluation-screen-container {
 			@apply flex justify-end;
-			position: absolute;
-			top: 0;
-			right: 0;
 		}
 
 		.entry-screen-container {
 			@apply flex justify-end;
 
-			@apply mt-8 mb-2;
+			@apply mb-2;
 		}
 
 		.entry-screen-container .screen {

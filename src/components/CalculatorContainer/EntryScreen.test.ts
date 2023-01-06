@@ -18,4 +18,15 @@ describe("Component: CalculatorContainer/EntryScreen", () => {
 		})
 		expect(calculatorScreen.text()).toEqual("1")
 	})
+
+	it("must have distinct class if `valueToDisplay` is empty", () => {
+		const wrapper = shallowMount(Component, {
+			"props": {
+				"valueToDisplay": ""
+			}
+		})
+
+		const calculatorScreen = wrapper.find(".entry-screen")
+		expect(calculatorScreen.classes()).toContain("empty")
+	})
 })

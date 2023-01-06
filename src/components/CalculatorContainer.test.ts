@@ -209,11 +209,11 @@ describe("Component: CalculatorContainer", () => {
 		const [percentageBtn] = evaluationBtns.filter(btn => btn.text() === "%")
 		await percentageBtn.trigger("click")
 
-		// This implicitly expects that `previousEvaluatedValue === 0`
+		// This implicitly expects that `previousResult === 0`
 		expect(entryScrn.text()).toEqual("0")
 		expect(expressionScrn.text()).toEqual("0")
 
-		// Mock mutation of `previousEvaluatedValue`
+		// Mock mutation of `previousResult`
 		const wrapperInternals = wrapper.vm as any
 		wrapperInternals.previousResult = "50"
 		await digital9Btn.trigger("click")
