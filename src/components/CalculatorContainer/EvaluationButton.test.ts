@@ -1,6 +1,7 @@
 import { shallowMount } from "@vue/test-utils"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
+import solvePercentage from "@/CalculatorContainer/helpers/solvePercentage"
 
 import Component from "./EvaluationButton.vue"
 
@@ -10,6 +11,7 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 		const expressionAndPreviousResultInformation = {
 			"hasSavedPreviousResult": false,
 			"operation": "+",
+			"previousEntry": null,
 			"previousResult": "0",
 			"rightEntry": null
 		}
@@ -35,6 +37,7 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 		const expressionAndPreviousResultInformation = {
 			"hasSavedPreviousResult": false,
 			"operation": "+",
+			"previousEntry": null,
 			"previousResult": "0",
 			"rightEntry": null
 		}
@@ -65,5 +68,32 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 		const expectedEmission = wrapper.emitted("emitEvaluationResult")
 		const expectedEvaluationResult = evaluate(updatedExpressionToEvaluate)
 		expect(expectedEmission).toHaveProperty("1.1", expectedEvaluationResult)
+	})
+
+	it("can derive percentage as such: `entry * (previousResult / 100)`", async() => {
+		const expressionAndPreviousResultInformation = {
+			"hasSavedPreviousResult": false,
+			"operation": null,
+			"previousEntry": null,
+			"previousResult": "0",
+			"rightEntry": null
+		}
+		const wrapper = shallowMount(Component, {
+			"props": {
+				"entry": "90",
+				expressionAndPreviousResultInformation,
+				"expressionToEvaluate": "",
+				"operation": "+",
+				"value": "%"
+			}
+		})
+		const evaluationBtn = wrapper.find(".evaluation-button")
+		await evaluationBtn.trigger("click")
+
+		const expectedEmission = wrapper.emitted("emitEvaluationResult")
+		const base = wrapper.props("entry")
+		const { "previousResult": percent } = wrapper.props("expressionAndPreviousResultInformation")
+		const expectedEvaluationResult = solvePercentage(Number(base), Number(percent))
+		expect(expectedEmission).toHaveProperty("0.1", expectedEvaluationResult)
 	})
 })
