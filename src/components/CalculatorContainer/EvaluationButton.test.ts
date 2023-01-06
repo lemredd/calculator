@@ -47,7 +47,6 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 			"props": {
 				expressionAndPreviousResultInformation,
 				expressionToEvaluate,
-				"operation": "+",
 				"value": "="
 			}
 		})
@@ -85,7 +84,6 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 				"entry": "90",
 				expressionAndPreviousResultInformation,
 				"expressionToEvaluate": "",
-				"operation": "+",
 				"value": "%"
 			}
 		})
@@ -112,7 +110,6 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 				"entry": "4",
 				expressionAndPreviousResultInformation,
 				"expressionToEvaluate": "5+4",
-				"operation": "+",
 				"value": "%"
 			}
 		})
@@ -123,6 +120,31 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 		const base = wrapper.props("entry")
 		const { "previousEntry": percent } = wrapper.props("expressionAndPreviousResultInformation")
 		const expectedEvaluationResult = solvePercentage(Number(base), Number(percent))
+		expect(expectedEmission).toHaveProperty("0.1", expectedEvaluationResult)
+	})
+
+	it("can evaluate fraction by given entry", async() => {
+		const expressionAndPreviousResultInformation = {
+			"hasSavedPreviousResult": false,
+			"operation": null,
+			"previousEntry": null,
+			"previousResult": "0",
+			"rightEntry": null
+		}
+		const wrapper = shallowMount(Component, {
+			"props": {
+				"entry": "4",
+				expressionAndPreviousResultInformation,
+				"expressionToEvaluate": "",
+				"value": "1/x"
+			}
+		})
+		const evaluationBtn = wrapper.find(".evaluation-button")
+		await evaluationBtn.trigger("click")
+
+		const expectedEmission = wrapper.emitted("emitEvaluationResult")
+		const { entry } = wrapper.props()
+		const expectedEvaluationResult = 1 / entry
 		expect(expectedEmission).toHaveProperty("0.1", expectedEvaluationResult)
 	})
 })
