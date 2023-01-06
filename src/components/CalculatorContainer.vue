@@ -8,7 +8,6 @@ import type {
 } from "@/types/buttons"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
-import solvePercentage from "@/CalculatorContainer/helpers/solvePercentage"
 
 import EntryScreen from "@/CalculatorContainer/EntryScreen.vue"
 import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
@@ -26,6 +25,14 @@ const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
+const rightEntry = computed(() => {
+	let entry: number|null = null
+	const mayIdentifyRightEntry = previousExpressionEvaluated.value && previousExpressionEvaluated.value.length === 3
+
+	if (mayIdentifyRightEntry) entry = Number(previousExpressionEvaluated.value[2])
+
+	return entry
+})
 const expressionToEvaluate = computed({
 	get() {
 		let value = ""
@@ -40,14 +47,6 @@ const expressionToEvaluate = computed({
 	}, set(newValue: string) {
 		previousExpressionEvaluated.value = newValue
 	}
-})
-const rightEntry = computed(() => {
-	let entry: number|null = null
-	const mayIdentifyRightEntry = previousExpressionEvaluated.value && previousExpressionEvaluated.value.length === 3
-
-	if (mayIdentifyRightEntry) entry = Number(previousExpressionEvaluated.value[2])
-
-	return entry
 })
 const expressionToDisplay = computed(() => {
 	let value = `${previousEntry.value ? previousEntry.value : ""} ${operation.value ? operation.value : ""}`
@@ -149,12 +148,6 @@ function setOperationValue(newOperation: Operations) {
 function evaluateExpression(evaluationMethod: Evaluations) {
 	mustClearEntryOnNextAppend.value = true
 	switch (evaluationMethod) {
-		// case "1/x": {
-		// 	previousEntry.value = Number(entry.value)
-		// 	const quotient = 1 / previousEntry.value
-		// 	entry.value = String(quotient)
-		// 	break
-		// }
 		case "x²": {
 			previousEntry.value = Number(entry.value)
 			const sqr = Number(entry.value) * Number(entry.value)
@@ -171,11 +164,15 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 }
 
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
+	mustClearEntryOnNextAppend.value = true
+
 	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
 	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
+	if (newEvaluation === "1/x") previousEntry.value = Number(entry.value)
 
 	evaluation.value = newEvaluation
 	previousResult.value = String(result)
+
 	entry.value = String(result)
 }
 </script>
