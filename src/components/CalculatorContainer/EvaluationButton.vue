@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import type { Evaluations } from "@/types/buttons"
+import type { Evaluations, Operations } from "@/types/buttons"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
+import solvePercentage from "@/CalculatorContainer/helpers/solvePercentage"
 
 type ExpressionAndPreviousResultInformation = {
 	hasSavedPreviousResult: boolean
+	previousEntry: number|null
 	previousResult: string
-	operation: string|null
+	operation: Operations|null
 	rightEntry: number|null
 }
 interface Props {
-	expressionToEvaluate: string,
+	entry?: string
+	expressionToEvaluate: string
 	expressionAndPreviousResultInformation: ExpressionAndPreviousResultInformation
 	value: Evaluations
 }
@@ -36,9 +39,30 @@ function evaluateExpression() {
 		return Number(evaluate(expressionToEvaluate))
 	}
 
+	function evaluateWithPercent() {
+		let percent = 0
+		const { entry } = props
+		const {
+			operation,
+			previousEntry,
+			previousResult
+		} = props.expressionAndPreviousResultInformation
+		const base = Number(entry)
+
+		if (operation && previousEntry !== null) percent = previousEntry as number
+		else percent = Number(previousResult)
+
+		return Number(solvePercentage(base, percent))
+	}
+
 	switch(props.value) {
 		case "=": {
 			emit("emitEvaluationResult", props.value, evaluateWithEquals())
+			break
+		}
+		case "%": {
+			emit("emitEvaluationResult", props.value, evaluateWithPercent())
+			break
 		}
 	}
 }

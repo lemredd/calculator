@@ -8,6 +8,7 @@ import type {
 } from "@/types/buttons"
 
 import evaluate from "@/CalculatorContainer/helpers/evaluate"
+import solvePercentage from "@/CalculatorContainer/helpers/solvePercentage"
 
 import EntryScreen from "@/CalculatorContainer/EntryScreen.vue"
 import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
@@ -23,12 +24,6 @@ const operation = ref<Operations|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
-
-function solvePercentage(base: number, percent: number) {
-	const percentInDecimal = percent / 100
-	const percentageResult = String(evaluate(`${base} * ${percentInDecimal}`))
-	return percentageResult
-}
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
 const expressionToEvaluate = computed({
@@ -152,20 +147,7 @@ function setOperationValue(newOperation: Operations) {
 
 function evaluateExpression(evaluationMethod: Evaluations) {
 	mustClearEntryOnNextAppend.value = true
-	// function evaluateBasicOperation() {
-	// 	if (hasSavedPreviousResult.value) {
-	// 		rightEntry.value = Number(previousExpressionEvaluated.value[2])
-	// 		expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
-	// 	}
-	// 	previousResult.value = String(evaluate(expressionToEvaluate.value))
-	// 	entry.value = previousResult.value
-	// }
-
 	switch (evaluationMethod) {
-		// case "=": {
-		// 	evaluateBasicOperation()
-		// 	break
-		// }
 		case "%": {
 			let percent = 0
 			const base = Number(entry.value)
