@@ -6,9 +6,9 @@ import solvePercentage from "@/CalculatorContainer/helpers/solvePercentage"
 
 interface ExpressionAndPreviousResultInformation {
 	hasSavedPreviousResult: boolean
+	operation: Operations|null
 	previousEntry: number|null
 	previousResult: string
-	operation: Operations|null
 	rightEntry: number|null
 }
 interface Props {

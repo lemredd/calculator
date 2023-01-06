@@ -83,6 +83,7 @@ const hasSavedPreviousResult = computed(() => previousResult.value === entry.val
 const expressionAndPreviousResultInformation = reactive({
 	hasSavedPreviousResult,
 	operation,
+	previousEntry,
 	previousResult,
 	rightEntry
 })
@@ -148,16 +149,6 @@ function setOperationValue(newOperation: Operations) {
 function evaluateExpression(evaluationMethod: Evaluations) {
 	mustClearEntryOnNextAppend.value = true
 	switch (evaluationMethod) {
-		case "%": {
-			let percent = 0
-			const base = Number(entry.value)
-
-			if (operation.value) percent = previousEntry.value as number
-			else percent = Number(previousResult.value)
-
-			entry.value = solvePercentage(base, percent)
-			break
-		}
 		case "1/x": {
 			previousEntry.value = Number(entry.value)
 			const quotient = 1 / previousEntry.value
@@ -207,7 +198,13 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 		</div>
 		<div class="common-buttons">
 			<div class="row">
-				<EvaluationButton value="%" @append-to-screen="retrieveEvaluationResults" />
+				<EvaluationButton
+					value="%"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 				<CorrectionButton value="CE" @clear-entry-screen="clearEntryScreen" />
 				<CorrectionButton value="C" @clear-all-screens="clearAll" />
 				<CorrectionButton value="" @clear-one-digit="popOneDigit" />
