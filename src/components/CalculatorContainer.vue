@@ -27,9 +27,10 @@ const evaluation = ref<Evaluations|null>(null)
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
 const rightEntry = computed(() => {
 	let entry: number|null = null
-	const mayIdentifyRightEntry = previousExpressionEvaluated.value && previousExpressionEvaluated.value.length === 3
+	const [ unusedLeftOperand, rightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
+	const mayIdentifyRightEntry = previousExpressionEvaluated.value && rightOperand
 
-	if (mayIdentifyRightEntry) entry = Number(previousExpressionEvaluated.value[2])
+	if (mayIdentifyRightEntry) entry = Number(rightOperand)
 
 	return entry
 })
@@ -47,35 +48,6 @@ const expressionToEvaluate = computed({
 	}, set(newValue: string) {
 		previousExpressionEvaluated.value = newValue
 	}
-})
-const expressionToDisplay = computed(() => {
-	let value = `${previousEntry.value ? previousEntry.value : ""} ${operation.value ? operation.value : ""}`
-
-	switch(evaluation.value) {
-		case "=": {
-			value = `${Array.from(previousExpressionEvaluated.value).join(" ")} ${evaluation.value}`
-			break
-		}
-		case "%": {
-			if (!hasPreviousEntry.value) value = entry.value
-			else value = `${previousEntry.value} ${operation.value} ${entry.value}`
-			break
-		}
-		case "1/x": {
-			value = `1/(${previousEntry.value})`
-			break
-		}
-		case "x²": {
-			value = `sqr(${previousEntry.value})`
-			break
-		}
-		case "√": {
-			value = `√(${previousEntry.value})`
-			break
-		}
-	}
-
-	return value
 })
 const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
 
@@ -171,7 +143,12 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 			<div class="evaluation-screen-container">
 				<ExpressionScreen
 					class="screen"
-					:value-to-display="expressionToDisplay"
+					:entry="entry"
+					:evaluation="evaluation"
+					:has-previous-entry="hasPreviousEntry"
+					:operation="operation"
+					:previous-entry="previousEntry"
+					:previous-expression-evaluated="previousExpressionEvaluated"
 				/>
 			</div>
 			<div class="entry-screen-container">
@@ -280,7 +257,7 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 		.entry-screen-container {
 			@apply flex justify-end;
 
-			@apply mb-2;
+			@apply mt-2 mb-4;
 		}
 
 		.entry-screen-container .screen {
