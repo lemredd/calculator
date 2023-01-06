@@ -58,6 +58,6 @@ const expressionScreenClasses = computed(() => ({
 
 <style scoped lang="scss">
 .expression-screen.empty {
-	@apply h-8;
+	@apply h-6;
 }
 </style>
