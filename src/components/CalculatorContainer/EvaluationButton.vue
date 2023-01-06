@@ -55,6 +55,11 @@ function evaluateExpression() {
 		return Number(solvePercentage(base, percent))
 	}
 
+	function evaluateFraction() {
+		const { entry } = props
+		return 1 / Number(entry)
+	}
+
 	switch(props.value) {
 		case "=": {
 			emit("emitEvaluationResult", props.value, evaluateWithEquals())
@@ -65,6 +70,7 @@ function evaluateExpression() {
 			break
 		}
 		case "1/x": {
+			emit("emitEvaluationResult", props.value, evaluateFraction())
 			break
 		}
 		case "x²": {

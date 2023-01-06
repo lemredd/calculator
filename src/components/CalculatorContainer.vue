@@ -149,12 +149,12 @@ function setOperationValue(newOperation: Operations) {
 function evaluateExpression(evaluationMethod: Evaluations) {
 	mustClearEntryOnNextAppend.value = true
 	switch (evaluationMethod) {
-		case "1/x": {
-			previousEntry.value = Number(entry.value)
-			const quotient = 1 / previousEntry.value
-			entry.value = String(quotient)
-			break
-		}
+		// case "1/x": {
+		// 	previousEntry.value = Number(entry.value)
+		// 	const quotient = 1 / previousEntry.value
+		// 	entry.value = String(quotient)
+		// 	break
+		// }
 		case "x²": {
 			previousEntry.value = Number(entry.value)
 			const sqr = Number(entry.value) * Number(entry.value)
@@ -210,7 +210,13 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 				<CorrectionButton value="" @clear-one-digit="popOneDigit" />
 			</div>
 			<div class="row">
-				<EvaluationButton value="1/x" @append-to-screen="retrieveEvaluationResults" />
+				<EvaluationButton
+					value="1/x"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 				<EvaluationButton value="x²" @append-to-screen="retrieveEvaluationResults" />
 				<EvaluationButton value="√" @append-to-screen="retrieveEvaluationResults" />
 				<OperationalButton value="÷" @append-to-screen="setOperationValue" />
