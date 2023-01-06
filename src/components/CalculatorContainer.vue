@@ -27,9 +27,10 @@ const evaluation = ref<Evaluations|null>(null)
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
 const rightEntry = computed(() => {
 	let entry: number|null = null
-	const mayIdentifyRightEntry = previousExpressionEvaluated.value && previousExpressionEvaluated.value.length === 3
+	const [ unusedLeftOperand, rightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
+	const mayIdentifyRightEntry = previousExpressionEvaluated.value && rightOperand
 
-	if (mayIdentifyRightEntry) entry = Number(previousExpressionEvaluated.value[2])
+	if (mayIdentifyRightEntry) entry = Number(rightOperand)
 
 	return entry
 })
@@ -53,7 +54,9 @@ const expressionToDisplay = computed(() => {
 
 	switch(evaluation.value) {
 		case "=": {
-			value = `${Array.from(previousExpressionEvaluated.value).join(" ")} ${evaluation.value}`
+			const [ LeftOperand, rightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
+			const spacedExpression = `${LeftOperand} ${operation.value} ${rightOperand}`
+			value = `${spacedExpression} ${evaluation.value}`
 			break
 		}
 		case "%": {
