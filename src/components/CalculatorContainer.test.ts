@@ -97,34 +97,34 @@ describe("Component: CalculatorContainer", () => {
 
 		// Find the digit "1" button and click it
 		const digitalBtns = wrapper.findAll(".digital-button")
-		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
-		await digital1Btn.trigger("click")
-		expect(entryScrn.text()).toEqual("1")
+		const [digital4Btn] = digitalBtns.filter(btn => btn.text() === "4")
+		await digital4Btn.trigger("click")
+		expect(entryScrn.text()).toEqual("4")
 		expect(expressionScrn.text()).toEqual("")
 
 		// Find the Addition button and click it
 		const operationalBtns = wrapper.findAll(".operational-button")
 		const [additionBtn] =  operationalBtns.filter(btn => btn.text() === "+")
 		await additionBtn.trigger("click")
-		expect(expressionScrn.text()).toEqual("1 +")
+		expect(expressionScrn.text()).toEqual("4 +")
 
 		// click digit "1" button again
-		await digital1Btn.trigger("click")
+		await digital4Btn.trigger("click")
 
 		// Find the Equal button and click it
 		const evaluationBtns = wrapper.findAll(".evaluation-button")
 		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
 		await equalBtn.trigger("click")
-		expect(expressionScrn.text()).toEqual("1 + 1 =")
-		expect(entryScrn.text()).toEqual("2")
+		expect(expressionScrn.text()).toEqual("4 + 4 =")
+		expect(entryScrn.text()).toEqual("8")
 
 		// Evaluate continuously with Equal button
 		await equalBtn.trigger("click")
-		expect(expressionScrn.text()).toEqual("2 + 1 =")
-		expect(entryScrn.text()).toEqual("3")
+		expect(expressionScrn.text()).toEqual("8 + 4 =")
+		expect(entryScrn.text()).toEqual("12")
 		await equalBtn.trigger("click")
-		expect(expressionScrn.text()).toEqual("3 + 1 =")
-		expect(entryScrn.text()).toEqual("4")
+		expect(expressionScrn.text()).toEqual("12 + 4 =")
+		expect(entryScrn.text()).toEqual("16")
 	})
 
 	it("can evaluate continuously if operation is already present", async() => {
