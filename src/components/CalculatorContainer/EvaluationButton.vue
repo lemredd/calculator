@@ -65,6 +65,11 @@ function evaluateExpression() {
 		return Number(entry) * Number(entry)
 	}
 
+	function evaluateSquareRoot() {
+		const { entry } = props
+		return Math.sqrt(Number(entry))
+	}
+
 	switch(props.value) {
 		case "=": {
 			emit("emitEvaluationResult", props.value, evaluateWithEquals())
@@ -83,6 +88,7 @@ function evaluateExpression() {
 			break
 		}
 		case "√": {
+			emit("emitEvaluationResult", props.value, evaluateSquareRoot())
 			break
 		}
 	}
