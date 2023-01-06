@@ -60,6 +60,11 @@ function evaluateExpression() {
 		return 1 / Number(entry)
 	}
 
+	function evaluateSquare() {
+		const { entry } = props
+		return Number(entry) * Number(entry)
+	}
+
 	switch(props.value) {
 		case "=": {
 			emit("emitEvaluationResult", props.value, evaluateWithEquals())
@@ -74,6 +79,7 @@ function evaluateExpression() {
 			break
 		}
 		case "x²": {
+			emit("emitEvaluationResult", props.value, evaluateSquare())
 			break
 		}
 		case "√": {

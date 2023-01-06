@@ -148,12 +148,6 @@ function setOperationValue(newOperation: Operations) {
 function evaluateExpression(evaluationMethod: Evaluations) {
 	mustClearEntryOnNextAppend.value = true
 	switch (evaluationMethod) {
-		case "x²": {
-			previousEntry.value = Number(entry.value)
-			const sqr = Number(entry.value) * Number(entry.value)
-			entry.value = String(sqr)
-			break
-		}
 		case "√": {
 			previousEntry.value = Number(entry.value)
 			const sqrt = Math.sqrt(Number(entry.value))
@@ -165,10 +159,12 @@ function evaluateExpression(evaluationMethod: Evaluations) {
 
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	mustClearEntryOnNextAppend.value = true
+	const mustSaveCurrentEntry = newEvaluation === "1/x"
+	|| newEvaluation === "x²"
 
 	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
 	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
-	if (newEvaluation === "1/x") previousEntry.value = Number(entry.value)
+	if (mustSaveCurrentEntry) previousEntry.value = Number(entry.value)
 
 	evaluation.value = newEvaluation
 	previousResult.value = String(result)
@@ -214,7 +210,13 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
 					@emit-evaluation-result="retrieveEvaluationResults"
 				/>
-				<EvaluationButton value="x²" @append-to-screen="retrieveEvaluationResults" />
+				<EvaluationButton
+					value="x²"
+					:entry="entry"
+					:expression-to-evaluate="expressionToEvaluate"
+					:expression-and-previous-result-information="expressionAndPreviousResultInformation"
+					@emit-evaluation-result="retrieveEvaluationResults"
+				/>
 				<EvaluationButton value="√" @append-to-screen="retrieveEvaluationResults" />
 				<OperationalButton value="÷" @append-to-screen="setOperationValue" />
 			</div>
