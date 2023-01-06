@@ -49,37 +49,6 @@ const expressionToEvaluate = computed({
 		previousExpressionEvaluated.value = newValue
 	}
 })
-const expressionToDisplay = computed(() => {
-	let value = `${previousEntry.value ? previousEntry.value : ""} ${operation.value ? operation.value : ""}`
-
-	switch(evaluation.value) {
-		case "=": {
-			const [ LeftOperand, rightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
-			const spacedExpression = `${LeftOperand} ${operation.value} ${rightOperand}`
-			value = `${spacedExpression} ${evaluation.value}`
-			break
-		}
-		case "%": {
-			if (!hasPreviousEntry.value) value = entry.value
-			else value = `${previousEntry.value} ${operation.value} ${entry.value}`
-			break
-		}
-		case "1/x": {
-			value = `1/(${previousEntry.value})`
-			break
-		}
-		case "x²": {
-			value = `sqr(${previousEntry.value})`
-			break
-		}
-		case "√": {
-			value = `√(${previousEntry.value})`
-			break
-		}
-	}
-
-	return value
-})
 const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
 
 const expressionAndPreviousResultInformation = reactive({
@@ -174,7 +143,12 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 			<div class="evaluation-screen-container">
 				<ExpressionScreen
 					class="screen"
-					:value-to-display="expressionToDisplay"
+					:entry="entry"
+					:evaluation="evaluation"
+					:has-previous-entry="hasPreviousEntry"
+					:operation="operation"
+					:previous-entry="previousEntry"
+					:previous-expression-evaluated="previousExpressionEvaluated"
 				/>
 			</div>
 			<div class="entry-screen-container">
