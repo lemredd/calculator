@@ -103,7 +103,10 @@ function clearAll(mustClearPreviousResult = true) {
 	previousEntry.value = 0
 	operation.value = null
 	evaluation.value = null
-	if (mustClearPreviousResult) previousResult.value = "0"
+	if (mustClearPreviousResult) {
+		previousResult.value = "0"
+		previousExpressionEvaluated.value = ""
+	}
 }
 
 function alterEntrySign() {
