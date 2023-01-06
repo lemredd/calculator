@@ -257,7 +257,7 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 		.entry-screen-container {
 			@apply flex justify-end;
 
-			@apply mb-2;
+			@apply mt-2 mb-4;
 		}
 
 		.entry-screen-container .screen {
