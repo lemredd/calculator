@@ -172,4 +172,29 @@ describe("Component: CalculatorContainer/EvaluationButton", () => {
 		const expectedEvaluationResult = entry * entry
 		expect(expectedEmission).toHaveProperty("0.1", expectedEvaluationResult)
 	})
+
+	it("can obtain square root of given entry", async() => {
+		const expressionAndPreviousResultInformation = {
+			"hasSavedPreviousResult": false,
+			"operation": null,
+			"previousEntry": null,
+			"previousResult": "0",
+			"rightEntry": null
+		}
+		const wrapper = shallowMount(Component, {
+			"props": {
+				"entry": "9",
+				expressionAndPreviousResultInformation,
+				"expressionToEvaluate": "",
+				"value": "√"
+			}
+		})
+		const evaluationBtn = wrapper.find(".evaluation-button")
+		await evaluationBtn.trigger("click")
+
+		const expectedEmission = wrapper.emitted("emitEvaluationResult")
+		const { entry } = wrapper.props()
+		const expectedEvaluationResult = Math.sqrt(entry)
+		expect(expectedEmission).toHaveProperty("0.1", expectedEvaluationResult)
+	})
 })
