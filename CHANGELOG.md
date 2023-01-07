@@ -1,3 +1,90 @@
+### 0.4.0 (2023-01-07)
+
+##### Chores
+
+* **ui:**
+  *  adjust margin (f2b9f4b9)
+  *  give distinct class (96112d38)
+* **config:**
+  *  warn `max-lines` (d7f01f16)
+  *  resolve aliases in component unit tests (b1c94061)
+* **component:**  prepare cases (e0ece906)
+* **intg:**
+  *  rename method (19b03afc)
+  *  rename state to clear entry (050717c1)
+  *  rename a computed state (e4a4cb6f)
+
+##### New Features
+
+* **intg:**
+  *  use `previousResult` as `previousEntry` (cc616ac5)
+  *  allow incomplete operand evaluation (e1cb9dbf)
+
+##### Bug Fixes
+
+* **ui:**
+  *  adjust height (52b64283)
+  *  remove absolution of container (7dd2974f)
+* **intg:**
+  *  split operands in previous expression (fd8ea5f9)
+  *  clear `previousExpression` (ef7ab17f)
+  *  save `previousEntry` conditionally (112b3687)
+  *  provide missing prop (7af96479)
+  *  update expression (9920a6dd)
+  *  clear `entry` on `operation` modification (1d6fb6a6)
+  *  use different condition (2db0a9a4)
+  *  use `entry` in `%` evaluation (911d8cee)
+  *  use `previousEntry` and `operation` (926eaa86)
+  *  save `previousExpression` conditionally (1e610ce3)
+  *  nullify entry containers (fc73c286)
+  *  save `expressionToEvaluate` (36b37b9b)
+
+##### Refactors
+
+* **component:**
+  *  split `expressionToDisplay` (b5fe50f4)
+  *  evaluate square root (ce73b9bd)
+  *  evaluate square (9fa28a85)
+  *  evaluate fraction (291a40a0)
+  *  evaluate percentage (79b851cb)
+  *  evaluate with equals (5d2d32ea)
+  *  use information from parent (b5d3a76c)
+  *  evaluate result (44e90583)
+* **helper:**  split function into own file (e982c00f)
+* **intg:**
+  *  make `rightEntry` computed (95adf847)
+  *  pass `expressionToEvaluate` (9b7af59f)
+  *  unclear `previousResult` optionally (e82d2735)
+  *  evaluate continuously (f29360f6)
+  *  make a computed value writable (3dadaf00)
+  *  save `previousExpressionEvaluated` (6773d967)
+  *  remove redundant conditioner (73bf3649)
+  *  remove `mustResetOnNextEntry` (b937bd64)
+  *  remove `rightEntry` (d91404f2)
+* **ui:**  give distinct class (1ab03fb8)
+
+##### Tests
+
+* **component:**
+  *  ensure expression to display (ba9d2ce1)
+  *  ensure square root evaluation (54a11cf1)
+  *  ensure square evaluation (48e2e967)
+  *  ensure fraction evaluation (ff10b039)
+  *  ensure percentage evaluation (039414d2)
+  *  ensure percentage evaluation (5a4375e0)
+  *  provide missing props (46e8e11a)
+  *  ensure continuous evaluation (ade4c481)
+  *  ensure evaluation result emission (a9f10d9e)
+  *  ensure distinct class (bd6cff9c)
+* **intg:**
+  *  change digital button to click (be347457)
+  *  rephrase some comment descriptions (2e5fe4f9)
+  *  ensure `previousResult` as `previousEntry` (d2cf764c)
+  *  ensure incomplete operand evaluation (225262e1)
+  *  rename description properly (8a9ed2d7)
+  *  split continuous evaluation (c13eebf0)
+* **config:**  resolve aliases (14bca696)
+
 ### 0.3.0 (2023-01-01)
 
 #### 0.2.2 (2022-12-27)
