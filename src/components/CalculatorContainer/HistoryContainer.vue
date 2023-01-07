@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
+import { Operations } from "@/types/buttons"
+
 interface HistoryItem {
 	leftEntry: number
-	operation: string
+	operation: Operations
 	rightEntry: number
 }
 interface Props {
@@ -14,6 +16,10 @@ defineProps<Props>()
 const isShowingHistoryList = ref(false)
 function toggleHistoryList() {
 	isShowingHistoryList.value = !isShowingHistoryList.value
+}
+
+function joinHistoryItemParts(historyItem: HistoryItem) {
+	return `${historyItem.leftEntry} ${historyItem.operation} ${ historyItem.rightEntry}`
 }
 
 // interface CustomEvents {
@@ -36,9 +42,10 @@ function toggleHistoryList() {
 		>
 			<li
 				v-for="item in historyList"
-				:key="item"
+				:key="joinHistoryItemParts(item)"
+				class="history-item"
 			>
-				{{ }}
+				{{ joinHistoryItemParts(item) }} =
 			</li>
 		</ul>
 
