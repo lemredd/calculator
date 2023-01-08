@@ -4,14 +4,19 @@ import { ref } from "vue"
 import { Operations } from "@/types/buttons"
 
 interface HistoryItem {
-	leftEntry: number
+	leftOperand: number
 	operation: Operations
-	rightEntry: number
+	rightOperand: number
 }
 interface Props {
 	historyList: HistoryItem[]
 }
 defineProps<Props>()
+
+interface CustomEvents {
+	(event: "revertToChosenHistory", historyItem: HistoryItem): void
+}
+const emit = defineEmits<CustomEvents>()
 
 const isShowingHistoryList = ref(false)
 function toggleHistoryList() {
@@ -19,12 +24,12 @@ function toggleHistoryList() {
 }
 
 function joinHistoryItemParts(historyItem: HistoryItem) {
-	return `${historyItem.leftEntry} ${historyItem.operation} ${ historyItem.rightEntry}`
+	return `${historyItem.leftOperand} ${historyItem.operation} ${ historyItem.rightOperand}`
 }
 
-// interface CustomEvents {
-// 	(event: "appendToScreen", valueToAppend: MemoryOperations): void
-// }
+function revertToChosenHistory(historyItem: HistoryItem) {
+	emit("revertToChosenHistory", historyItem)
+}
 </script>
 
 <template>
@@ -44,6 +49,7 @@ function joinHistoryItemParts(historyItem: HistoryItem) {
 				v-for="item in historyList"
 				:key="joinHistoryItemParts(item)"
 				class="history-item"
+				@click="revertToChosenHistory(item)"
 			>
 				{{ joinHistoryItemParts(item) }} =
 			</li>
