@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-import { Operations } from "@/types/buttons"
+import { HistoryItem, HistoryList } from "@/types/history"
 
-interface HistoryItem {
-	leftOperand: number
-	operation: Operations
-	rightOperand: number
-}
 interface Props {
-	historyList: HistoryItem[]
+	historyList: HistoryList
 }
 defineProps<Props>()
 
