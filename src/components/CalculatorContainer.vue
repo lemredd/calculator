@@ -151,6 +151,14 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	previousResult.value = String(result)
 
 	entry.value = String(result)
+	addToHistoryList()
+}
+
+function revertToChosenHistory(historyItem: HistoryItem) {
+	const { leftOperand, "operation": operationFromHistory, rightOperand } = historyItem
+	evaluation.value = "="
+	previousExpressionEvaluated.value = `${leftOperand}${operationFromHistory}${rightOperand}`
+	entry.value = String(evaluate(previousExpressionEvaluated.value))
 }
 </script>
 
