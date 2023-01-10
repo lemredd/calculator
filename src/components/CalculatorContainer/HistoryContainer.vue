@@ -2,6 +2,7 @@
 import { ref } from "vue"
 
 import { HistoryItem, HistoryList } from "@/types/history"
+import joinHistoryItemParts from "@/CalculatorContainer/HistoryContainer/helpers/joinHistoryItemParts"
 
 interface Props {
 	historyList: HistoryList
@@ -16,10 +17,6 @@ const emit = defineEmits<CustomEvents>()
 const isShowingHistoryList = ref(false)
 function toggleHistoryList() {
 	isShowingHistoryList.value = !isShowingHistoryList.value
-}
-
-function joinHistoryItemParts(historyItem: HistoryItem) {
-	return `${historyItem.leftOperand} ${historyItem.operation} ${ historyItem.rightOperand}`
 }
 
 function revertToChosenHistory(historyItem: HistoryItem) {
