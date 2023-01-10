@@ -1,6 +1,10 @@
 /* eslint-disable max-lines */
 import { mount } from "@vue/test-utils"
 
+import { Operations } from "@/types/buttons"
+
+import evaluate from "@/CalculatorContainer/helpers/evaluate"
+
 import Component from "./CalculatorContainer.vue"
 
 describe("Component: CalculatorContainer", () => {
@@ -366,6 +370,7 @@ describe("Component: CalculatorContainer", () => {
 		await decimalBtn.trigger("click")
 		expect(entryScrn.text()).toEqual("25.")
 	})
+
 	it("can add to history list", async() => {
 		const wrapper = mount(Component)
 
@@ -394,5 +399,44 @@ describe("Component: CalculatorContainer", () => {
 			"rightOperand": 1
 		}
 		expect(wrapperInternals.historyList).toContainEqual(expectedHistoryItem)
+	})
+
+	it("can revert to chosen history", async() => {
+		const wrapper = mount(Component)
+		const entryScrn = wrapper.find(".entry-screen")
+		const expressionScrn = wrapper.find(".expression-screen")
+
+		// Find the digit "1" button and click it
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
+		await digital1Btn.trigger("click")
+
+		// Find the Addition button and click it
+		const operationalBtns = wrapper.findAll(".operational-button")
+		const [additionBtn] =  operationalBtns.filter(btn => btn.text() === "+")
+		await additionBtn.trigger("click")
+
+		// click digit "1" button again
+		await digital1Btn.trigger("click")
+
+		// Find the Equal button and click it
+		const evaluationBtns = wrapper.findAll(".evaluation-button")
+		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
+		await equalBtn.trigger("click")
+
+		const historyItem = {
+			"leftOperand": 1,
+			"operation": "+" as Operations,
+			"rightOperand": 1
+		}
+		const historyContainer = wrapper.find(".history-container")
+		const [historyItem1] = historyContainer.findAll(".history-item")
+		await historyItem1.trigger("click")
+
+		const joinedHistoryitemParts = `${historyItem.leftOperand} ${historyItem.operation} ${historyItem.rightOperand}`
+		const expectedExpressionTextValue = `${joinedHistoryitemParts} =`
+		const expectedResult = evaluate(joinedHistoryitemParts)
+		expect(expressionScrn.text()).toEqual(expectedExpressionTextValue)
+		expect(entryScrn.text()).toEqual(String(expectedResult))
 	})
 })
