@@ -52,7 +52,7 @@ const expressionToEvaluate = computed({
 		previousExpressionEvaluated.value = newValue
 	}
 })
-const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
+const hasSavedPreviousResult = computed(() => previousResult.value === entry.value && mustClearEntryOnNextAppend.value)
 
 const expressionAndPreviousResultInformation = reactive({
 	hasSavedPreviousResult,
@@ -75,7 +75,7 @@ function clearEntryScreen() {
 }
 function clearAll(mustClearPreviousResult = true) {
 	entry.value = ""
-	previousEntry.value = 0
+	previousEntry.value = null
 	operation.value = null
 	evaluation.value = null
 	if (mustClearPreviousResult) {
@@ -105,7 +105,7 @@ function appendToEntryScreen(valueToAppend: Entries) {
 
 function setOperationValue(newOperation: Operations) {
 	if (!operation.value) {
-		if (!previousEntry.value) previousEntry.value = Number(entry.value)
+		if (previousEntry.value === null) previousEntry.value = Number(entry.value)
 		clearEntryScreen()
 	} else if (!mustClearEntryOnNextAppend.value) {
 		const expressionToEvaluateEagerly = `${previousEntry.value}${operation.value}${entry.value}`
