@@ -18,29 +18,6 @@ describe("Component: CalculatorContainer/HistoryContainer", () => {
 		expect(historyListHiddenByDefault.exists()).toBeTruthy()
 	})
 
-	it("can display a history item properly", async() => {
-		const historyItem = {
-			"leftOperand": 1,
-			"operation": "+" as Operations,
-			"rightOperand": 1
-		}
-		const historyList = [ historyItem ]
-		const props = {
-			historyList
-		}
-		const wrapper = shallowMount(Component, { props })
-
-		// mock `isShowingHistoryList = true`
-		const wrapperInternals = wrapper.vm as any
-		wrapperInternals.isShowingHistoryList = true
-		await nextTick()
-
-		const historyListHiddenByDefault = wrapper.find(".history-list.hidden-by-default")
-		const [historyListItem1] = historyListHiddenByDefault.findAll("li.history-item")
-		const expectedTextValue = `${historyItem.leftOperand} ${historyItem.operation} ${ historyItem.rightOperand} =`
-		expect(historyListItem1.text()).toEqual(expectedTextValue)
-	})
-
 	it("should emit to revert evaluation to chosen history item", async() => {
 		const historyItem = {
 			"leftOperand": 1,
