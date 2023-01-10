@@ -28,7 +28,7 @@ describe("Component: CalculatorContainer/HistoryContainer", () => {
 		const props = {
 			historyList
 		}
-		const wrapper = shallowMount(Component, { props })
+		const wrapper = shallowMount(Component,{ props })
 
 		// mock `isShowingHistoryList = true`
 		const wrapperInternals = wrapper.vm as any
@@ -36,7 +36,7 @@ describe("Component: CalculatorContainer/HistoryContainer", () => {
 		await nextTick()
 
 		const historyListHiddenByDefault = wrapper.find(".history-list.hidden-by-default")
-		const [historyListItem1] = historyListHiddenByDefault.findAll("li.history-item")
+		const [historyListItem1] = historyListHiddenByDefault.findAllComponents({ "name": "HistoryListItem" })
 		await historyListItem1.trigger("click")
 
 		const expectedEmission = wrapper.emitted("revertToChosenHistory")
