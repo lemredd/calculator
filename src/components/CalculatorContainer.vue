@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue"
 
+import type { HistoryItem, HistoryList } from "@/types/history"
 import type {
 	Entries,
 	Operations,
@@ -14,6 +15,7 @@ import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
 import ExpressionScreen from "@/CalculatorContainer/ExpressionScreen.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
 import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
+import HistoryContainer from "@/CalculatorContainer/HistoryContainer.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const entry = ref("")
@@ -23,6 +25,7 @@ const operation = ref<Operations|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
+const historyList = ref<HistoryList>([])
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
 const rightEntry = computed(() => {
@@ -120,6 +123,20 @@ function setOperationValue(newOperation: Operations) {
 	operation.value = newOperation
 }
 
+function addToHistoryList() {
+	const [
+		leftOperand,
+		rightOperand
+	] = previousExpressionEvaluated.value.split(operation.value as Operations)
+	const historyItem = {
+		"leftOperand": Number(leftOperand),
+		"operation": operation.value as Operations,
+		"rightOperand": Number(rightOperand)
+	}
+
+	historyList.value.push(historyItem)
+}
+
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	mustClearEntryOnNextAppend.value = true
 	const mustSaveCurrentEntry = newEvaluation === "1/x"
@@ -134,11 +151,23 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	previousResult.value = String(result)
 
 	entry.value = String(result)
+	addToHistoryList()
+}
+
+function revertToChosenHistory(historyItem: HistoryItem) {
+	const { leftOperand, "operation": operationFromHistory, rightOperand } = historyItem
+	evaluation.value = "="
+	previousExpressionEvaluated.value = `${leftOperand}${operationFromHistory}${rightOperand}`
+	entry.value = String(evaluate(previousExpressionEvaluated.value))
 }
 </script>
 
 <template>
 	<div class="calculator-container">
+		<HistoryContainer
+			:history-list="historyList"
+			@revert-to-chosen-history="revertToChosenHistory"
+		/>
 		<div class="screens">
 			<div class="evaluation-screen-container">
 				<ExpressionScreen
@@ -229,47 +258,47 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 </template>
 
 <style lang="scss">
-	button {
-		@apply m-[1px] px-2 py-1;
-		@apply border border-neutral-800 rounded-md;
-		@apply text-xl text-neutral-800;
-	}
+button:not(.no-border) {
+	@apply m-[1px] px-2 py-1;
+	@apply border border-neutral-800 rounded-md;
+	@apply text-xl text-neutral-800;
+}
 
-	.common-buttons .row button {
-		@apply flex flex-1 justify-center items-center;
-	}
+.common-buttons .row button {
+	@apply flex flex-1 justify-center items-center;
+}
 </style>
 
 <style scoped lang="scss">
-	.calculator-container {
-		@apply p-1;
-		@apply flex flex-col justify-between;
-		min-height: 100vh;
+.calculator-container {
+	@apply p-1;
+	@apply flex flex-col justify-between;
+	min-height: 100vh;
+}
+
+.screens {
+	position: relative;
+
+	.evaluation-screen-container {
+		@apply flex justify-end;
 	}
 
-	.screens {
-		position: relative;
+	.entry-screen-container {
+		@apply flex justify-end;
 
-		.evaluation-screen-container {
-			@apply flex justify-end;
-		}
-
-		.entry-screen-container {
-			@apply flex justify-end;
-
-			@apply mt-2 mb-4;
-		}
-
-		.entry-screen-container .screen {
-			@apply text-4xl;
-		}
+		@apply mt-2 mb-4;
 	}
 
-	.common-buttons {
-		@apply flex flex-1 flex-col;
-
-		.row {
-			@apply flex flex-1;
-		}
+	.entry-screen-container .screen {
+		@apply text-4xl;
 	}
+}
+
+.common-buttons {
+	@apply flex flex-1 flex-col;
+
+	.row {
+		@apply flex flex-1;
+	}
+}
 </style>
