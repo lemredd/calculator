@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from "vue"
 
+import type { HistoryItem, HistoryList } from "@/types/history"
 import type {
 	Entries,
 	Operations,
@@ -14,6 +15,7 @@ import DigitalButton from "@/CalculatorContainer/DigitalButton.vue"
 import ExpressionScreen from "@/CalculatorContainer/ExpressionScreen.vue"
 import EvaluationButton from "@/CalculatorContainer/EvaluationButton.vue"
 import CorrectionButton from "@/CalculatorContainer/CorrectionButton.vue"
+import HistoryContainer from "@/CalculatorContainer/HistoryContainer.vue"
 import OperationalButton from "@/CalculatorContainer/OperationalButton.vue"
 
 const entry = ref("")
@@ -23,6 +25,7 @@ const operation = ref<Operations|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
+const historyList = ref<HistoryList>([])
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
 const rightEntry = computed(() => {
@@ -120,6 +123,20 @@ function setOperationValue(newOperation: Operations) {
 	operation.value = newOperation
 }
 
+function addToHistoryList() {
+	const [
+		leftOperand,
+		rightOperand
+	] = previousExpressionEvaluated.value.split(operation.value as Operations)
+	const historyItem = {
+		"leftOperand": Number(leftOperand),
+		"operation": operation.value as Operations,
+		"rightOperand": Number(rightOperand)
+	}
+
+	historyList.value.push(historyItem)
+}
+
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	mustClearEntryOnNextAppend.value = true
 	const mustSaveCurrentEntry = newEvaluation === "1/x"
@@ -139,6 +156,10 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 
 <template>
 	<div class="calculator-container">
+		<HistoryContainer
+			:history-list="historyList"
+			@revert-to-chosen-history="revertToChosenHistory"
+		/>
 		<div class="screens">
 			<div class="evaluation-screen-container">
 				<ExpressionScreen
