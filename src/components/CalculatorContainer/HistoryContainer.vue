@@ -72,4 +72,37 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 
 <style scoped lang="scss">
 	@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0";
+
+	.show-history-btn {
+		z-index: 999;
+		position: fixed;
+	}
+
+	.overlay {
+		@apply bg-neutral-900/50;
+		content: "";
+		position: fixed;
+		inset: 0;
+
+		z-index: 100;
+	}
+
+	.history-list {
+		.history-list-header {
+			@apply flex items-center justify-between;
+		}
+	}
+
+	.history-list.hidden-by-default {
+		@apply p-4;
+		@apply rounded-t-sm;
+		@apply bg-white;
+
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+
+		z-index: 101;
+	}
 </style>
