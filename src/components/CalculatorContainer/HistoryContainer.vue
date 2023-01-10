@@ -4,6 +4,8 @@ import { ref } from "vue"
 import { HistoryItem, HistoryList } from "@/types/history"
 import joinHistoryItemParts from "@/CalculatorContainer/HistoryContainer/helpers/joinHistoryItemParts"
 
+import HistoryListItem from "@/CalculatorContainer/HistoryContainer/HistoryItem.vue"
+
 interface Props {
 	historyList: HistoryList
 }
@@ -37,14 +39,12 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			v-if="isShowingHistoryList"
 			class="history-list hidden-by-default"
 		>
-			<li
+			<HistoryListItem
 				v-for="item in historyList"
 				:key="joinHistoryItemParts(item)"
-				class="history-item"
+				:history-item="item"
 				@click="revertToChosenHistory(item)"
-			>
-				{{ joinHistoryItemParts(item) }} =
-			</li>
+			/>
 		</ul>
 
 		<ul class="history-list shown-by-default">
