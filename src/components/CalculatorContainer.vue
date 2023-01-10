@@ -258,47 +258,47 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 </template>
 
 <style lang="scss">
-	button:not(.no-border) {
-		@apply m-[1px] px-2 py-1;
-		@apply border border-neutral-800 rounded-md;
-		@apply text-xl text-neutral-800;
-	}
+button:not(.no-border) {
+	@apply m-[1px] px-2 py-1;
+	@apply border border-neutral-800 rounded-md;
+	@apply text-xl text-neutral-800;
+}
 
-	.common-buttons .row button {
-		@apply flex flex-1 justify-center items-center;
-	}
+.common-buttons .row button {
+	@apply flex flex-1 justify-center items-center;
+}
 </style>
 
 <style scoped lang="scss">
-	.calculator-container {
-		@apply p-1;
-		@apply flex flex-col justify-between;
-		min-height: 100vh;
+.calculator-container {
+	@apply p-1;
+	@apply flex flex-col justify-between;
+	min-height: 100vh;
+}
+
+.screens {
+	position: relative;
+
+	.evaluation-screen-container {
+		@apply flex justify-end;
 	}
 
-	.screens {
-		position: relative;
+	.entry-screen-container {
+		@apply flex justify-end;
 
-		.evaluation-screen-container {
-			@apply flex justify-end;
-		}
-
-		.entry-screen-container {
-			@apply flex justify-end;
-
-			@apply mt-2 mb-4;
-		}
-
-		.entry-screen-container .screen {
-			@apply text-4xl;
-		}
+		@apply mt-2 mb-4;
 	}
 
-	.common-buttons {
-		@apply flex flex-1 flex-col;
-
-		.row {
-			@apply flex flex-1;
-		}
+	.entry-screen-container .screen {
+		@apply text-4xl;
 	}
+}
+
+.common-buttons {
+	@apply flex flex-1 flex-col;
+
+	.row {
+		@apply flex flex-1;
+	}
+}
 </style>
