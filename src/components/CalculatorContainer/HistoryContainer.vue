@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 import { HistoryItem, HistoryList } from "@/types/history"
 import joinHistoryItemParts from "@/CalculatorContainer/HistoryContainer/helpers/joinHistoryItemParts"
@@ -9,13 +9,14 @@ import HistoryListItem from "@/CalculatorContainer/HistoryContainer/HistoryItem.
 interface Props {
 	historyList: HistoryList
 }
-defineProps<Props>()
+const props = defineProps<Props>()
 
 interface CustomEvents {
 	(event: "revertToChosenHistory", historyItem: HistoryItem): void
 }
 const emit = defineEmits<CustomEvents>()
 
+const hasHistoryItems = computed(() => Boolean(props.historyList.length))
 const isShowingHistoryList = ref(false)
 function toggleHistoryList() {
 	isShowingHistoryList.value = !isShowingHistoryList.value
@@ -46,22 +47,20 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			v-if="isShowingHistoryList"
 			class="history-list hidden-by-default"
 		>
-			<div class="history-list-header">
-				<span class="header-text">History</span>
-				<button
-					class="material-symbols-outlined close-btn no-border"
-					@click="toggleHistoryList"
-				>
-					close
-				</button>
+			<span class="header-text">History</span>
+			<div v-if="hasHistoryItems" class="has-history-items">
+				<HistoryListItem
+					v-for="item in historyList"
+					:key="joinHistoryItemParts(item)"
+					:history-item="item"
+					class="list-item"
+					@click="revertToChosenHistory(item)"
+				/>
 			</div>
-			<HistoryListItem
-				v-for="item in historyList"
-				:key="joinHistoryItemParts(item)"
-				:history-item="item"
-				class="list-item"
-				@click="revertToChosenHistory(item)"
-			/>
+
+			<div v-else class="no-history-items">
+				No history yet.
+			</div>
 		</ul>
 
 		<ul class="history-list shown-by-default">
@@ -87,15 +86,13 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 	z-index: 100;
 }
 
-.history-list {
-	.history-list-header {
-		@apply flex items-center justify-between;
-	}
+.header-text {
+	@apply font-bold;
 }
 
 .history-list.hidden-by-default {
-	@apply p-4;
-	@apply rounded-t-sm;
+	@apply p-2;
+	@apply rounded-t-md border border-black;
 	@apply bg-white;
 
 	position: fixed;
