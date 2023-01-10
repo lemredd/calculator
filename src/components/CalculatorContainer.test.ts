@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { mount } from "@vue/test-utils"
 
 import Component from "./CalculatorContainer.vue"
