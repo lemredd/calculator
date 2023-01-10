@@ -23,26 +23,43 @@ function toggleHistoryList() {
 
 function revertToChosenHistory(historyItem: HistoryItem) {
 	emit("revertToChosenHistory", historyItem)
+	toggleHistoryList()
 }
 </script>
 
 <template>
 	<div class="history-container">
 		<button
-			class="material-symbols-outlined show-history-btn"
+			class="material-symbols-outlined show-history-btn no-border"
 			@click="toggleHistoryList"
 		>
 			history
 		</button>
 
+		<div
+			v-if="isShowingHistoryList"
+			class="overlay"
+			@click="toggleHistoryList"
+		/>
+
 		<ul
 			v-if="isShowingHistoryList"
 			class="history-list hidden-by-default"
 		>
+			<div class="history-list-header">
+				<span class="header-text">History</span>
+				<button
+					class="material-symbols-outlined close-btn no-border"
+					@click="toggleHistoryList"
+				>
+					close
+				</button>
+			</div>
 			<HistoryListItem
 				v-for="item in historyList"
 				:key="joinHistoryItemParts(item)"
 				:history-item="item"
+				class="list-item"
 				@click="revertToChosenHistory(item)"
 			/>
 		</ul>
