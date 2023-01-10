@@ -258,7 +258,7 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 </template>
 
 <style lang="scss">
-	button {
+	button:not(.no-border) {
 		@apply m-[1px] px-2 py-1;
 		@apply border border-neutral-800 rounded-md;
 		@apply text-xl text-neutral-800;
