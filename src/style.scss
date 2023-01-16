@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	@apply flex;
+
+	#app {
+		@apply flex-1;
+		max-width: 768px;
+	}
+
+	#history-container-shown-by-default {
+		display: none;
+	}
+
+	@screen md {
+		#app {
+			max-width: 640px;
+		}
+
+		#history-container-shown-by-default {
+			display: block;
+		}
+
+	}
+}
+
+
 button:not(.no-border) {
 	@apply m-[1px] px-2 py-1;
 	@apply border border-neutral-800 rounded-md;
