@@ -1,3 +1,51 @@
+### 0.5.0 (2023-01-14)
+
+##### Chores
+
+* **lint:**  disable `max-lines` (cae92e28)
+
+##### New Features
+
+* **ui:**
+  *  display empty `historyList` (8a95d930)
+  *  exclude `no-border` buttons (c7cf18e0)
+  *  add some styles (65e201cb)
+  *  add overlay (9531f011)
+  *  add some styles (a46631dc)
+* **intg:**
+  *  revert to chosen history (09ecafd3)
+  *  add to history list (25d91e9c)
+* **component:**
+  *  revert to chosen history (c013b6a1)
+  *  display history item properly (986b53bc)
+  *  allow toggling of history list (08b399bb)
+
+##### Refactors
+
+* **component:**
+  *  use `historyItem` (fcf5bbe9)
+  *  split `historyItem` (1febe7d7)
+* **helpers:**  split into separate file (21893ee0)
+* **types:**  split into separate file (c555f553)
+
+##### Code Style Changes
+
+* **intg:**  reduce tabs of `<style>` lines (2acf1521)
+* **component:**  reduce tabs of `<style>` lines (fc737db9)
+
+##### Tests
+
+* **intg:**
+  *  ensure reverting to chosen history (a7f44255)
+  *  ensure adding to history list (8a95c09a)
+* **component:**
+  *  ensure stubbed component (338eea98)
+  *  test `historyItem` proper display (4b1e85ad)
+  *  ensure chosen history reversion (dc34cd57)
+  *  ensure history items display (e0d51029)
+  *  ensure toggling of history list (e957da0f)
+* **helpers:**  ensure joining `historyItem` parts (5b3c00ea)
+
 ### 0.4.0 (2023-01-07)
 
 ##### Chores
