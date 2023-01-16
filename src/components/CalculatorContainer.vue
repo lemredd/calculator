@@ -25,18 +25,10 @@ const operation = ref<Operations|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
+const lastPassedEntry = ref<number|null>(null)
 const historyList = ref<HistoryList>([])
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
-const rightEntry = computed(() => {
-	let entry: number|null = null
-	const [ unusedLeftOperand, rightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
-	const mayIdentifyRightEntry = previousExpressionEvaluated.value && rightOperand
-
-	if (mayIdentifyRightEntry) entry = Number(rightOperand)
-
-	return entry
-})
 const expressionToEvaluate = computed({
 	get() {
 		let value = ""
@@ -59,7 +51,7 @@ const expressionAndPreviousResultInformation = reactive({
 	operation,
 	previousEntry,
 	previousResult,
-	rightEntry
+	rightEntry: lastPassedEntry
 })
 
 function popOneDigit() {
@@ -143,8 +135,12 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	|| newEvaluation === "x²"
 	|| newEvaluation === "√"
 
-	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
-	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
+	previousExpressionEvaluated.value = expressionToEvaluate.value
+	if (!lastPassedEntry.value) {
+		const [ leftOperand, unusedRightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
+		lastPassedEntry.value = Number(leftOperand)
+	}
+	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${lastPassedEntry.value}`
 	if (mustSaveCurrentEntry) previousEntry.value = Number(entry.value)
 
 	evaluation.value = newEvaluation
