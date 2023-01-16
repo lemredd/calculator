@@ -15,7 +15,10 @@ describe("Component: CalculatorContainer", () => {
 
 		// Find the digit "1" button and click it
 		const digitalBtns = wrapper.findAll(".digital-button")
-		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
+		const [digital1Btn, digital2Btn] = digitalBtns.filter(
+			btn => btn.text() === "1"
+			|| btn.text() === "2"
+		)
 		await digital1Btn.trigger("click")
 		expect(entryScrn.text()).toEqual("1")
 		expect(expressionScrn.text()).toEqual("")
@@ -35,6 +38,15 @@ describe("Component: CalculatorContainer", () => {
 		await equalBtn.trigger("click")
 		expect(expressionScrn.text()).toEqual("1 + 1 =")
 		expect(entryScrn.text()).toEqual("2")
+
+		await digital2Btn.trigger("click")
+		expect(entryScrn.text()).toEqual("2")
+		await additionBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 +")
+		await digital1Btn.trigger("click")
+		await equalBtn.trigger("click")
+		expect(expressionScrn.text()).toEqual("2 + 1 =")
+		expect(entryScrn.text()).toEqual("3")
 	})
 
 	it("can evaluate with incomplete operands", async() => {

@@ -25,18 +25,10 @@ const operation = ref<Operations|null>(null)
 const previousResult = ref("0")
 const previousExpressionEvaluated = ref("")
 const evaluation = ref<Evaluations|null>(null)
+const lastPassedEntry = ref<number|null>(null)
 const historyList = ref<HistoryList>([])
 
 const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
-const rightEntry = computed(() => {
-	let entry: number|null = null
-	const [ unusedLeftOperand, rightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
-	const mayIdentifyRightEntry = previousExpressionEvaluated.value && rightOperand
-
-	if (mayIdentifyRightEntry) entry = Number(rightOperand)
-
-	return entry
-})
 const expressionToEvaluate = computed({
 	get() {
 		let value = ""
@@ -52,14 +44,14 @@ const expressionToEvaluate = computed({
 		previousExpressionEvaluated.value = newValue
 	}
 })
-const hasSavedPreviousResult = computed(() => previousResult.value === entry.value)
+const hasSavedPreviousResult = computed(() => previousResult.value === entry.value && mustClearEntryOnNextAppend.value)
 
 const expressionAndPreviousResultInformation = reactive({
 	hasSavedPreviousResult,
 	operation,
 	previousEntry,
 	previousResult,
-	rightEntry
+	rightEntry: lastPassedEntry
 })
 
 function popOneDigit() {
@@ -75,7 +67,7 @@ function clearEntryScreen() {
 }
 function clearAll(mustClearPreviousResult = true) {
 	entry.value = ""
-	previousEntry.value = 0
+	previousEntry.value = null
 	operation.value = null
 	evaluation.value = null
 	if (mustClearPreviousResult) {
@@ -105,7 +97,7 @@ function appendToEntryScreen(valueToAppend: Entries) {
 
 function setOperationValue(newOperation: Operations) {
 	if (!operation.value) {
-		if (!previousEntry.value) previousEntry.value = Number(entry.value)
+		if (previousEntry.value === null) previousEntry.value = Number(entry.value)
 		clearEntryScreen()
 	} else if (!mustClearEntryOnNextAppend.value) {
 		const expressionToEvaluateEagerly = `${previousEntry.value}${operation.value}${entry.value}`
@@ -143,8 +135,12 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	|| newEvaluation === "x²"
 	|| newEvaluation === "√"
 
-	if (!previousExpressionEvaluated.value) previousExpressionEvaluated.value = expressionToEvaluate.value
-	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${rightEntry.value}`
+	previousExpressionEvaluated.value = expressionToEvaluate.value
+	if (!lastPassedEntry.value) {
+		const [ leftOperand, unusedRightOperand ] = previousExpressionEvaluated.value.split(operation.value as Operations)
+		lastPassedEntry.value = Number(leftOperand)
+	}
+	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${lastPassedEntry.value}`
 	if (mustSaveCurrentEntry) previousEntry.value = Number(entry.value)
 
 	evaluation.value = newEvaluation
