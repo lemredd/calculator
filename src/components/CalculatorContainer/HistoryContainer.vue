@@ -63,9 +63,24 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			</div>
 		</ul>
 
-		<ul class="history-list shown-by-default">
-			<div class="history-item" />
-		</ul>
+		<Teleport to="#history-container-shown-by-default">
+			<ul class="history-list shown-by-default">
+				<span class="header-text">History</span>
+				<!-- <div v-if="hasHistoryItems" class="has-history-items">
+					<HistoryListItem
+						v-for="item in historyList"
+						:key="joinHistoryItemParts(item)"
+						:history-item="item"
+						class="list-item"
+						@click="revertToChosenHistory(item)"
+					/>
+				</div>
+
+				<div v-else class="no-history-items">
+					No history yet.
+				</div> -->
+			</ul>
+		</Teleport>
 	</div>
 </template>
 
