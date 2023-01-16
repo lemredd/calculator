@@ -254,12 +254,6 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 </template>
 
 <style lang="scss">
-button:not(.no-border) {
-	@apply m-[1px] px-2 py-1;
-	@apply border border-neutral-800 rounded-md;
-	@apply text-xl text-neutral-800;
-}
-
 .common-buttons .row button {
 	@apply flex flex-1 justify-center items-center;
 }
@@ -281,7 +275,6 @@ button:not(.no-border) {
 
 	.entry-screen-container {
 		@apply flex justify-end;
-
 		@apply mt-2 mb-4;
 	}
 
