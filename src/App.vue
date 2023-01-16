@@ -6,6 +6,6 @@ import Calculator from "@/CalculatorContainer.vue"
 	<Calculator />
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "./style.scss";
 </style>

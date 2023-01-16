@@ -117,4 +117,10 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 
 	z-index: 101;
 }
+
+@screen md {
+	.show-history-btn {
+		display: none;
+	}
+}
 </style>
