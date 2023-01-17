@@ -16,11 +16,12 @@ body {
 
 	@screen md {
 		#app {
-			max-width: 640px;
+			max-width: unset;
 		}
 
 		#history-container-shown-by-default {
 			display: block;
+			min-width: 300px;
 		}
 
 	}
