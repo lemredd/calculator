@@ -16,6 +16,11 @@ interface CustomEvents {
 }
 const emit = defineEmits<CustomEvents>()
 
+const reversedHistoryList = computed(() => {
+	const { "historyList": reversedHistoryList } = props
+
+	return reversedHistoryList.reverse()
+})
 const hasHistoryItems = computed(() => Boolean(props.historyList.length))
 const isShowingHistoryList = ref(false)
 function toggleHistoryList() {
@@ -24,7 +29,7 @@ function toggleHistoryList() {
 
 function revertToChosenHistory(historyItem: HistoryItem) {
 	emit("revertToChosenHistory", historyItem)
-	toggleHistoryList()
+	isShowingHistoryList.value = false
 }
 </script>
 
@@ -50,7 +55,7 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			<span class="header-text">History</span>
 			<div v-if="hasHistoryItems" class="has-history-items">
 				<HistoryListItem
-					v-for="item in historyList"
+					v-for="item in reversedHistoryList"
 					:key="joinHistoryItemParts(item)"
 					:history-item="item"
 					class="list-item"
@@ -66,9 +71,9 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 		<Teleport to="#history-container-shown-by-default">
 			<ul class="history-list shown-by-default">
 				<span class="header-text">History</span>
-				<!-- <div v-if="hasHistoryItems" class="has-history-items">
+				<div v-if="hasHistoryItems" class="has-history-items">
 					<HistoryListItem
-						v-for="item in historyList"
+						v-for="item in reversedHistoryList"
 						:key="joinHistoryItemParts(item)"
 						:history-item="item"
 						class="list-item"
@@ -78,7 +83,7 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 
 				<div v-else class="no-history-items">
 					No history yet.
-				</div> -->
+				</div>
 			</ul>
 		</Teleport>
 	</div>
@@ -105,18 +110,31 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 	@apply font-bold;
 }
 
-.history-list.hidden-by-default {
-	@apply p-2;
-	@apply rounded-t-md border border-black;
-	@apply bg-white;
+.history-list {
+	&.hidden-by-default {
+		@apply p-2;
+		@apply rounded-t-md border border-black;
+		@apply bg-white;
 
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
 
-	z-index: 101;
+		z-index: 101;
+	}
+
+	&.shown-by-default {
+		@apply p-2;
+		min-height: 100vh;
+
+		.header-text {
+			@apply block mb-2;
+			@apply text-xl;
+		}
+	}
 }
+
 
 @screen md {
 	.show-history-btn {
