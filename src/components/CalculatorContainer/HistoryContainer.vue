@@ -132,7 +132,7 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 		max-height: 100vh;
 
 		.history-list-wrapper {
-			@apply border border-black rounded-md;
+			@apply border-2 border-black;
 			@apply p-4;
 			@apply bg-white;
 			height: 100%;
