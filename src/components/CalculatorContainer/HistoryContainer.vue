@@ -138,6 +138,20 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			height: 100%;
 			max-height: 100vh;
 			overflow-y: scroll;
+			scrollbar-width: none;
+		}
+
+		.history-list-wrapper::-webkit-scrollbar {
+			width: .5em;
+		}
+
+		.history-list-wrapper::-webkit-scrollbar-thumb {
+			@apply bg-slate-400;
+			@apply rounded-md;
+			width: .5em;
+		}
+		.history-list-wrapper::-webkit-scrollbar-thumb:hover {
+			@apply bg-slate-500;
 		}
 
 		.header-text {
