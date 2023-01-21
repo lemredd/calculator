@@ -70,19 +70,21 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 
 		<Teleport to="#history-container-shown-by-default">
 			<ul class="history-list shown-by-default">
-				<span class="header-text">History</span>
-				<div v-if="hasHistoryItems" class="has-history-items">
-					<HistoryListItem
-						v-for="item in reversedHistoryList"
-						:key="joinHistoryItemParts(item)"
-						:history-item="item"
-						class="list-item"
-						@click="revertToChosenHistory(item)"
-					/>
-				</div>
+				<div class="history-list-wrapper">
+					<span class="header-text">History</span>
+					<div v-if="hasHistoryItems" class="has-history-items">
+						<HistoryListItem
+							v-for="item in reversedHistoryList"
+							:key="joinHistoryItemParts(item)"
+							:history-item="item"
+							class="list-item"
+							@click="revertToChosenHistory(item)"
+						/>
+					</div>
 
-				<div v-else class="no-history-items">
-					No history yet.
+					<div v-else class="no-history-items">
+						No history yet.
+					</div>
 				</div>
 			</ul>
 		</Teleport>
@@ -125,8 +127,18 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 	}
 
 	&.shown-by-default {
+		@apply p-4;
 		height: 100%;
 		max-height: 100vh;
+
+		.history-list-wrapper {
+			@apply border border-black rounded-md;
+			@apply p-4;
+			@apply bg-white;
+			height: 100%;
+			max-height: 100vh;
+			overflow-y: scroll;
+		}
 
 		.header-text {
 			@apply block mb-2;
