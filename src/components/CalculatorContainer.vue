@@ -263,12 +263,10 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 .calculator-container {
 	@apply p-1;
 	@apply flex flex-col justify-between;
-	min-height: 100vh;
+	height: 100%;
 }
 
 .screens {
-	position: relative;
-
 	.evaluation-screen-container {
 		@apply flex justify-end;
 	}

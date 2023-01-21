@@ -125,10 +125,8 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 	}
 
 	&.shown-by-default {
-		@apply p-2;
-		min-height: 100vh;
+		height: 100%;
 		max-height: 100vh;
-		overflow-y: scroll;
 
 		.header-text {
 			@apply block mb-2;
