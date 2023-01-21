@@ -3,9 +3,16 @@
 @tailwind utilities;
 
 body {
-	@apply flex;
+	.container {
+		@apply flex;
+		@apply bg-calculator-ocean;
+		min-height: 100vh;
+		min-width: 100vw;
+	}
 
 	#app {
+		@apply border-r border-r-black;
+		@apply p-4;
 		@apply flex-1;
 		max-width: 768px;
 	}
