@@ -3,7 +3,9 @@ import Calculator from "@/CalculatorContainer.vue"
 </script>
 
 <template>
-	<Calculator />
+	<div class="rim">
+		<Calculator />
+	</div>
 </template>
 
 <style lang="scss">
