@@ -34,6 +34,16 @@ body {
 	}
 }
 
+.rim {
+	@apply bg-white;
+	@apply rounded-md;
+	height: 100%;
+
+	&> .calculator-container {
+		@apply border border-black rounded-md;
+		@apply p-4;
+	}
+}
 
 button:not(.no-border) {
 	@apply m-[1px] px-2 py-1;
