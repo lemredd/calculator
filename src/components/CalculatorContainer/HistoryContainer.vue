@@ -94,9 +94,15 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 <style scoped lang="scss">
 @import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0";
 
-.show-history-btn {
-	z-index: 999;
-	position: fixed;
+.history-container {
+	position: relative;
+
+	.show-history-btn {
+		z-index: 999;
+		position: absolute;
+		top: .25em;
+		left: .25em;
+	}
 }
 
 .overlay {

@@ -267,6 +267,10 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 }
 
 .screens {
+	@apply mb-2 px-2 pt-2;
+	@apply border border-black rounded-md;
+	@apply bg-calculator-mustard;
+
 	.evaluation-screen-container {
 		@apply flex justify-end;
 	}
