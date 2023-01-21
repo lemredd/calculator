@@ -6,6 +6,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			boxShadow: {
+				neobrut: "4px 4px black"
+			},
 			colors: {
 				"calculator-candy": "#f096e3",
 				"calculator-mint": "#4e9e94",
