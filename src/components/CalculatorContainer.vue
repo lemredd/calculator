@@ -131,9 +131,7 @@ function addToHistoryList() {
 
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	mustClearEntryOnNextAppend.value = true
-	const mustSaveCurrentEntry = newEvaluation === "1/x"
-	|| newEvaluation === "x²"
-	|| newEvaluation === "√"
+	const mustSaveCurrentEntry = newEvaluation !== "="
 
 	previousExpressionEvaluated.value = expressionToEvaluate.value
 	if (!lastPassedEntry.value) {
@@ -141,7 +139,7 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 		lastPassedEntry.value = Number(leftOperand)
 	}
 	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${lastPassedEntry.value}`
-	if (mustSaveCurrentEntry) previousEntry.value = Number(entry.value)
+	if (mustSaveCurrentEntry && newEvaluation !== "%") previousEntry.value = Number(entry.value)
 
 	evaluation.value = newEvaluation
 	previousResult.value = String(result)
