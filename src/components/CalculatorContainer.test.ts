@@ -451,8 +451,7 @@ describe("Component: CalculatorContainer", () => {
 			"operation": "+" as Operations,
 			"rightOperand": 1
 		}
-		const historyContainer = wrapper.find(".history-container")
-		const [historyItem1] = historyContainer.findAll(".history-item")
+		const [historyItem1] = wrapper.findAllComponents(".history-item")
 		await historyItem1.trigger("click")
 
 		const joinedHistoryitemParts = `${historyItem.leftOperand} ${historyItem.operation} ${historyItem.rightOperand}`
