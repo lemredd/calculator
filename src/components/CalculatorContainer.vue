@@ -28,7 +28,7 @@ const evaluation = ref<Evaluations|null>(null)
 const lastPassedEntry = ref<number|null>(null)
 const historyList = ref<HistoryList>([])
 
-const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
+const hasPreviousEntry = computed(() => previousEntry.value !== null && Boolean(operation.value))
 const expressionToEvaluate = computed({
 	get() {
 		let value = ""
