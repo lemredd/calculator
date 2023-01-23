@@ -8,6 +8,16 @@ import evaluate from "@/CalculatorContainer/helpers/evaluate"
 import Component from "./CalculatorContainer.vue"
 
 describe("Component: CalculatorContainer", () => {
+	beforeEach(() => {
+		const historyContainerShownByDefault = document.createElement("div")
+		historyContainerShownByDefault.id = "history-container-shown-by-default"
+		document.body.appendChild(historyContainerShownByDefault)
+	})
+
+	afterEach(() => {
+		document.body.outerHTML = ""
+	})
+
 	it("can evaluate a proper expression", async() => {
 		const wrapper = mount(Component)
 		const expressionScrn = wrapper.find(".expression-screen")
