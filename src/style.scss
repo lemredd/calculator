@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+	.container {
+		@apply flex;
+		@apply bg-calculator-ocean;
+		min-height: 100vh;
+		min-width: 100vw;
+	}
+
+	#app {
+		@apply p-4;
+		@apply flex-1;
+		max-width: 768px;
+	}
+
+	#history-container-shown-by-default {
+		display: none;
+	}
+
+	@screen md {
+		#app {
+			max-width: unset;
+		}
+
+		#history-container-shown-by-default {
+			display: block;
+			min-width: 300px;
+		}
+	}
+}
+
+.rim, .history-list-wrapper {
+	@apply shadow-neobrut rounded-md;
+}
+
+.rim {
+	@apply bg-white;
+	height: 100%;
+	&> .calculator-container {
+		@apply border-2 border-black rounded-md;
+		@apply p-4;
+	}
+}
+
+button:not(.no-border) {
+	@apply m-[1px] px-2 py-1;
+	@apply border border-black rounded-md;
+	@apply text-xl text-black;
+
+	&:hover {
+		@apply bg-calculator-candy;
+	}
+}

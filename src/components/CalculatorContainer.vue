@@ -28,7 +28,7 @@ const evaluation = ref<Evaluations|null>(null)
 const lastPassedEntry = ref<number|null>(null)
 const historyList = ref<HistoryList>([])
 
-const hasPreviousEntry = computed(() => Boolean(previousEntry.value) && Boolean(operation.value))
+const hasPreviousEntry = computed(() => previousEntry.value !== null && Boolean(operation.value))
 const expressionToEvaluate = computed({
 	get() {
 		let value = ""
@@ -131,9 +131,7 @@ function addToHistoryList() {
 
 function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	mustClearEntryOnNextAppend.value = true
-	const mustSaveCurrentEntry = newEvaluation === "1/x"
-	|| newEvaluation === "x²"
-	|| newEvaluation === "√"
+	const mustSaveCurrentEntry = newEvaluation !== "="
 
 	previousExpressionEvaluated.value = expressionToEvaluate.value
 	if (!lastPassedEntry.value) {
@@ -141,13 +139,13 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 		lastPassedEntry.value = Number(leftOperand)
 	}
 	if (hasSavedPreviousResult.value) expressionToEvaluate.value = `${previousResult.value}${operation.value}${lastPassedEntry.value}`
-	if (mustSaveCurrentEntry) previousEntry.value = Number(entry.value)
+	if (mustSaveCurrentEntry && newEvaluation !== "%") previousEntry.value = Number(entry.value)
 
 	evaluation.value = newEvaluation
 	previousResult.value = String(result)
 
 	entry.value = String(result)
-	addToHistoryList()
+	if (!mustSaveCurrentEntry) addToHistoryList()
 }
 
 function revertToChosenHistory(historyItem: HistoryItem) {
@@ -254,12 +252,6 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 </template>
 
 <style lang="scss">
-button:not(.no-border) {
-	@apply m-[1px] px-2 py-1;
-	@apply border border-neutral-800 rounded-md;
-	@apply text-xl text-neutral-800;
-}
-
 .common-buttons .row button {
 	@apply flex flex-1 justify-center items-center;
 }
@@ -269,11 +261,13 @@ button:not(.no-border) {
 .calculator-container {
 	@apply p-1;
 	@apply flex flex-col justify-between;
-	min-height: 100vh;
+	height: 100%;
 }
 
 .screens {
-	position: relative;
+	@apply mb-2 px-2 pt-2;
+	@apply border border-black rounded-md;
+	@apply bg-calculator-mustard;
 
 	.evaluation-screen-container {
 		@apply flex justify-end;
@@ -281,7 +275,6 @@ button:not(.no-border) {
 
 	.entry-screen-container {
 		@apply flex justify-end;
-
 		@apply mt-2 mb-4;
 	}
 

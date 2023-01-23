@@ -3,8 +3,11 @@ import Calculator from "@/CalculatorContainer.vue"
 </script>
 
 <template>
-	<Calculator/>
+	<div class="rim">
+		<Calculator />
+	</div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+@import "./style.scss";
 </style>
