@@ -145,7 +145,7 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 	previousResult.value = String(result)
 
 	entry.value = String(result)
-	addToHistoryList()
+	if (!mustSaveCurrentEntry) addToHistoryList()
 }
 
 function revertToChosenHistory(historyItem: HistoryItem) {
