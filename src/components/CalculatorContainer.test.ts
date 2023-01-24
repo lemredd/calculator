@@ -460,4 +460,33 @@ describe("Component: CalculatorContainer", () => {
 		expect(expressionScrn.text()).toEqual(expectedExpressionTextValue)
 		expect(entryScrn.text()).toEqual(String(expectedResult))
 	})
+
+	it("can clear history list", async() => {
+		const wrapper = mount(Component)
+
+		// Find the digit "1" button and click it
+		const digitalBtns = wrapper.findAll(".digital-button")
+		const [digital1Btn] = digitalBtns.filter(btn => btn.text() === "1")
+		await digital1Btn.trigger("click")
+
+		// Find the Addition button and click it
+		const operationalBtns = wrapper.findAll(".operational-button")
+		const [additionBtn] =  operationalBtns.filter(btn => btn.text() === "+")
+		await additionBtn.trigger("click")
+
+		// click digit "1" button again
+		await digital1Btn.trigger("click")
+
+		// Find the Equal button and click it
+		const evaluationBtns = wrapper.findAll(".evaluation-button")
+		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
+		await equalBtn.trigger("click")
+
+		const showHistoryBtn = wrapper.find(".show-history-btn")
+		await showHistoryBtn.trigger("click")
+		const clearHistoryBtn = wrapper.find(".clear-history-btn")
+		await clearHistoryBtn.trigger("click")
+		const historyItems = wrapper.findAll(".history-item")
+		expect(historyItems.length).toEqual(0)
+	})
 })
