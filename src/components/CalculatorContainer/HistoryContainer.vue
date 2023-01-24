@@ -18,9 +18,7 @@ interface CustomEvents {
 const emit = defineEmits<CustomEvents>()
 
 const reversedHistoryList = computed(() => {
-	const { "historyList": reversedHistoryList } = props
-
-	return reversedHistoryList.reverse()
+	return [...props.historyList].reverse()
 })
 const hasHistoryItems = computed(() => Boolean(props.historyList.length))
 const isShowingHistoryList = ref(false)
