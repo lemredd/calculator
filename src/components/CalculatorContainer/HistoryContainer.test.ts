@@ -77,5 +77,47 @@ describe("Component: CalculatorContainer/HistoryContainer", () => {
 		expect(historyListItem1.props("historyItem")).toStrictEqual(historyItem3)
 		expect(historyListItem2.props("historyItem")).toStrictEqual(historyItem2)
 		expect(historyListItem3.props("historyItem")).toStrictEqual(historyItem1)
+
+		const historyItem4 = {
+			"leftOperand": 4,
+			"operation": "+" as Operations,
+			"rightOperand": 4
+		}
+		const newHistoryList = [ ...historyList, historyItem4 ]
+		await wrapper.setProps({ "historyList": newHistoryList })
+		const [
+			newHistoryListItem1,
+			newHistoryListItem2,
+			newHistoryListItem3,
+			newHistoryListItem4,
+		] = historyListHiddenByDefault.findAllComponents({ "name": "HistoryListItem" })
+		expect(newHistoryListItem1.props("historyItem")).toStrictEqual(historyItem4)
+		expect(newHistoryListItem2.props("historyItem")).toStrictEqual(historyItem3)
+		expect(newHistoryListItem3.props("historyItem")).toStrictEqual(historyItem2)
+		expect(newHistoryListItem4.props("historyItem")).toStrictEqual(historyItem1)
+	})
+
+	it("can emit clearing of history", async() => {
+		const historyItem = {
+			"leftOperand": 1,
+			"operation": "+" as Operations,
+			"rightOperand": 1
+		}
+		const historyList = [ historyItem ]
+		const props = {
+			historyList
+		}
+		const wrapper = shallowMount(Component,{ props })
+
+		// mock `isShowingHistoryList = true`
+		const wrapperInternals = wrapper.vm as any
+		wrapperInternals.isShowingHistoryList = true
+		await nextTick()
+
+		const clearHistoryBtn = wrapper.find(".clear-history-btn")
+		await clearHistoryBtn.trigger("click")
+
+		const expectedEmission = wrapper.emitted("clearHistory")
+		expect(expectedEmission).toBeDefined()
 	})
 })

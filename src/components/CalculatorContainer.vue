@@ -154,6 +154,10 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 	previousExpressionEvaluated.value = `${leftOperand}${operationFromHistory}${rightOperand}`
 	entry.value = String(evaluate(previousExpressionEvaluated.value))
 }
+
+function clearHistoryList() {
+	historyList.value = []
+}
 </script>
 
 <template>
@@ -161,6 +165,7 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 		<HistoryContainer
 			:history-list="historyList"
 			@revert-to-chosen-history="revertToChosenHistory"
+			@clear-history="clearHistoryList"
 		/>
 		<div class="screens">
 			<div class="evaluation-screen-container">
