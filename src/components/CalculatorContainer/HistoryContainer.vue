@@ -12,6 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 
 interface CustomEvents {
+	(event: "clearHistory"): void
 	(event: "revertToChosenHistory", historyItem: HistoryItem): void
 }
 const emit = defineEmits<CustomEvents>()
@@ -30,6 +31,10 @@ function toggleHistoryList() {
 function revertToChosenHistory(historyItem: HistoryItem) {
 	emit("revertToChosenHistory", historyItem)
 	isShowingHistoryList.value = false
+}
+
+function clearHistory() {
+	emit("clearHistory")
 }
 </script>
 
@@ -52,7 +57,16 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			v-if="isShowingHistoryList"
 			class="history-list hidden-by-default"
 		>
-			<span class="header-text">History</span>
+			<div class="history-header">
+				<span class="header-text">History</span>
+				<button
+					v-if="hasHistoryItems"
+					class="clear-history-btn material-symbols-outlined no-border"
+					@click="clearHistory"
+				>
+					delete
+				</button>
+			</div>
 			<div v-if="hasHistoryItems" class="has-history-items">
 				<HistoryListItem
 					v-for="item in reversedHistoryList"
@@ -71,7 +85,16 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 		<Teleport to="#history-container-shown-by-default">
 			<ul class="history-list shown-by-default">
 				<div class="history-list-wrapper">
-					<span class="header-text">History</span>
+					<div class="history-header">
+						<span class="header-text">History</span>
+						<button
+							v-if="hasHistoryItems"
+							class="clear-history-btn material-symbols-outlined no-border"
+							@click="clearHistory"
+						>
+							delete
+						</button>
+					</div>
 					<div v-if="hasHistoryItems" class="has-history-items">
 						<HistoryListItem
 							v-for="item in reversedHistoryList"
@@ -164,6 +187,11 @@ function revertToChosenHistory(historyItem: HistoryItem) {
 			@apply block mb-2;
 			@apply text-xl;
 		}
+	}
+
+	.history-header {
+		@apply mb-4;
+		@apply flex items-center justify-between;
 	}
 }
 
