@@ -78,4 +78,28 @@ describe("Component: CalculatorContainer/HistoryContainer", () => {
 		expect(historyListItem2.props("historyItem")).toStrictEqual(historyItem2)
 		expect(historyListItem3.props("historyItem")).toStrictEqual(historyItem1)
 	})
+
+	it("can emit clearing of history", async() => {
+		const historyItem = {
+			"leftOperand": 1,
+			"operation": "+" as Operations,
+			"rightOperand": 1
+		}
+		const historyList = [ historyItem ]
+		const props = {
+			historyList
+		}
+		const wrapper = shallowMount(Component,{ props })
+
+		// mock `isShowingHistoryList = true`
+		const wrapperInternals = wrapper.vm as any
+		wrapperInternals.isShowingHistoryList = true
+		await nextTick()
+
+		const clearHistoryBtn = wrapper.find(".clear-history-btn")
+		await clearHistoryBtn.trigger("click")
+
+		const expectedEmission = wrapper.emitted("clearHistory")
+		expect(expectedEmission).toBeDefined()
+	})
 })
