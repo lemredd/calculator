@@ -150,8 +150,9 @@ function retrieveEvaluationResults(newEvaluation: Evaluations, result: number) {
 
 function revertToChosenHistory(historyItem: HistoryItem) {
 	const { leftOperand, "operation": operationFromHistory, rightOperand } = historyItem
+	operation.value = operationFromHistory
 	evaluation.value = "="
-	previousExpressionEvaluated.value = `${leftOperand}${operationFromHistory}${rightOperand}`
+	expressionToEvaluate.value = `${leftOperand}${operationFromHistory}${rightOperand}`
 	entry.value = String(evaluate(previousExpressionEvaluated.value))
 }
 
