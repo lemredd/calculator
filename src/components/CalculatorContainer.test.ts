@@ -446,6 +446,10 @@ describe("Component: CalculatorContainer", () => {
 		const [equalBtn] =  evaluationBtns.filter(btn => btn.text() === "=")
 		await equalBtn.trigger("click")
 
+		const correctionBtns = wrapper.findAll(".correction-button")
+		const [clearAllBtn] = correctionBtns.filter(btn => btn.text() === "C")
+		await clearAllBtn.trigger("click")
+
 		const historyItem = {
 			"leftOperand": 1,
 			"operation": "+" as Operations,
