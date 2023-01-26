@@ -7,14 +7,13 @@ module.exports = {
 	theme: {
 		extend: {
 			boxShadow: {
-				neobrut: "6px 6px black"
+				neobrut: "6px 6px #35495e"
 			},
 			colors: {
 				"calculator-candy": "#f096e3",
-				"calculator-mint": "#4e9e94",
+				"calculator-mint": "#41B883",
 				"calculator-mustard": "#ffdb58",
-				"calculator-ocean": "#2e66d2",
-				"calculator-sky": "#8a94f8",
+				"calculator-ocean": "#35495e"
 			}
 		}
 	},
