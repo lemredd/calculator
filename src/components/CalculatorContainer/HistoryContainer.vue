@@ -142,7 +142,7 @@ function clearHistory() {
 .history-list {
 	&.hidden-by-default {
 		@apply p-2;
-		@apply rounded-t-md border border-black;
+		@apply rounded-t-md border border-calculator-ocean;
 		@apply bg-white;
 
 		position: fixed;
@@ -159,7 +159,7 @@ function clearHistory() {
 		max-height: 100vh;
 
 		.history-list-wrapper {
-			@apply border-2 border-black;
+			@apply border-2 border-calculator-ocean;
 			@apply p-4;
 			@apply bg-white;
 			height: 100%;
