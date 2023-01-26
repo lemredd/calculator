@@ -1,3 +1,77 @@
+## 1.0.0 (2023-01-26)
+
+##### Chores
+
+* **docs:**
+  *  use third-party `Vercel` badge (682aab9a)
+  *  add more details (301c316f)
+* **ui:**
+  *  rename color to `police-blue` (7c9ee4a0)
+  *  use `Vue` color scheme (d41fbdbc)
+  *  adjust neobrutalist shadow offsets (abafcd17)
+  *  configure neobrutalist shadow (8b118135)
+  *  wrap app and history container (4490b2dd)
+  *  add color schemes with custom names (e3ba5219)
+
+##### New Features
+
+* **ui:**
+  *  change the logo (4de8d091)
+  *  transition hidden history list (4960de6c)
+  *  make calculator screens responsive (9f52a29a)
+  *  use ocean as border color (a4d6c502)
+  *  use mint as container background color (176573e0)
+  *  make button to `clearHistory` (62f497b5)
+  *  style screens container (20616a30)
+  *  use neobrutalist shadow (e9b3ed00)
+  *  style scrollbar (c66b34c8)
+  *  wrap contents of `.history-list` (df57e5b5)
+  *  style `.rim` (9c329b07)
+  *  style the parent and `#app` containers (9e93829e)
+  *  wrap `Calculator` (7c6f617f)
+  *  scroll overflowing history list (c2f5ca7e)
+  *  hide button to show history (16cc56d4)
+  *  flex the whole `<body>` container (87eee23b)
+  *  `teleport` history list (bddbfd50)
+* **intg:**  clear `historyList` (51090072)
+* **component:**  reverse listed items (0b9ac2e9)
+
+##### Bug Fixes
+
+* **docs:**  add missing reference (b3f72967)
+* **ui:**
+  *  make text size height responsive (72dc30d7)
+  *  use `100%` for heights (0a1f40e6)
+  *  limit widths in medium viewport (4328bf79)
+*  use proper casing (112cd06f)
+* **intg:**
+  *  use `operationFromHistory` (67719c5f)
+  *  condition by null (9e9c9973)
+  *  add to history only if evaluation is `=` (a54212d6)
+  *  exclude `%` when saving current entry (60adbd42)
+  *  set `lastPassedEntry` manually (8b50c60f)
+  *  account `mustClearEntryOnNextAppend` (1bb41ec6)
+* **component:**  utilize spread operator (32dbee41)
+* **helpers:**  ensure proper throwing of message (2cb1aa12)
+
+##### Refactors
+
+* **ui:**  move styles to external file (f88fce93)
+
+##### Tests
+
+* **intg:**
+  *  clear before history recall (1c403b8b)
+  *  ensure clearing of `historyList` (cd0dcd83)
+  *  find all `.history-item` components (f374c6b7)
+  *  mock history container teleport location (2bef60c9)
+  *  ensure an edge case in computation (aaf962c6)
+* **component:**
+  *  ensure proper reverse order (ace3c3fd)
+  *  ensure emission to clear history (52c18ae2)
+  *  ensure reverse listed items (3564bef9)
+* **helpers:**  ensure expression is included (4a23902e)
+
 ### 0.5.0 (2023-01-14)
 
 ##### Chores
