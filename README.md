@@ -9,3 +9,4 @@ Most of the features were inspired by Microsoft's standard [calculator] for Wind
 
 <!-- References -->
 [calculator]: https://github.com/Microsoft/calculator
+[Vue]: https://www.vuejs.org
