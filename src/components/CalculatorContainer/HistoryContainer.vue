@@ -45,40 +45,44 @@ function clearHistory() {
 			history
 		</button>
 
-		<div
-			v-if="isShowingHistoryList"
-			class="overlay"
-			@click="toggleHistoryList"
-		/>
+		<Transition name="fade">
+			<div
+				v-if="isShowingHistoryList"
+				class="overlay"
+				@click="toggleHistoryList"
+			/>
+		</Transition>
 
-		<ul
-			v-if="isShowingHistoryList"
-			class="history-list hidden-by-default"
-		>
-			<div class="history-header">
-				<span class="header-text">History</span>
-				<button
-					v-if="hasHistoryItems"
-					class="clear-history-btn material-symbols-outlined no-border"
-					@click="clearHistory"
-				>
-					delete
-				</button>
-			</div>
-			<div v-if="hasHistoryItems" class="has-history-items">
-				<HistoryListItem
-					v-for="item in reversedHistoryList"
-					:key="joinHistoryItemParts(item)"
-					:history-item="item"
-					class="list-item"
-					@click="revertToChosenHistory(item)"
-				/>
-			</div>
+		<Transition name="list">
+			<ul
+				v-if="isShowingHistoryList"
+				class="history-list hidden-by-default"
+			>
+				<div class="history-header">
+					<span class="header-text">History</span>
+					<button
+						v-if="hasHistoryItems"
+						class="clear-history-btn material-symbols-outlined no-border"
+						@click="clearHistory"
+					>
+						delete
+					</button>
+				</div>
+				<div v-if="hasHistoryItems" class="has-history-items">
+					<HistoryListItem
+						v-for="item in reversedHistoryList"
+						:key="joinHistoryItemParts(item)"
+						:history-item="item"
+						class="list-item"
+						@click="revertToChosenHistory(item)"
+					/>
+				</div>
 
-			<div v-else class="no-history-items">
-				No history yet.
-			</div>
-		</ul>
+				<div v-else class="no-history-items">
+					No history yet.
+				</div>
+			</ul>
+		</Transition>
 
 		<Teleport to="#history-container-shown-by-default">
 			<ul class="history-list shown-by-default">
@@ -126,6 +130,15 @@ function clearHistory() {
 	}
 }
 
+
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
+}
 .overlay {
 	@apply bg-neutral-900/50;
 	content: "";
@@ -133,12 +146,26 @@ function clearHistory() {
 	inset: 0;
 
 	z-index: 100;
+
+	transition: opacity ease 300ms;
 }
 
 .header-text {
 	@apply font-bold;
 }
 
+
+.list-enter-active,
+.list-leave-active {
+	transition:
+		opacity 0.3s ease,
+		transform 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+	opacity: 0;
+	transform: translateY(50px);
+}
 .history-list {
 	&.hidden-by-default {
 		@apply p-2;
@@ -149,6 +176,9 @@ function clearHistory() {
 		bottom: 0;
 		left: 0;
 		right: 0;
+		min-height: 70vh;
+		max-height: 70vh;
+		overflow-y: scroll;
 
 		z-index: 101;
 	}
