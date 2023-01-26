@@ -48,7 +48,7 @@ body {
 button:not(.no-border) {
 	@apply m-[1px] px-2 py-1;
 	@apply border-2 border-calculator-police-blue rounded-md;
-	@apply text-xl text-calculator-police-blue;
+	@apply text-2xl text-calculator-police-blue;
 
 	&:hover {
 		@apply bg-calculator-candy;

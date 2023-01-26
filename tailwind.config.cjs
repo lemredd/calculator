@@ -16,6 +16,5 @@ module.exports = {
 				"calculator-police-blue": "#35495e"
 			}
 		}
-	},
-	plugins: [],
+	}
 }
