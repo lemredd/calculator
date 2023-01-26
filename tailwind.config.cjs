@@ -13,7 +13,7 @@ module.exports = {
 				"calculator-candy": "#f096e3",
 				"calculator-mint": "#41B883",
 				"calculator-mustard": "#ffdb58",
-				"calculator-ocean": "#35495e"
+				"calculator-police-blue": "#35495e"
 			}
 		}
 	},

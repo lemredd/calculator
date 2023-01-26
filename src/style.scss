@@ -40,15 +40,15 @@ body {
 	@apply bg-white;
 	height: 100%;
 	&> .calculator-container {
-		@apply border-2 border-calculator-ocean rounded-md;
+		@apply border-2 border-calculator-police-blue rounded-md;
 		@apply p-4;
 	}
 }
 
 button:not(.no-border) {
 	@apply m-[1px] px-2 py-1;
-	@apply border-2 border-calculator-ocean rounded-md;
-	@apply text-xl text-calculator-ocean;
+	@apply border-2 border-calculator-police-blue rounded-md;
+	@apply text-xl text-calculator-police-blue;
 
 	&:hover {
 		@apply bg-calculator-candy;
