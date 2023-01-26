@@ -293,11 +293,15 @@ function clearHistoryList() {
 	}
 
 	.entry-screen-container .screen {
-		@apply text-6xl;
+		@apply text-4xl;
+
+		@media (min-height: 600px) {
+			@apply text-6xl;
+		}
 	}
 
-	@screen md {
-		height: 15%;
+	@media (min-height: 600px) {
+		height: 20%;
 	}
 }
 
