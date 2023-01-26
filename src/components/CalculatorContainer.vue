@@ -273,11 +273,19 @@ function clearHistoryList() {
 .screens {
 	@apply mb-2 px-2 pt-2;
 	@apply border border-black rounded-md;
+	@apply flex flex-col justify-between;
 	@apply bg-calculator-mustard;
 
 	.evaluation-screen-container {
 		@apply flex justify-end;
 	}
+
+	.evaluation-screen-container .screen {
+		@screen md {
+			@apply text-xl;
+		}
+	}
+
 
 	.entry-screen-container {
 		@apply flex justify-end;
@@ -286,6 +294,14 @@ function clearHistoryList() {
 
 	.entry-screen-container .screen {
 		@apply text-4xl;
+
+		@media (min-height: 600px) {
+			@apply text-6xl;
+		}
+	}
+
+	@media (min-height: 600px) {
+		height: 20%;
 	}
 }
 

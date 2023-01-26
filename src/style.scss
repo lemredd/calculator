@@ -5,7 +5,7 @@
 body {
 	.container {
 		@apply flex;
-		@apply bg-calculator-ocean;
+		@apply bg-calculator-mint;
 		min-height: 100vh;
 		min-width: 100vw;
 	}
@@ -40,15 +40,15 @@ body {
 	@apply bg-white;
 	height: 100%;
 	&> .calculator-container {
-		@apply border-2 border-black rounded-md;
+		@apply border-2 border-calculator-police-blue rounded-md;
 		@apply p-4;
 	}
 }
 
 button:not(.no-border) {
 	@apply m-[1px] px-2 py-1;
-	@apply border border-black rounded-md;
-	@apply text-xl text-black;
+	@apply border-2 border-calculator-police-blue rounded-md;
+	@apply text-2xl text-calculator-police-blue;
 
 	&:hover {
 		@apply bg-calculator-candy;
